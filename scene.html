@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Hello, WebVR! - A-Frame</title>
+	<meta name="description" content="Hello, WebVR! - A-Frame">
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+
+
+
+</head>
+
+<body>
+<a-scene>
+
+	<a-sky 
+		color = "#001337">
+	</a-sky>
+
+	<a-plane
+		width="100" height="100"
+		position=" 0.00 0.00 0.00" 
+		rotation="-90 0 0" 
+		color="#666666"
+		shadow="cast: false; receive: true">
+	</a-plane>
+
+    <!-- <a-entity position="0 3 0">
+        <a-entity id="camera" camera="active: true"  look-controls wasd-controls ></a-entity>
+        <a-cursor></a-cursor>
+    </a-entity> -->
+
+    <a-camera  position="0 3 0">
+        <a-cursor></a-cursor>
+      </a-camera>
+
+    <a-entity id="beam">
+        <a-box width="1" height="0.1" depth="9" material="color: gray;"
+        rotation = "0 -90 0"  
+        position="0 2.2 -5"
+        ></a-box>
+    </a-entity>
+
+    <a-entity id="wall1">
+        <a-box width="1" height="4" depth="2" material="color: lightgray;"
+        rotation = "0 0 0"  
+        position="4 0 -5"
+        ></a-box>
+    </a-entity>
+
+    <a-entity id="wall2">
+        <a-box width="1" height="4" depth="2" material="color: lightgray;"
+        rotation = "0 0 0"  
+        position="-4 0 -5"
+        ></a-box>
+    </a-entity>
+
+    <a-cylinder id='add' color="#000" radius="0.5" height="0.2" position='0.7 0 -3.4' rotation=' 0 0 0'>
+        <a-text id='but1' value="+" color="#ffffff" position="-0.15 0.1 -0.05" rotation='-90 0 0' width='10'></a-text>
+    </a-cylinder>
+    <a-cylinder id='remove' color="#000" radius="0.5" height="0.2" position='-0.7 0 -3.4' rotation=' 0 0 0'>
+        <a-text id='but2' value="-" color="#ffffff" position="-0.15 0.1 0" rotation='-90 0 0' width='10'></a-text>
+    </a-cylinder>
+
+  <!-- UI widgets -->
+  <a-entity position="0 1 0" rotation="0 0 0">
+
+
+    <!-- Slider -->
+    <a-entity id="beam-length" ui-slider="min: 1; max: 10; value: 5" position="0 2 -2" rotation="90 0 0"></a-entity>
+  </a-entity>
+    
+      <script>
+    
+        let next = document.querySelector("#add");
+        let prev = document.querySelector("#remove");
+        let text1 = document.querySelector("#but1");
+        let text2 = document.querySelector("#but2");
+        let click = true;
+        let scale = 1
+
+        //main event listener's
+        next.addEventListener("click", () => {
+        if (click) {
+            Add();
+        }
+        });
+
+        prev.addEventListener("click", () => {
+        if (click) {
+            Subtract();
+        }
+        });
+
+        // for cursor interaction with buttons
+        next.addEventListener("mouseenter", () => {
+        next.setAttribute("color", "#fff");
+        text1.setAttribute("color", "#000");
+
+        });
+
+        next.addEventListener("mouseleave", () => {
+        next.setAttribute("color", "#000");
+        text1.setAttribute("color", "#fff");
+
+        });
+
+        prev.addEventListener("mouseenter", () => {
+        prev.setAttribute("color", "#fff");
+        text2.setAttribute("color", "#000");
+
+        });
+
+        prev.addEventListener("mouseleave", () => {
+        prev.setAttribute("color", "#000");
+        text2.setAttribute("color", "#fff");
+
+        });
+
+        function Add() {
+        click = false;
+
+        const beam = document.querySelector('#beam');
+        scale+=0.5;
+        beam.setAttribute('scale', {x: scale, y: 1, z: 1});
+     
+
+        setTimeout(() => {
+            click = true;
+        }, 1000);
+        }
+
+        function Subtract() {
+        click = false;
+        const beam = document.querySelector('#beam');
+        scale-=0.5;
+        beam.setAttribute('scale', {x: scale, y: 1, z: 1});
+
+       
+        setTimeout(() => {
+            click = true;
+        }, 1000);
+        }
+      </script>
+
+</a-scene>
+
+</body>
+</html>
