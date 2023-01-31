@@ -1,1 +1,1 @@
-# Lateral_Torsional_Buckling
+# Lateral Torsional Buckling
