@@ -1,17 +1,17 @@
-export let positions, shear_force, bending_moment;
+let positions, shear_force, bending_moment;
 let initial_positions;
 let EI;
-export let P, P_max;
-export let M_max = 0;
-export let SF_max = 0;
-export let max_displacement = 0.5;
+let P, P_max;
+let M_max = 0;
+let SF_max = 0;
+let max_displacement = 0.5;
 
-export function set_initial_position(p) {
+function set_initial_position(p) {
     positions = p.map((x) => x); // deep copy
     initial_positions = p;
 }
 
-export function updateDeformation(params) {
+function updateDeformation(params) {
     let l = params.length;
     let a = params.load_position; // distance from left to load point
     let b = l - a; // distance from right to load point
