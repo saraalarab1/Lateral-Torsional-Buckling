@@ -28,23 +28,10 @@
             <a-cursor></a-cursor>
         </a-camera>
 
-        <a-gui-flex-container flex-direction="column" justify-content="center" align-items="normal" component-padding="0.3" opacity="0.5" width="3.5" height="5" panel-color="#072B73" panel-rounded="0.2" position="-7 7.5 -10" rotation="0 15 0">
-
-            <a-gui-label width="2.5" height="0.75" value="Length" font-size="0.35" line-height="0.8" margin="0 0 0.05 0">
-            </a-gui-label>
-            <a-gui-slider id="lengthSlider" width="2.5" height="0.75" onclick="update_beam_length(event, this)" percent="0.2" margin="0 0 0.1 0" position="0 0 0.1"></a-gui-slider>
-
-            <a-gui-label width="2.5" height="0.75" value="Height" font-size="0.35" line-height="0.8" margin="0 0 0.05 0" position="0 0 0">
-            </a-gui-label>
-
-            <a-gui-slider width="2.5" height="0.75" onclick="update_beam_height(this.value)" percent="0.2" margin="0 0 0.1 0" position="0 1 0.1"></a-gui-slider>
-
-            <a-gui-label width="2.5" height="0.75" value="Depth" font-size="0.35" line-height="0.8" margin="0 0 0.05 0" position="0 0 0">
-            </a-gui-label>
-
-            <a-gui-slider width="2.5" height="0.75" onclick="update_beam_depth(this.value)" percent="0.2" margin="0 0 0.1 0" position="0 -2 0.1"></a-gui-slider>
+        <a-gui-flex-container id="dimensions" flex-direction="column" justify-content="center" align-items="normal" component-padding="0.3" opacity="0.5" width="3.5" height="5" panel-color="#072B73" panel-rounded="0.2" position="-7 7.5 -10" rotation="0 15 0">
 
         </a-gui-flex-container>
+
         <a-gui-flex-container flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="3.5" height="4.5" panel-rounded="0.2" position="-1 8 -10" rotation="0 0 0" panel-color="#212121">
 
             <a-gui-label width="1" height="0.75" value="Left" font-size="0.35" line-height="0.8" margin="0 0 0.05 0">
@@ -75,12 +62,12 @@
             <a-gui-label width="2.5" height="0.75" value="Applied Displacement" font-size="0.35" line-height="0.8" margin="0 0 0.05 0" position="0 0 0">
             </a-gui-label>
 
-            <a-gui-slider width="2.5" height="0.75" onclick="update_applied_displacement(this.value)" percent="0.2" margin="0 0 0.1 0" position="0 0 0.1"></a-gui-slider>
+            <a-gui-slider width="2.5" height="0.75" onclick="update_applied_displacement" percent="0.1" margin="0 0 0.1 0" position="0 0 0.1"></a-gui-slider>
 
             <a-gui-label width="2.5" height="0.75" value="Load Position" font-size="0.35" line-height="0.8" margin="0 0 0.05 0" position="0 0 0">
             </a-gui-label>
 
-            <a-gui-slider width="2.5" height="0.75" onclick="update_load_position(this.value)" percent="0.2" margin="0 0 0.1 0" position="0 1 0.1"></a-gui-slider>
+            <a-gui-slider width="2.5" height="0.75" onclick="update_load_position" percent="0.1" margin="0 0 0.1 0" position="0 1 0.1"></a-gui-slider>
 
         </a-gui-flex-container>
     </a-scene>
