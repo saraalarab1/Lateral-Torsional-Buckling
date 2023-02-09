@@ -20,42 +20,99 @@ pin_radius = 1;
 let beam_offset = new THREE.Vector3(0, 4, -10);
 
 function update_beam_length(event, element) {
-    const beam = document.getElementById("beam");
-    console.log(event);
-    console.log(element);
-    const lengthSlider = document.getElementById("lengthSlider");
+    params.length = 10;
 
-    console.log(lengthSlider);
     document.getElementById('beam').setAttribute('beam', {
-        length: 10,
+        length: params.length,
         height: 1.5,
         depth: 0.2
     });
     document.getElementById('right_support').setAttribute('right_support', {
         support_type: params.right,
-        length: 10,
+        length: params.length,
         height: params.height,
         depth: params.depth,
     });
     console.log(document.getElementById('right_support').getAttribute('right_support'));
     document.getElementById('left_support').setAttribute('left_support', {
         support_type: params.left,
-        length: 10,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
+}
+
+function update_beam_depth(depth) {
+    params.depth = 0.5;
+
+    document.getElementById('beam').setAttribute('beam', {
+        length: params.length,
+        height: params.height,
+        depth: params.depth
+    });
+    document.getElementById('right_support').setAttribute('right_support', {
+        support_type: params.right,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
+    console.log(document.getElementById('right_support').getAttribute('right_support'));
+    document.getElementById('left_support').setAttribute('left_support', {
+        support_type: params.left,
+        length: params.length,
         height: params.height,
         depth: params.depth,
     });
 }
 
 function update_beam_height(height) {
-    // beam.scale.set(params.length, params.height, params.depth);
-    // redraw_supports();
-    console.log(height)
+    params.height = 2;
+
+    document.getElementById('beam').setAttribute('beam', {
+        length: params.length,
+        height: params.height,
+        depth: params.depth
+    });
+    document.getElementById('right_support').setAttribute('right_support', {
+        support_type: params.right,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
+    document.getElementById('left_support').setAttribute('left_support', {
+        support_type: params.left,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
 }
 
-function update_beam_depth(depth) {
-    // beam.scale.set(params.length, params.height, params.depth);
-    // redraw_supports();
-    console.log(depth)
+function update_left(value) {
+    params.left = value;
+    document.getElementById('left_support').setAttribute('left_support', {
+        support_type: params.left,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
+}
+
+function update_right(value) {
+    params.right = value;
+    document.getElementById('right_support').setAttribute('right_support', {
+        support_type: params.right,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
+}
+
+function update_applied_displacement(value) {
+
+}
+
+function update_load_position() {
+
 }
 window.onload = function() {
 
