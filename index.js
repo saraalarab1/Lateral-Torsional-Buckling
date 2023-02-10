@@ -53,10 +53,6 @@ cooltowarm.getColor = function(index) {
     console.error('Invalid index: ' + index);
     return null;
   }
-  if (this.colorMap.length === 0) {
-    console.error('Color map is empty');
-    return null;
-  }
   if (isNaN(index)) {
     index = 0;
   }
@@ -171,6 +167,27 @@ window.onload = function() {
     flexContainer.appendChild(depthLabel)
     flexContainer.appendChild(depthSlider)
 
+    let flexContainer2 = document.querySelector("#load");
+
+    let loadPositionLabel = document.createElement("a-gui-label");
+        loadPositionLabel.setAttribute("width", "2.5");
+        loadPositionLabel.setAttribute("height", "0.75");
+        loadPositionLabel.setAttribute("value", "Load Position");
+        loadPositionLabel.setAttribute("font-size", "0.35");
+        loadPositionLabel.setAttribute("line-height", "0.8");
+        loadPositionLabel.setAttribute("position", "0 0 0");
+
+    let loadPositionSlider = document.createElement("a-gui-slider");
+        loadPositionSlider.setAttribute("id", "depthSlider");
+        loadPositionSlider.setAttribute("width", "2.5");
+        loadPositionSlider.setAttribute("height", "0.75");
+        loadPositionSlider.setAttribute("onclick", "update_load_position");
+        loadPositionSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
+        loadPositionSlider.setAttribute("position", "0 1 0.1");
+
+    flexContainer2.appendChild(loadPositionLabel)
+    flexContainer2.appendChild(loadPositionSlider)
+
 }
 
 function update_beam_length(click, percent) {
@@ -195,6 +212,7 @@ function update_beam_length(click, percent) {
         height: params.height,
         depth: params.depth,
     });
+    document.getElementById('beam').setAttribute('percent', params.length);
 }
 
 function update_beam_height(click,percent) {
@@ -324,7 +342,6 @@ function redraw_beam(beam) {
           for (let i = 0; i < arr.length; i++) {
               const colorValue = arr[i];
               const color = lut.getColor(colorValue);
-              console.log(color)
               colors.push(color.r, color.g, color.b);
           }
       } else {
@@ -332,7 +349,6 @@ function redraw_beam(beam) {
               colors.push(0, 0, 0);
           }
       }
-      console.log(colors)
       beam.geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
       beam.geometry.attributes.color.needsUpdate = true;
       beam.material.needsUpdate = true;

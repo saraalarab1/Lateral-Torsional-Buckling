@@ -57,17 +57,14 @@
             </a-gui-button>
 
         </a-gui-flex-container>
-        <a-gui-flex-container flex-direction="column" justify-content="center" align-items="normal" component-padding="0.3" opacity="0.8" width="3.5" height="4.5" panel-color="#072B73" panel-rounded="0.2" position="6 8 -10" rotation="0 -15 0">
+        <a-gui-flex-container  id="load"  flex-direction="column" justify-content="center" align-items="normal" component-padding="0.3" opacity="0.8" width="3.5" height="4.5" panel-color="#072B73" panel-rounded="0.2" position="6 8 -10" rotation="0 -15 0">
 
-            <a-gui-label width="2.5" height="0.75" value="Applied Displacement" font-size="0.35" line-height="0.8" margin="0 0 0.05 0" position="0 0 0">
+            <a-gui-label width="2.5" height="0.75" value="Applied Displacement" font-size="0.35" line-height="0.8" position="0 0 0">
             </a-gui-label>
 
-            <a-gui-slider width="2.5" height="0.75" onclick="update_applied_displacement" percent="0.1" margin="0 0 0.1 0" position="0 0 0.1"></a-gui-slider>
+            <a-gui-slider width="2.5" height="0.75" onclick="update_applied_displacement" percent="0.1" position="0 0 0.1"></a-gui-slider>
 
-            <a-gui-label width="2.5" height="0.75" value="Load Position" font-size="0.35" line-height="0.8" margin="0 0 0.05 0" position="0 0 0">
-            </a-gui-label>
-
-            <a-gui-slider width="2.5" height="0.75" onclick="update_load_position" percent="0.1" margin="0 0 0.1 0" position="0 1 0.1"></a-gui-slider>
+           
 
         </a-gui-flex-container>
     </a-scene>
