@@ -16,12 +16,73 @@ let params = {
 }
 let pin_radius;
 pin_radius = 1;
+let font;
+let BMD,SFD,box;
 
 let beam_offset = new THREE.Vector3(0, 4, -10);
+let scene;
+let lut;
+// let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
+// let cooltowarm = new THREE.Lut('cooltowarm', 512); // options are rainbow, cooltowarm and blackbody
+var cooltowarm = {};
+
+// Define the color map
+cooltowarm.colorMap = [
+  [0, 0, 1],   // Blue
+  [1, 1, 1],   // White
+  [1, 0, 0]    // Red
+];
+
+// Define the min and max values for the LUT
+cooltowarm.minValue = 0;
+cooltowarm.maxValue = 1;
+
+// Define a function to set the min value for the LUT
+cooltowarm.setMin = function(minValue) {
+  this.minValue = minValue;
+};
+
+// Define a function to set the max value for the LUT
+cooltowarm.setMax = function(maxValue) {
+  this.maxValue = maxValue;
+};
+
+// Define a function to get the color value for a given index
+cooltowarm.getColor = function(index) {
+  if (typeof index !== 'number') {
+    console.error('Invalid index: ' + index);
+    return null;
+  }
+  if (this.colorMap.length === 0) {
+    console.error('Color map is empty');
+    return null;
+  }
+  if (isNaN(index)) {
+    index = 0;
+  }
+
+  var colorIndex = Math.floor((index - this.minValue) / (this.maxValue - this.minValue) * (this.colorMap.length - 1));
+  if (colorIndex < 0 || colorIndex >= this.colorMap.length) {
+    return {
+      isColor: true,
+      r: 1,
+      g: 1,
+      b: 1
+    };
+  }
+  return {
+    isColor: true,
+    r: this.colorMap[colorIndex][0],
+    g: this.colorMap[colorIndex][1],
+    b: this.colorMap[colorIndex][2]
+  };
+};
+
+
 
 window.onload = function() {
 
-    const scene = document.querySelector('a-scene');
+    scene = document.querySelector('a-scene');
     const entity = document.createElement('a-entity');
     const group = new THREE.Group();
 
@@ -187,15 +248,23 @@ function update_beam_depth(click,percent) {
 
 function update_applied_displacement(click, percent) {
   percent = (percent * 0.5).toFixed(4);
-  params.height = percent;
+  params.displacement.y = percent;
   console.log(percent)
+
+  document.getElementById('beam').setAttribute('beam', {
+    applied_displacement: params.displacement.y,
+});
 
 }
 
 function update_load_position(click, percent) {
   percent = ((percent * (20 - 1)) + 1).toFixed(2);
-  params.height = percent;
+  params.load_position = percent;
   console.log(percent)
+
+  document.getElementById('beam').setAttribute('beam', {
+    load_position: params.load_position,
+});
 
 }
 
@@ -219,11 +288,66 @@ function update_right(value) {
   });
 }
 
+function redraw_beam(beam) {
+  console.log("redraw beam")
+
+  updateDeformation(params);
+  beam.geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+  beam.geometry.attributes.position.needsUpdate = true;
+
+  if (params.colour_by === 'None') {
+      let colors = [];
+      for (let i = 0; i < shear_force.length; i++) {
+          colors.push(1, 1, 1);
+      }
+
+      beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+      beam.geometry.attributes.color.needsUpdate = true;
+      beam.material.needsUpdate = true;
+  } else {
+      let arr, max_val;
+      if (params.colour_by === 'Bending Moment') {
+          arr = bending_moment;
+          lut = cooltowarm;
+          max_val = M_max;
+      }
+      else if (params.colour_by === 'Shear Force') {
+          arr = shear_force;
+          lut = cooltowarm;
+          max_val = SF_max;
+      }
+      const colors = [];
+
+      if (max_val > 0) {
+          lut.setMin(-max_val);
+          lut.setMax(max_val);
+          for (let i = 0; i < arr.length; i++) {
+              const colorValue = arr[i];
+              const color = lut.getColor(colorValue);
+              console.log(color)
+              colors.push(color.r, color.g, color.b);
+          }
+      } else {
+          for (let i = 0; i < arr.length; i++) {
+              colors.push(0, 0, 0);
+          }
+      }
+      console.log(colors)
+      beam.geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+      beam.geometry.attributes.color.needsUpdate = true;
+      beam.material.needsUpdate = true;
+
+  }
+
+}
+
 AFRAME.registerComponent('beam', {
     schema: {
         length: { type: 'number', default: params.length },
         height: { type: 'number', default: params.height },
         depth: { type: 'number', default: params.depth },
+        applied_displacement: { type: 'number', default: params.displacement.y },
+        load_position: { type: 'number', default: params.load_position },
     },
 
     /**
@@ -233,7 +357,7 @@ AFRAME.registerComponent('beam', {
         var data = this.data;
         var el = this.el;
         // Create geometry.
-        this.geometry = new THREE.BoxGeometry(1, 1, 1, params.np, 1, 1);
+        this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
 
         // Create material.
         this.material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: true });
@@ -246,8 +370,7 @@ AFRAME.registerComponent('beam', {
         const type = 'beam';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
 
-        set_initial_position(this.mesh.geometry.vertices);
-
+        set_initial_position(this.mesh.geometry.attributes.position.array);
         // Set mesh on entity.
         el.setObject3D('mesh', this.mesh);
     },
@@ -259,7 +382,7 @@ AFRAME.registerComponent('beam', {
         params.length = data.length
         params.height = data.height
         params.depth = data.depth
-        updateDeformation(params);
+        redraw_beam(this.mesh);
 
     },
 
@@ -280,8 +403,8 @@ AFRAME.registerComponent('right_support', {
         var data = this.data;
         var el = this.el;
 
-        let pin_geometry = new THREE.CylinderGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
-        let fixed_geometry = new THREE.BoxGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
+        let pin_geometry = new THREE.CylinderBufferGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
+        let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
         let support_material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: false });
 
         if (data.support_type == 'Pin') {
@@ -314,8 +437,8 @@ AFRAME.registerComponent('right_support', {
         var data = this.data;
         var el = this.el;
 
-        let pin_geometry = new THREE.CylinderGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
-        let fixed_geometry = new THREE.BoxGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
+        let pin_geometry = new THREE.CylinderBufferGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
+        let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
         let support_material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: false });
 
         if (data.support_type == 'Pin') {
@@ -343,7 +466,7 @@ AFRAME.registerComponent('right_support', {
         this.mesh.userData.type = 'right_support'; // this sets up interaction group for controllers
         // Set mesh on entity.
         el.setObject3D('mesh', this.mesh);
-        updateDeformation(params);
+        // updateDeformation(params);
 
     },
 });
@@ -363,8 +486,8 @@ AFRAME.registerComponent('left_support', {
         var data = this.data;
         var el = this.el;
 
-        let pin_geometry = new THREE.CylinderGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
-        let fixed_geometry = new THREE.BoxGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
+        let pin_geometry = new THREE.CylinderBufferGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
+        let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
         let support_material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: false });
 
         if (data.support_type == 'Pin') {
@@ -397,8 +520,8 @@ AFRAME.registerComponent('left_support', {
         var data = this.data;
         var el = this.el;
 
-        let pin_geometry = new THREE.CylinderGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
-        let fixed_geometry = new THREE.BoxGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
+        let pin_geometry = new THREE.CylinderBufferGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
+        let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
         let support_material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: false });
 
         if (data.support_type == 'Pin') {
@@ -429,24 +552,9 @@ AFRAME.registerComponent('left_support', {
     }
 });
 
-AFRAME.registerComponent('bend', {
-    schema: {
 
-    },
-
-    init: function() {
-        // Do something when component first attached.
-    },
-
-    update: function() {
-        // Do something when component's data is updated.
-    },
-
-    remove: function() {
-        // Do something the component or its entity is detached.
-    },
-
-    tick: function(time, timeDelta) {
-        // Do something on every scene tick or frame.
-    }
-});
+function animate() {
+  requestAnimationFrame( animate );
+  render();
+  controls.update();
+}
