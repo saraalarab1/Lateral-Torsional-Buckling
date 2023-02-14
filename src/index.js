@@ -125,10 +125,10 @@ window.onload = function() {
         lengthSlider.setAttribute("id", "lengthSlider");
         lengthSlider.setAttribute("width", "2.5");
         lengthSlider.setAttribute("height", "0.75");
-        lengthSlider.setAttribute("onclick", update_beam_length);
+        lengthSlider.setAttribute("slider-length","");
         lengthSlider.setAttribute("percent",(params.length - 6) / (50 - 5));
         lengthSlider.setAttribute("position", "0 0 0.1");
-
+    // lengthSlider.addEventListener('onChange', update_beam_length())
     let heightLabel = document.createElement("a-gui-label");
         heightLabel.setAttribute("width", "2.5");
         heightLabel.setAttribute("height", "0.75");
@@ -358,6 +358,32 @@ function redraw_beam(beam) {
   }
 
 }
+
+AFRAME.registerComponent('slider-length',{
+    init: function () {
+
+    console.log("***")
+    // Get the target element to add the listener to
+    const el = this.el;
+
+    // Add the onchange listener to the target element
+    // el.addEventListener('onClick', function (event) {
+    //     console.log("***")
+    //     var percent = el.getAttribute('percent');
+    //     console.log('Slider value changed to ' + percent);
+    // });
+
+    
+    },
+    update: function(){
+        const el = this.el;
+
+        console.log("***")
+        var percent = el.getAttribute('percent');
+        console.log('Slider value changed to ' + percent);
+    }
+   
+})
 
 AFRAME.registerComponent('beam', {
     schema: {
