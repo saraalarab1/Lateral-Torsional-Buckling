@@ -1,5 +1,6 @@
 import * as PHYSICS from './physics.js';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
+import {getDevice, isPhone} from './device'
 
 let beamLength = 20;
 
@@ -34,6 +35,35 @@ window.onload = function() {
     scene = document.querySelector('a-scene');
     const entity = document.createElement('a-entity');
     const group = new THREE.Group();
+
+    const camera = document.createElement("a-entity");
+    camera.setAttribute("camera", "");
+    var device = getDevice();
+    if (device === "Desktop" || device === "Mobile") {
+
+        camera.setAttribute("position", "0 5 0.3");
+        camera.setAttribute("look-controls", "pointerLockEnabled: false;");
+        camera.setAttribute("wasd-controls", "acceleration: 200");
+        var cursorEntity = document.createElement("a-cursor");
+        cursorEntity.setAttribute("cursor", "");
+        cursorEntity.setAttribute("position", "0 0 -0.1");
+        cursorEntity.setAttribute(
+        "geometry",
+        `primitive: sphere; radius: ${isPhone() ? "0.001" : "0.0006"}`
+        );
+        cursorEntity.setAttribute(
+        "material",
+        "color: #000; shader: flat; opacity: 0.6"
+        );
+        cursorEntity.setAttribute("raycaster", "showLine: true");
+        camera.appendChild(cursorEntity);
+        
+    }
+    else {
+        camera.setAttribute("orbit-controls", "target: 0 1 -0.6; initialPosition: -0.5 1.4 0.3; minDistance: -0.01")
+    }
+    console.log(camera)
+    scene.appendChild(camera)
 
     // Create the left_support entity
     const leftSupport = document.createElement('a-entity');
