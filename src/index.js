@@ -1,3 +1,5 @@
+import * as PHYSICS from './physics.js';
+
 let beamLength = 20;
 
 let params = {
@@ -123,7 +125,7 @@ window.onload = function() {
         lengthSlider.setAttribute("id", "lengthSlider");
         lengthSlider.setAttribute("width", "2.5");
         lengthSlider.setAttribute("height", "0.75");
-        lengthSlider.setAttribute("onclick", "update_beam_length");
+        lengthSlider.setAttribute("onclick", update_beam_length);
         lengthSlider.setAttribute("percent",(params.length - 6) / (50 - 5));
         lengthSlider.setAttribute("position", "0 0 0.1");
 
@@ -139,7 +141,7 @@ window.onload = function() {
         heightSlider.setAttribute("id", "heightSlider");
         heightSlider.setAttribute("width", "2.5");
         heightSlider.setAttribute("height", "0.75");
-        heightSlider.setAttribute("onclick", "update_beam_height");
+        heightSlider.setAttribute("onclick", update_beam_height);
         heightSlider.setAttribute("percent", (params.height - 0.2) / (1.5 - 0.1));
         heightSlider.setAttribute("position", "0 1 0.1");
 
@@ -156,7 +158,7 @@ window.onload = function() {
         depthSlider.setAttribute("id", "depthSlider");
         depthSlider.setAttribute("width", "2.5");
         depthSlider.setAttribute("height", "0.75");
-        depthSlider.setAttribute("onclick", "update_beam_depth");
+        depthSlider.setAttribute("onclick", update_beam_depth);
         depthSlider.setAttribute("percent", params.depth);
         depthSlider.setAttribute("position", "0 -2 0.1");
 
@@ -181,7 +183,7 @@ window.onload = function() {
         loadPositionSlider.setAttribute("id", "depthSlider");
         loadPositionSlider.setAttribute("width", "2.5");
         loadPositionSlider.setAttribute("height", "0.75");
-        loadPositionSlider.setAttribute("onclick", "update_load_position");
+        loadPositionSlider.setAttribute("onclick", update_load_position);
         loadPositionSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
         loadPositionSlider.setAttribute("position", "0 1 0.1");
 
@@ -190,7 +192,7 @@ window.onload = function() {
 
 }
 
-function update_beam_length(click, percent) {
+export function update_beam_length(click, percent) {
   percent = ((percent * (50 - 5)) + 5).toFixed(1);
   params.length = percent;
   console.log(percent)
@@ -215,7 +217,7 @@ function update_beam_length(click, percent) {
     document.getElementById('beam').setAttribute('percent', params.length);
 }
 
-function update_beam_height(click,percent) {
+export function update_beam_height(click,percent) {
   percent = ((percent * (1.5 - 0.1)) + 0.1).toFixed(1);
   params.height = percent;
   console.log(percent)
@@ -239,7 +241,7 @@ function update_beam_height(click,percent) {
     });
 }
 
-function update_beam_depth(click,percent) {
+export function update_beam_depth(click,percent) {
     percent = percent.toFixed(2);
     params.depth = percent;
     console.log(percent)
@@ -264,7 +266,7 @@ function update_beam_depth(click,percent) {
 }
 
 
-function update_applied_displacement(click, percent) {
+export function update_applied_displacement(click, percent) {
   percent = (percent * 0.5).toFixed(4);
   params.displacement.y = percent;
   console.log(percent)
@@ -275,7 +277,7 @@ function update_applied_displacement(click, percent) {
 
 }
 
-function update_load_position(click, percent) {
+export function update_load_position(click, percent) {
   percent = ((percent * (20 - 1)) + 1).toFixed(2);
   params.load_position = percent;
   console.log(percent)
@@ -286,7 +288,7 @@ function update_load_position(click, percent) {
 
 }
 
-function update_left(value) {
+export function update_left(value) {
   params.left = value;
   document.getElementById('left_support').setAttribute('left_support', {
       support_type: params.left,
@@ -296,7 +298,7 @@ function update_left(value) {
   });
 }
 
-function update_right(value) {
+export function update_right(value) {
   params.right = value;
   document.getElementById('right_support').setAttribute('right_support', {
       support_type: params.right,
@@ -309,13 +311,13 @@ function update_right(value) {
 function redraw_beam(beam) {
   console.log("redraw beam")
 
-  updateDeformation(params);
-  beam.geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+  PHYSICS.updateDeformation(params);
+  beam.geometry.addAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
   beam.geometry.attributes.position.needsUpdate = true;
 
   if (params.colour_by === 'None') {
       let colors = [];
-      for (let i = 0; i < shear_force.length; i++) {
+      for (let i = 0; i < PHYSICS.shear_force.length; i++) {
           colors.push(1, 1, 1);
       }
 
@@ -325,14 +327,14 @@ function redraw_beam(beam) {
   } else {
       let arr, max_val;
       if (params.colour_by === 'Bending Moment') {
-          arr = bending_moment;
+          arr = PHYSICS.bending_moment;
           lut = cooltowarm;
-          max_val = M_max;
+          max_val = PHYSICS.M_max;
       }
       else if (params.colour_by === 'Shear Force') {
-          arr = shear_force;
+          arr = PHYSICS.shear_force;
           lut = cooltowarm;
-          max_val = SF_max;
+          max_val = PHYSICS.SF_max;
       }
       const colors = [];
 
@@ -386,7 +388,7 @@ AFRAME.registerComponent('beam', {
         const type = 'beam';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
 
-        set_initial_position(this.mesh.geometry.attributes.position.array);
+        PHYSICS.set_initial_position(this.mesh.geometry.attributes.position.array);
         // Set mesh on entity.
         el.setObject3D('mesh', this.mesh);
     },

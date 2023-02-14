@@ -7,13 +7,12 @@
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/lodash@4.16.6"></script>
 
 </head>
 
 <body>
-    <script src="index.js"></script>
-    <script src="physics.js"></script>
-    <script src="ui.js"></script>
+    <script src="./src/index.js"></script>
 
     <a-scene gui-env>
 
@@ -63,8 +62,6 @@
             </a-gui-label>
 
             <a-gui-slider width="2.5" height="0.75" onclick="update_applied_displacement" percent="0.1" position="0 0 0.1"></a-gui-slider>
-
-           
 
         </a-gui-flex-container>
     </a-scene>
