@@ -31,7 +31,7 @@ jspm_packages/
 .next
 
 # dist
-dist/
+# dist/
 
 
 # vuepress build output
