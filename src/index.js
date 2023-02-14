@@ -20,15 +20,13 @@ let params = {
 let pin_radius;
 pin_radius = 1;
 let font;
-let BMD,SFD,box;
+let BMD, SFD, box;
 
 let beam_offset = new THREE.Vector3(0, 4, -10);
 let scene;
 let lut;
 let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
 // let cooltowarm = new THREE.Lut('cooltowarm', 512); // options are rainbow, cooltowarm and blackbody
-
-
 
 
 window.onload = function() {
@@ -66,13 +64,13 @@ window.onload = function() {
     scene.appendChild(entity);
 
     let flexContainer = document.querySelector("#dimensions");
-    
+
     let lengthLabel = document.createElement("a-gui-label");
-        lengthLabel.setAttribute("width", "2.5");
-        lengthLabel.setAttribute("height", "0.75");
-        lengthLabel.setAttribute("value", "Length");
-        lengthLabel.setAttribute("font-size", "0.35");
-        lengthLabel.setAttribute("line-height", "0.8");
+    lengthLabel.setAttribute("width", "2.5");
+    lengthLabel.setAttribute("height", "0.75");
+    lengthLabel.setAttribute("value", "Length");
+    lengthLabel.setAttribute("font-size", "0.35");
+    lengthLabel.setAttribute("line-height", "0.8");
 
     let lengthSlider = document.createElement("a-gui-slider");
         lengthSlider.setAttribute("id", "lengthSlider");
@@ -83,37 +81,37 @@ window.onload = function() {
         lengthSlider.setAttribute("position", "0 0 0.1");
 
     let heightLabel = document.createElement("a-gui-label");
-        heightLabel.setAttribute("width", "2.5");
-        heightLabel.setAttribute("height", "0.75");
-        heightLabel.setAttribute("value", "Height");
-        heightLabel.setAttribute("font-size", "0.35");
-        heightLabel.setAttribute("line-height", "0.8");
-        heightLabel.setAttribute("position", "0 0 0");
+    heightLabel.setAttribute("width", "2.5");
+    heightLabel.setAttribute("height", "0.75");
+    heightLabel.setAttribute("value", "Height");
+    heightLabel.setAttribute("font-size", "0.35");
+    heightLabel.setAttribute("line-height", "0.8");
+    heightLabel.setAttribute("position", "0 0 0");
 
     let heightSlider = document.createElement("a-gui-slider");
-        heightSlider.setAttribute("id", "heightSlider");
-        heightSlider.setAttribute("width", "2.5");
-        heightSlider.setAttribute("height", "0.75");
-        heightSlider.setAttribute("onclick", "update_beam_height");
-        heightSlider.setAttribute("percent", (params.height - 0.2) / (1.5 - 0.1));
-        heightSlider.setAttribute("position", "0 1 0.1");
+    heightSlider.setAttribute("id", "heightSlider");
+    heightSlider.setAttribute("width", "2.5");
+    heightSlider.setAttribute("height", "0.75");
+    heightSlider.setAttribute("onclick", "update_beam_height");
+    heightSlider.setAttribute("percent", (params.height - 0.2) / (1.5 - 0.1));
+    heightSlider.setAttribute("position", "0 1 0.1");
 
-          
+
     let depthLabel = document.createElement("a-gui-label");
-        depthLabel.setAttribute("width", "2.5");
-        depthLabel.setAttribute("height", "0.75");
-        depthLabel.setAttribute("value", "Depth");
-        depthLabel.setAttribute("font-size", "0.35");
-        depthLabel.setAttribute("line-height", "0.8");
-        depthLabel.setAttribute("position", "0 0 0");
+    depthLabel.setAttribute("width", "2.5");
+    depthLabel.setAttribute("height", "0.75");
+    depthLabel.setAttribute("value", "Depth");
+    depthLabel.setAttribute("font-size", "0.35");
+    depthLabel.setAttribute("line-height", "0.8");
+    depthLabel.setAttribute("position", "0 0 0");
 
     let depthSlider = document.createElement("a-gui-slider");
-        depthSlider.setAttribute("id", "depthSlider");
-        depthSlider.setAttribute("width", "2.5");
-        depthSlider.setAttribute("height", "0.75");
-        depthSlider.setAttribute("onclick", "update_beam_depth");
-        depthSlider.setAttribute("percent", params.depth);
-        depthSlider.setAttribute("position", "0 -2 0.1");
+    depthSlider.setAttribute("id", "depthSlider");
+    depthSlider.setAttribute("width", "2.5");
+    depthSlider.setAttribute("height", "0.75");
+    depthSlider.setAttribute("onclick", "update_beam_depth");
+    depthSlider.setAttribute("percent", params.depth);
+    depthSlider.setAttribute("position", "0 -2 0.1");
 
     flexContainer.appendChild(lengthLabel)
     flexContainer.appendChild(lengthSlider)
@@ -125,28 +123,28 @@ window.onload = function() {
     let flexContainer2 = document.querySelector("#load");
 
     let loadPositionLabel = document.createElement("a-gui-label");
-        loadPositionLabel.setAttribute("width", "2.5");
-        loadPositionLabel.setAttribute("height", "0.75");
-        loadPositionLabel.setAttribute("value", "Load Position");
-        loadPositionLabel.setAttribute("font-size", "0.35");
-        loadPositionLabel.setAttribute("line-height", "0.8");
-        loadPositionLabel.setAttribute("position", "0 0 0");
+    loadPositionLabel.setAttribute("width", "2.5");
+    loadPositionLabel.setAttribute("height", "0.75");
+    loadPositionLabel.setAttribute("value", "Load Position");
+    loadPositionLabel.setAttribute("font-size", "0.35");
+    loadPositionLabel.setAttribute("line-height", "0.8");
+    loadPositionLabel.setAttribute("position", "0 0 0");
 
     let loadPositionSlider = document.createElement("a-gui-slider");
-        loadPositionSlider.setAttribute("id", "depthSlider");
-        loadPositionSlider.setAttribute("width", "2.5");
-        loadPositionSlider.setAttribute("height", "0.75");
-        loadPositionSlider.setAttribute("onclick", "update_load_position");
-        loadPositionSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
-        loadPositionSlider.setAttribute("position", "0 1 0.1");
+    loadPositionSlider.setAttribute("id", "depthSlider");
+    loadPositionSlider.setAttribute("width", "2.5");
+    loadPositionSlider.setAttribute("height", "0.75");
+    loadPositionSlider.setAttribute("onclick", "update_load_position");
+    loadPositionSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
+    loadPositionSlider.setAttribute("position", "0 1 0.1");
 
     flexContainer2.appendChild(loadPositionLabel)
     flexContainer2.appendChild(loadPositionSlider)
-
 }
 
 window.update_beam_length= function(click, percent) {
   percent = ((percent * (50 - 5)) + 5).toFixed(1);
+  params.load_position = params.load_position * percent / params.length;
   params.length = percent;
   console.log(percent)
 
@@ -168,6 +166,7 @@ window.update_beam_length= function(click, percent) {
         depth: params.depth,
     });
     document.getElementById('beam').setAttribute('percent', params.length);
+    update_all_functions();
 }
 
 window.update_beam_height= function(click,percent) {
@@ -192,6 +191,16 @@ window.update_beam_height= function(click,percent) {
         height: params.height,
         depth: params.depth,
     });
+    update_all_functions();
+    animate();
+}
+
+function update_all_functions() {
+    update_beam_depth();
+    update_beam_height();
+    update_beam_length();
+    update_applied_displacement();
+    update_load_position();
 }
 
 window.update_beam_depth = function(click,percent) {
@@ -224,20 +233,20 @@ window.update_applied_displacement = function(click, percent) {
   params.displacement.y = percent;
   console.log(percent)
 
-  document.getElementById('beam').setAttribute('beam', {
-    applied_displacement: params.displacement.y,
-});
+    document.getElementById('beam').setAttribute('beam', {
+        applied_displacement: params.displacement.y,
+    });
 
 }
 
 window.update_load_position = function(click, percent) {
-  percent = ((percent * (20 - 1)) + 1).toFixed(2);
+    percent = ((percent * (params.length - 1)) + 1).toFixed(2);
   params.load_position = percent;
   console.log(percent)
 
-  document.getElementById('beam').setAttribute('beam', {
-    load_position: params.load_position,
-});
+    document.getElementById('beam').setAttribute('beam', {
+        load_position: params.load_position,
+    });
 
 }
 
@@ -311,32 +320,6 @@ function redraw_beam(beam) {
   }
 
 }
-
-AFRAME.registerComponent('slider-length',{
-    init: function () {
-
-    console.log("***")
-    // Get the target element to add the listener to
-    const el = this.el;
-
-    // Add the onchange listener to the target element
-    // el.addEventListener('onClick', function (event) {
-    //     console.log("***")
-    //     var percent = el.getAttribute('percent');
-    //     console.log('Slider value changed to ' + percent);
-    // });
-
-    
-    },
-    update: function(){
-        const el = this.el;
-
-        console.log("***")
-        var percent = el.getAttribute('percent');
-        console.log('Slider value changed to ' + percent);
-    }
-   
-})
 
 AFRAME.registerComponent('beam', {
     schema: {
@@ -551,7 +534,6 @@ AFRAME.registerComponent('left_support', {
 
 
 function animate() {
-  requestAnimationFrame( animate );
-  render();
-  controls.update();
+    requestAnimationFrame(animate);
+    // controls.update();
 }
