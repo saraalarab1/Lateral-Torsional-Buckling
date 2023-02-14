@@ -1,4 +1,5 @@
 import * as PHYSICS from './physics.js';
+import { Lut } from 'three/examples/jsm/math/Lut.js';
 
 let beamLength = 20;
 
@@ -24,57 +25,9 @@ let BMD,SFD,box;
 let beam_offset = new THREE.Vector3(0, 4, -10);
 let scene;
 let lut;
-// let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
+let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
 // let cooltowarm = new THREE.Lut('cooltowarm', 512); // options are rainbow, cooltowarm and blackbody
-var cooltowarm = {};
 
-// Define the color map
-cooltowarm.colorMap = [
-  [0, 0, 1],   // Blue
-  [1, 1, 1],   // White
-  [1, 0, 0]    // Red
-];
-
-// Define the min and max values for the LUT
-cooltowarm.minValue = 0;
-cooltowarm.maxValue = 1;
-
-// Define a function to set the min value for the LUT
-cooltowarm.setMin = function(minValue) {
-  this.minValue = minValue;
-};
-
-// Define a function to set the max value for the LUT
-cooltowarm.setMax = function(maxValue) {
-  this.maxValue = maxValue;
-};
-
-// Define a function to get the color value for a given index
-cooltowarm.getColor = function(index) {
-  if (typeof index !== 'number') {
-    console.error('Invalid index: ' + index);
-    return null;
-  }
-  if (isNaN(index)) {
-    index = 0;
-  }
-
-  var colorIndex = Math.floor((index - this.minValue) / (this.maxValue - this.minValue) * (this.colorMap.length - 1));
-  if (colorIndex < 0 || colorIndex >= this.colorMap.length) {
-    return {
-      isColor: true,
-      r: 1,
-      g: 1,
-      b: 1
-    };
-  }
-  return {
-    isColor: true,
-    r: this.colorMap[colorIndex][0],
-    g: this.colorMap[colorIndex][1],
-    b: this.colorMap[colorIndex][2]
-  };
-};
 
 
 
@@ -125,10 +78,10 @@ window.onload = function() {
         lengthSlider.setAttribute("id", "lengthSlider");
         lengthSlider.setAttribute("width", "2.5");
         lengthSlider.setAttribute("height", "0.75");
-        lengthSlider.setAttribute("slider-length","");
+        lengthSlider.setAttribute("onclick","update_beam_length");
         lengthSlider.setAttribute("percent",(params.length - 6) / (50 - 5));
         lengthSlider.setAttribute("position", "0 0 0.1");
-    // lengthSlider.addEventListener('onChange', update_beam_length())
+
     let heightLabel = document.createElement("a-gui-label");
         heightLabel.setAttribute("width", "2.5");
         heightLabel.setAttribute("height", "0.75");
@@ -141,7 +94,7 @@ window.onload = function() {
         heightSlider.setAttribute("id", "heightSlider");
         heightSlider.setAttribute("width", "2.5");
         heightSlider.setAttribute("height", "0.75");
-        heightSlider.setAttribute("onclick", update_beam_height);
+        heightSlider.setAttribute("onclick", "update_beam_height");
         heightSlider.setAttribute("percent", (params.height - 0.2) / (1.5 - 0.1));
         heightSlider.setAttribute("position", "0 1 0.1");
 
@@ -158,7 +111,7 @@ window.onload = function() {
         depthSlider.setAttribute("id", "depthSlider");
         depthSlider.setAttribute("width", "2.5");
         depthSlider.setAttribute("height", "0.75");
-        depthSlider.setAttribute("onclick", update_beam_depth);
+        depthSlider.setAttribute("onclick", "update_beam_depth");
         depthSlider.setAttribute("percent", params.depth);
         depthSlider.setAttribute("position", "0 -2 0.1");
 
@@ -183,7 +136,7 @@ window.onload = function() {
         loadPositionSlider.setAttribute("id", "depthSlider");
         loadPositionSlider.setAttribute("width", "2.5");
         loadPositionSlider.setAttribute("height", "0.75");
-        loadPositionSlider.setAttribute("onclick", update_load_position);
+        loadPositionSlider.setAttribute("onclick", "update_load_position");
         loadPositionSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
         loadPositionSlider.setAttribute("position", "0 1 0.1");
 
@@ -192,7 +145,7 @@ window.onload = function() {
 
 }
 
-export function update_beam_length(click, percent) {
+window.update_beam_length= function(click, percent) {
   percent = ((percent * (50 - 5)) + 5).toFixed(1);
   params.length = percent;
   console.log(percent)
@@ -217,7 +170,7 @@ export function update_beam_length(click, percent) {
     document.getElementById('beam').setAttribute('percent', params.length);
 }
 
-export function update_beam_height(click,percent) {
+window.update_beam_height= function(click,percent) {
   percent = ((percent * (1.5 - 0.1)) + 0.1).toFixed(1);
   params.height = percent;
   console.log(percent)
@@ -241,7 +194,7 @@ export function update_beam_height(click,percent) {
     });
 }
 
-export function update_beam_depth(click,percent) {
+window.update_beam_depth = function(click,percent) {
     percent = percent.toFixed(2);
     params.depth = percent;
     console.log(percent)
@@ -266,7 +219,7 @@ export function update_beam_depth(click,percent) {
 }
 
 
-export function update_applied_displacement(click, percent) {
+window.update_applied_displacement = function(click, percent) {
   percent = (percent * 0.5).toFixed(4);
   params.displacement.y = percent;
   console.log(percent)
@@ -277,7 +230,7 @@ export function update_applied_displacement(click, percent) {
 
 }
 
-export function update_load_position(click, percent) {
+window.update_load_position = function(click, percent) {
   percent = ((percent * (20 - 1)) + 1).toFixed(2);
   params.load_position = percent;
   console.log(percent)
@@ -288,7 +241,7 @@ export function update_load_position(click, percent) {
 
 }
 
-export function update_left(value) {
+window.update_left = function(value) {
   params.left = value;
   document.getElementById('left_support').setAttribute('left_support', {
       support_type: params.left,
@@ -298,7 +251,7 @@ export function update_left(value) {
   });
 }
 
-export function update_right(value) {
+window.update_right = function(value) {
   params.right = value;
   document.getElementById('right_support').setAttribute('right_support', {
       support_type: params.right,
