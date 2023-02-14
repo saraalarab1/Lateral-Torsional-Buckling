@@ -17,7 +17,7 @@ let params = {
 let pin_radius;
 pin_radius = 1;
 let font;
-let BMD,SFD,box;
+let BMD, SFD, box;
 
 let beam_offset = new THREE.Vector3(0, 4, -10);
 let scene;
@@ -28,9 +28,9 @@ var cooltowarm = {};
 
 // Define the color map
 cooltowarm.colorMap = [
-  [0, 0, 1],   // Blue
-  [1, 1, 1],   // White
-  [1, 0, 0]    // Red
+    [0, 0, 1], // Blue
+    [1, 1, 1], // White
+    [1, 0, 0] // Red
 ];
 
 // Define the min and max values for the LUT
@@ -39,39 +39,39 @@ cooltowarm.maxValue = 1;
 
 // Define a function to set the min value for the LUT
 cooltowarm.setMin = function(minValue) {
-  this.minValue = minValue;
+    this.minValue = minValue;
 };
 
 // Define a function to set the max value for the LUT
 cooltowarm.setMax = function(maxValue) {
-  this.maxValue = maxValue;
+    this.maxValue = maxValue;
 };
 
 // Define a function to get the color value for a given index
 cooltowarm.getColor = function(index) {
-  if (typeof index !== 'number') {
-    console.error('Invalid index: ' + index);
-    return null;
-  }
-  if (isNaN(index)) {
-    index = 0;
-  }
+    if (typeof index !== 'number') {
+        console.error('Invalid index: ' + index);
+        return null;
+    }
+    if (isNaN(index)) {
+        index = 0;
+    }
 
-  var colorIndex = Math.floor((index - this.minValue) / (this.maxValue - this.minValue) * (this.colorMap.length - 1));
-  if (colorIndex < 0 || colorIndex >= this.colorMap.length) {
+    var colorIndex = Math.floor((index - this.minValue) / (this.maxValue - this.minValue) * (this.colorMap.length - 1));
+    if (colorIndex < 0 || colorIndex >= this.colorMap.length) {
+        return {
+            isColor: true,
+            r: 1,
+            g: 1,
+            b: 1
+        };
+    }
     return {
-      isColor: true,
-      r: 1,
-      g: 1,
-      b: 1
+        isColor: true,
+        r: this.colorMap[colorIndex][0],
+        g: this.colorMap[colorIndex][1],
+        b: this.colorMap[colorIndex][2]
     };
-  }
-  return {
-    isColor: true,
-    r: this.colorMap[colorIndex][0],
-    g: this.colorMap[colorIndex][1],
-    b: this.colorMap[colorIndex][2]
-  };
 };
 
 
@@ -111,54 +111,54 @@ window.onload = function() {
     scene.appendChild(entity);
 
     let flexContainer = document.querySelector("#dimensions");
-    
+
     let lengthLabel = document.createElement("a-gui-label");
-        lengthLabel.setAttribute("width", "2.5");
-        lengthLabel.setAttribute("height", "0.75");
-        lengthLabel.setAttribute("value", "Length");
-        lengthLabel.setAttribute("font-size", "0.35");
-        lengthLabel.setAttribute("line-height", "0.8");
+    lengthLabel.setAttribute("width", "2.5");
+    lengthLabel.setAttribute("height", "0.75");
+    lengthLabel.setAttribute("value", "Length");
+    lengthLabel.setAttribute("font-size", "0.35");
+    lengthLabel.setAttribute("line-height", "0.8");
 
     let lengthSlider = document.createElement("a-gui-slider");
-        lengthSlider.setAttribute("id", "lengthSlider");
-        lengthSlider.setAttribute("width", "2.5");
-        lengthSlider.setAttribute("height", "0.75");
-        lengthSlider.setAttribute("onclick", "update_beam_length");
-        lengthSlider.setAttribute("percent",(params.length - 6) / (50 - 5));
-        lengthSlider.setAttribute("position", "0 0 0.1");
+    lengthSlider.setAttribute("id", "lengthSlider");
+    lengthSlider.setAttribute("width", "2.5");
+    lengthSlider.setAttribute("height", "0.75");
+    lengthSlider.setAttribute("onclick", "update_beam_length");
+    lengthSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
+    lengthSlider.setAttribute("position", "0 0 0.1");
 
     let heightLabel = document.createElement("a-gui-label");
-        heightLabel.setAttribute("width", "2.5");
-        heightLabel.setAttribute("height", "0.75");
-        heightLabel.setAttribute("value", "Height");
-        heightLabel.setAttribute("font-size", "0.35");
-        heightLabel.setAttribute("line-height", "0.8");
-        heightLabel.setAttribute("position", "0 0 0");
+    heightLabel.setAttribute("width", "2.5");
+    heightLabel.setAttribute("height", "0.75");
+    heightLabel.setAttribute("value", "Height");
+    heightLabel.setAttribute("font-size", "0.35");
+    heightLabel.setAttribute("line-height", "0.8");
+    heightLabel.setAttribute("position", "0 0 0");
 
     let heightSlider = document.createElement("a-gui-slider");
-        heightSlider.setAttribute("id", "heightSlider");
-        heightSlider.setAttribute("width", "2.5");
-        heightSlider.setAttribute("height", "0.75");
-        heightSlider.setAttribute("onclick", "update_beam_height");
-        heightSlider.setAttribute("percent", (params.height - 0.2) / (1.5 - 0.1));
-        heightSlider.setAttribute("position", "0 1 0.1");
+    heightSlider.setAttribute("id", "heightSlider");
+    heightSlider.setAttribute("width", "2.5");
+    heightSlider.setAttribute("height", "0.75");
+    heightSlider.setAttribute("onclick", "update_beam_height");
+    heightSlider.setAttribute("percent", (params.height - 0.2) / (1.5 - 0.1));
+    heightSlider.setAttribute("position", "0 1 0.1");
 
-          
+
     let depthLabel = document.createElement("a-gui-label");
-        depthLabel.setAttribute("width", "2.5");
-        depthLabel.setAttribute("height", "0.75");
-        depthLabel.setAttribute("value", "Depth");
-        depthLabel.setAttribute("font-size", "0.35");
-        depthLabel.setAttribute("line-height", "0.8");
-        depthLabel.setAttribute("position", "0 0 0");
+    depthLabel.setAttribute("width", "2.5");
+    depthLabel.setAttribute("height", "0.75");
+    depthLabel.setAttribute("value", "Depth");
+    depthLabel.setAttribute("font-size", "0.35");
+    depthLabel.setAttribute("line-height", "0.8");
+    depthLabel.setAttribute("position", "0 0 0");
 
     let depthSlider = document.createElement("a-gui-slider");
-        depthSlider.setAttribute("id", "depthSlider");
-        depthSlider.setAttribute("width", "2.5");
-        depthSlider.setAttribute("height", "0.75");
-        depthSlider.setAttribute("onclick", "update_beam_depth");
-        depthSlider.setAttribute("percent", params.depth);
-        depthSlider.setAttribute("position", "0 -2 0.1");
+    depthSlider.setAttribute("id", "depthSlider");
+    depthSlider.setAttribute("width", "2.5");
+    depthSlider.setAttribute("height", "0.75");
+    depthSlider.setAttribute("onclick", "update_beam_depth");
+    depthSlider.setAttribute("percent", params.depth);
+    depthSlider.setAttribute("position", "0 -2 0.1");
 
     flexContainer.appendChild(lengthLabel)
     flexContainer.appendChild(lengthSlider)
@@ -170,30 +170,30 @@ window.onload = function() {
     let flexContainer2 = document.querySelector("#load");
 
     let loadPositionLabel = document.createElement("a-gui-label");
-        loadPositionLabel.setAttribute("width", "2.5");
-        loadPositionLabel.setAttribute("height", "0.75");
-        loadPositionLabel.setAttribute("value", "Load Position");
-        loadPositionLabel.setAttribute("font-size", "0.35");
-        loadPositionLabel.setAttribute("line-height", "0.8");
-        loadPositionLabel.setAttribute("position", "0 0 0");
+    loadPositionLabel.setAttribute("width", "2.5");
+    loadPositionLabel.setAttribute("height", "0.75");
+    loadPositionLabel.setAttribute("value", "Load Position");
+    loadPositionLabel.setAttribute("font-size", "0.35");
+    loadPositionLabel.setAttribute("line-height", "0.8");
+    loadPositionLabel.setAttribute("position", "0 0 0");
 
     let loadPositionSlider = document.createElement("a-gui-slider");
-        loadPositionSlider.setAttribute("id", "depthSlider");
-        loadPositionSlider.setAttribute("width", "2.5");
-        loadPositionSlider.setAttribute("height", "0.75");
-        loadPositionSlider.setAttribute("onclick", "update_load_position");
-        loadPositionSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
-        loadPositionSlider.setAttribute("position", "0 1 0.1");
+    loadPositionSlider.setAttribute("id", "depthSlider");
+    loadPositionSlider.setAttribute("width", "2.5");
+    loadPositionSlider.setAttribute("height", "0.75");
+    loadPositionSlider.setAttribute("onclick", "update_load_position");
+    loadPositionSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
+    loadPositionSlider.setAttribute("position", "0 1 0.1");
 
     flexContainer2.appendChild(loadPositionLabel)
     flexContainer2.appendChild(loadPositionSlider)
-
 }
 
 function update_beam_length(click, percent) {
-  percent = ((percent * (50 - 5)) + 5).toFixed(1);
-  params.length = percent;
-  console.log(percent)
+    percent = ((percent * (50 - 5)) + 5).toFixed(1);
+    params.load_position = params.load_position * percent / params.length;
+    params.length = percent;
+    console.log(percent)
 
     document.getElementById('beam').setAttribute('beam', {
         length: params.length,
@@ -213,12 +213,12 @@ function update_beam_length(click, percent) {
         depth: params.depth,
     });
     document.getElementById('beam').setAttribute('percent', params.length);
+    update_all_functions();
 }
 
-function update_beam_height(click,percent) {
-  percent = ((percent * (1.5 - 0.1)) + 0.1).toFixed(1);
-  params.height = percent;
-  console.log(percent)
+function update_beam_height(click, percent) {
+    percent = ((percent * (1.5 - 0.1)) + 0.1).toFixed(1);
+    params.height = percent;
 
     document.getElementById('beam').setAttribute('beam', {
         length: params.length,
@@ -237,9 +237,19 @@ function update_beam_height(click,percent) {
         height: params.height,
         depth: params.depth,
     });
+    update_all_functions();
+    animate();
 }
 
-function update_beam_depth(click,percent) {
+function update_all_functions() {
+    update_beam_depth();
+    update_beam_height();
+    update_beam_length();
+    update_applied_displacement();
+    update_load_position();
+}
+
+function update_beam_depth(click, percent) {
     percent = percent.toFixed(2);
     params.depth = percent;
     console.log(percent)
@@ -265,95 +275,97 @@ function update_beam_depth(click,percent) {
 
 
 function update_applied_displacement(click, percent) {
-  percent = (percent * 0.5).toFixed(4);
-  params.displacement.y = percent;
-  console.log(percent)
+    percent = (percent * 0.5).toFixed(4);
+    params.displacement.y = percent;
+    console.log(percent)
 
-  document.getElementById('beam').setAttribute('beam', {
-    applied_displacement: params.displacement.y,
-});
+    document.getElementById('beam').setAttribute('beam', {
+        applied_displacement: params.displacement.y,
+    });
 
 }
 
 function update_load_position(click, percent) {
-  percent = ((percent * (20 - 1)) + 1).toFixed(2);
-  params.load_position = percent;
-  console.log(percent)
+    percent = ((percent * (params.length - 1)) + 1).toFixed(2);
+    params.load_position = percent;
+    console.log(percent)
 
-  document.getElementById('beam').setAttribute('beam', {
-    load_position: params.load_position,
-});
+    document.getElementById('beam').setAttribute('beam', {
+        load_position: params.load_position,
+    });
 
 }
 
 function update_left(value) {
-  params.left = value;
-  document.getElementById('left_support').setAttribute('left_support', {
-      support_type: params.left,
-      length: params.length,
-      height: params.height,
-      depth: params.depth,
-  });
+    params.left = value;
+    document.getElementById('left_support').setAttribute('left_support', {
+        support_type: params.left,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
 }
 
 function update_right(value) {
-  params.right = value;
-  document.getElementById('right_support').setAttribute('right_support', {
-      support_type: params.right,
-      length: params.length,
-      height: params.height,
-      depth: params.depth,
-  });
+    params.right = value;
+    document.getElementById('right_support').setAttribute('right_support', {
+        support_type: params.right,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
 }
 
 function redraw_beam(beam) {
-  console.log("redraw beam")
+    console.log("redraw beam");
 
-  updateDeformation(params);
-  beam.geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
-  beam.geometry.attributes.position.needsUpdate = true;
+    updateDeformation(params);
+    beam.geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+    beam.geometry.attributes.position.needsUpdate = true;
 
-  if (params.colour_by === 'None') {
-      let colors = [];
-      for (let i = 0; i < shear_force.length; i++) {
-          colors.push(1, 1, 1);
-      }
+    if (params.colour_by === 'None') {
+        let colors = [];
+        for (let i = 0; i < shear_force.length; i++) {
+            colors.push(1, 1, 1);
+        }
 
-      beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-      beam.geometry.attributes.color.needsUpdate = true;
-      beam.material.needsUpdate = true;
-  } else {
-      let arr, max_val;
-      if (params.colour_by === 'Bending Moment') {
-          arr = bending_moment;
-          lut = cooltowarm;
-          max_val = M_max;
-      }
-      else if (params.colour_by === 'Shear Force') {
-          arr = shear_force;
-          lut = cooltowarm;
-          max_val = SF_max;
-      }
-      const colors = [];
+        beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        beam.geometry.attributes.color.needsUpdate = true;
+        beam.material.needsUpdate = true;
+    } else {
+        let arr, max_val;
+        if (params.colour_by === 'Bending Moment') {
+            arr = bending_moment;
+            lut = cooltowarm;
+            max_val = M_max;
+        } else if (params.colour_by === 'Shear Force') {
+            arr = shear_force;
+            lut = cooltowarm;
+            max_val = SF_max;
+        }
+        const colors = [];
+        console.log(params.colour_by);
+        console.log(arr);
+        console.log(max_val);
+        if (max_val > 0) {
+            lut.setMin(-max_val);
+            lut.setMax(max_val);
+            for (let i = 0; i < arr.length; i++) {
+                const colorValue = arr[i];
+                const color = lut.getColor(colorValue);
+                colors.push(color.r, color.g, color.b);
+                console.log(color.r, color.g, color.b);
+            }
+        } else {
+            for (let i = 0; i < arr.length; i++) {
+                colors.push(0, 0, 0);
+            }
+        }
+        beam.geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        beam.geometry.attributes.color.needsUpdate = true;
+        beam.material.needsUpdate = true;
 
-      if (max_val > 0) {
-          lut.setMin(-max_val);
-          lut.setMax(max_val);
-          for (let i = 0; i < arr.length; i++) {
-              const colorValue = arr[i];
-              const color = lut.getColor(colorValue);
-              colors.push(color.r, color.g, color.b);
-          }
-      } else {
-          for (let i = 0; i < arr.length; i++) {
-              colors.push(0, 0, 0);
-          }
-      }
-      beam.geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-      beam.geometry.attributes.color.needsUpdate = true;
-      beam.material.needsUpdate = true;
-
-  }
+    }
 
 }
 
@@ -570,7 +582,6 @@ AFRAME.registerComponent('left_support', {
 
 
 function animate() {
-  requestAnimationFrame( animate );
-  render();
-  controls.update();
+    requestAnimationFrame(animate);
+    // controls.update();
 }
