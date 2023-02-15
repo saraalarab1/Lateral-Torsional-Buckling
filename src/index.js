@@ -579,7 +579,12 @@ AFRAME.registerComponent('left_support', {
     }
 });
 
-
+AFRAME.utils.device.checkHeadsetConnected = function() {
+    if (AFRAME.utils.device.isMobile()) {
+      return false; // Disable HTTPS on mobile devices
+    }
+    return true;
+  };
 function animate() {
     requestAnimationFrame(animate);
     // controls.update();
