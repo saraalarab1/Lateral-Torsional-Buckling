@@ -1,6 +1,6 @@
 import * as PHYSICS from './physics.js';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
-import {getDevice, isPhone} from './device'
+import { getDevice, isPhone } from './device'
 
 let beamLength = 20;
 
@@ -39,6 +39,7 @@ window.onload = function() {
     const camera = document.createElement("a-entity");
     camera.setAttribute("camera", "");
     var device = getDevice();
+    console.log('device is: ' + device);
     if (device === "Desktop" || device === "Mobile") {
 
         camera.setAttribute("position", "0 5 0.3");
@@ -48,19 +49,26 @@ window.onload = function() {
         cursorEntity.setAttribute("cursor", "");
         cursorEntity.setAttribute("position", "0 0 -0.1");
         cursorEntity.setAttribute(
-        "geometry",
-        `primitive: sphere; radius: ${isPhone() ? "0.001" : "0.0006"}`
+            "geometry",
+            `primitive: sphere; radius: ${isPhone() ? "0.001" : "0.0006"}`
         );
         cursorEntity.setAttribute(
-        "material",
-        "color: #000; shader: flat; opacity: 0.6"
+            "material",
+            "color: #000; shader: flat; opacity: 0.6"
         );
         cursorEntity.setAttribute("raycaster", "showLine: true");
         camera.appendChild(cursorEntity);
-        
-    }
-    else {
+
+    } else {
         camera.setAttribute("orbit-controls", "target: 0 1 -0.6; initialPosition: -0.5 1.4 0.3; minDistance: -0.01")
+        var entity_control_left = document.createElement('a-entity');
+        entity_control_left.setAttribute('oculus-touch-controls', "hand:left");
+        var entity_control_right = document.createElement('a-entity');
+        entity_control_right.setAttribute('oculus-touch-controls', "hand: right");
+        var laser_left = document.createElement('a-entity');
+        laser_left.setAttribute('laser-controls', "hand: right");
+        var laser_right = document.createElement('a-entity');
+        laser_right.setAttribute('laser-controls', "hand: left");
     }
     console.log(camera)
     scene.appendChild(camera)
@@ -103,12 +111,12 @@ window.onload = function() {
     lengthLabel.setAttribute("line-height", "0.8");
 
     let lengthSlider = document.createElement("a-gui-slider");
-        lengthSlider.setAttribute("id", "lengthSlider");
-        lengthSlider.setAttribute("width", "2.5");
-        lengthSlider.setAttribute("height", "0.75");
-        lengthSlider.setAttribute("onclick","update_beam_length");
-        lengthSlider.setAttribute("percent",(params.length - 6) / (50 - 5));
-        lengthSlider.setAttribute("position", "0 0 0.1");
+    lengthSlider.setAttribute("id", "lengthSlider");
+    lengthSlider.setAttribute("width", "2.5");
+    lengthSlider.setAttribute("height", "0.75");
+    lengthSlider.setAttribute("onclick", "update_beam_length");
+    lengthSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
+    lengthSlider.setAttribute("position", "0 0 0.1");
 
     let heightLabel = document.createElement("a-gui-label");
     heightLabel.setAttribute("width", "2.5");
@@ -172,11 +180,11 @@ window.onload = function() {
     flexContainer2.appendChild(loadPositionSlider)
 }
 
-window.update_beam_length= function(click, percent) {
-  percent = ((percent * (50 - 5)) + 5).toFixed(1);
-  params.load_position = params.load_position * percent / params.length;
-  params.length = percent;
-  console.log(percent)
+window.update_beam_length = function(click, percent) {
+    percent = ((percent * (50 - 5)) + 5).toFixed(1);
+    params.load_position = params.load_position * percent / params.length;
+    params.length = percent;
+    console.log(percent)
 
     document.getElementById('beam').setAttribute('beam', {
         length: params.length,
@@ -199,10 +207,10 @@ window.update_beam_length= function(click, percent) {
     update_all_functions();
 }
 
-window.update_beam_height= function(click,percent) {
-  percent = ((percent * (1.5 - 0.1)) + 0.1).toFixed(1);
-  params.height = percent;
-  console.log(percent)
+window.update_beam_height = function(click, percent) {
+    percent = ((percent * (1.5 - 0.1)) + 0.1).toFixed(1);
+    params.height = percent;
+    console.log(percent)
 
     document.getElementById('beam').setAttribute('beam', {
         length: params.length,
@@ -233,7 +241,7 @@ function update_all_functions() {
     update_load_position();
 }
 
-window.update_beam_depth = function(click,percent) {
+window.update_beam_depth = function(click, percent) {
     percent = percent.toFixed(2);
     params.depth = percent;
     console.log(percent)
@@ -259,9 +267,9 @@ window.update_beam_depth = function(click,percent) {
 
 
 window.update_applied_displacement = function(click, percent) {
-  percent = (percent * 0.5).toFixed(4);
-  params.displacement.y = percent;
-  console.log(percent)
+    percent = (percent * 0.5).toFixed(4);
+    params.displacement.y = percent;
+    console.log(percent)
 
     document.getElementById('beam').setAttribute('beam', {
         applied_displacement: params.displacement.y,
@@ -271,8 +279,8 @@ window.update_applied_displacement = function(click, percent) {
 
 window.update_load_position = function(click, percent) {
     percent = ((percent * (params.length - 1)) + 1).toFixed(2);
-  params.load_position = percent;
-  console.log(percent)
+    params.load_position = percent;
+    console.log(percent)
 
     document.getElementById('beam').setAttribute('beam', {
         load_position: params.load_position,
@@ -281,73 +289,72 @@ window.update_load_position = function(click, percent) {
 }
 
 window.update_left = function(value) {
-  params.left = value;
-  document.getElementById('left_support').setAttribute('left_support', {
-      support_type: params.left,
-      length: params.length,
-      height: params.height,
-      depth: params.depth,
-  });
+    params.left = value;
+    document.getElementById('left_support').setAttribute('left_support', {
+        support_type: params.left,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
 }
 
 window.update_right = function(value) {
-  params.right = value;
-  document.getElementById('right_support').setAttribute('right_support', {
-      support_type: params.right,
-      length: params.length,
-      height: params.height,
-      depth: params.depth,
-  });
+    params.right = value;
+    document.getElementById('right_support').setAttribute('right_support', {
+        support_type: params.right,
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
 }
 
 function redraw_beam(beam) {
-  console.log("redraw beam")
+    console.log("redraw beam")
 
-  PHYSICS.updateDeformation(params);
-  beam.geometry.addAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
-  beam.geometry.attributes.position.needsUpdate = true;
+    PHYSICS.updateDeformation(params);
+    beam.geometry.addAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
+    beam.geometry.attributes.position.needsUpdate = true;
 
-  if (params.colour_by === 'None') {
-      let colors = [];
-      for (let i = 0; i < PHYSICS.shear_force.length; i++) {
-          colors.push(1, 1, 1);
-      }
+    if (params.colour_by === 'None') {
+        let colors = [];
+        for (let i = 0; i < PHYSICS.shear_force.length; i++) {
+            colors.push(1, 1, 1);
+        }
 
-      beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-      beam.geometry.attributes.color.needsUpdate = true;
-      beam.material.needsUpdate = true;
-  } else {
-      let arr, max_val;
-      if (params.colour_by === 'Bending Moment') {
-          arr = PHYSICS.bending_moment;
-          lut = cooltowarm;
-          max_val = PHYSICS.M_max;
-      }
-      else if (params.colour_by === 'Shear Force') {
-          arr = PHYSICS.shear_force;
-          lut = cooltowarm;
-          max_val = PHYSICS.SF_max;
-      }
-      const colors = [];
+        beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        beam.geometry.attributes.color.needsUpdate = true;
+        beam.material.needsUpdate = true;
+    } else {
+        let arr, max_val;
+        if (params.colour_by === 'Bending Moment') {
+            arr = PHYSICS.bending_moment;
+            lut = cooltowarm;
+            max_val = PHYSICS.M_max;
+        } else if (params.colour_by === 'Shear Force') {
+            arr = PHYSICS.shear_force;
+            lut = cooltowarm;
+            max_val = PHYSICS.SF_max;
+        }
+        const colors = [];
 
-      if (max_val > 0) {
-          lut.setMin(-max_val);
-          lut.setMax(max_val);
-          for (let i = 0; i < arr.length; i++) {
-              const colorValue = arr[i];
-              const color = lut.getColor(colorValue);
-              colors.push(color.r, color.g, color.b);
-          }
-      } else {
-          for (let i = 0; i < arr.length; i++) {
-              colors.push(0, 0, 0);
-          }
-      }
-      beam.geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-      beam.geometry.attributes.color.needsUpdate = true;
-      beam.material.needsUpdate = true;
+        if (max_val > 0) {
+            lut.setMin(-max_val);
+            lut.setMax(max_val);
+            for (let i = 0; i < arr.length; i++) {
+                const colorValue = arr[i];
+                const color = lut.getColor(colorValue);
+                colors.push(color.r, color.g, color.b);
+            }
+        } else {
+            for (let i = 0; i < arr.length; i++) {
+                colors.push(0, 0, 0);
+            }
+        }
+        beam.geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        beam.geometry.attributes.color.needsUpdate = true;
+        beam.material.needsUpdate = true;
 
-  }
+    }
 
 }
 
