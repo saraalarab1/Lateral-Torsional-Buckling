@@ -7,4 +7,12 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  devServer: {
+    https: true,
+    host: '0.0.0.0',
+    overlay: {
+      warnings: false,
+      errors: true
+    }
+  },
 };
