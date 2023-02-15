@@ -288,6 +288,15 @@ window.update_load_position = function(click, percent) {
 
 }
 
+window.update_color = function(value) {
+    params.colour_by = value;
+    document.getElementById('beam').setAttribute('beam', {
+        length: params.length,
+        color_by: params.colour_by
+    });
+    
+  }
+
 window.update_left = function(value) {
     params.left = value;
     document.getElementById('left_support').setAttribute('left_support', {
@@ -365,6 +374,7 @@ AFRAME.registerComponent('beam', {
         depth: { type: 'number', default: params.depth },
         applied_displacement: { type: 'number', default: params.displacement.y },
         load_position: { type: 'number', default: params.load_position },
+        color_by: {type: 'string', default: params.colour_by}
     },
 
     /**
