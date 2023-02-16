@@ -24,6 +24,9 @@ let font;
 let BMD, SFD, box;
 
 let beam_offset = new THREE.Vector3(0, 4, -10);
+let upper_offset = new THREE.Vector3(0, 1, 0);
+let lower_offset = new THREE.Vector3(0, 4, -10);
+
 let scene;
 let lut;
 let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
@@ -328,8 +331,8 @@ function redraw_beam(beam) {
     console.log("redraw beam")
 
     PHYSICS.updateDeformation(params);
-    beam.geometry.addAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
-    beam.geometry.attributes.position.needsUpdate = true;
+    beam.children[0].geometry.addAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
+    beam.children[0].geometry.attributes.position.needsUpdate = true;
 
     if (params.colour_by === 'None') {
         let colors = [];
@@ -337,9 +340,9 @@ function redraw_beam(beam) {
             colors.push(1, 1, 1);
         }
 
-        beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        beam.geometry.attributes.color.needsUpdate = true;
-        beam.material.needsUpdate = true;
+        beam.children[0].geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        beam.children[0].geometry.attributes.color.needsUpdate = true;
+        beam.children[0].material.needsUpdate = true;
     } else {
         let arr, max_val;
         if (params.colour_by === 'Bending Moment') {
@@ -366,9 +369,10 @@ function redraw_beam(beam) {
                 colors.push(0, 0, 0);
             }
         }
-        beam.geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        beam.geometry.attributes.color.needsUpdate = true;
-        beam.material.needsUpdate = true;
+        console.log(beam)
+        beam.children[0].geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        beam.children[0].geometry.attributes.color.needsUpdate = true;
+        beam.children[0].material.needsUpdate = true;
 
     }
 
@@ -391,20 +395,27 @@ AFRAME.registerComponent('beam', {
         var data = this.data;
         var el = this.el;
         // Create geometry.
-        this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
+        const beamGeometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
+        const upperGeometry = new THREE.BoxBufferGeometry(0.2, 0.2, 2, params.np, 1, 1);
+        const lowerGeometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
 
         // Create material.
         this.material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: true });
 
+        this.beam = new THREE.Mesh(beamGeometry, this.material);
+        this.lower = new THREE.Mesh(upperGeometry, this.material);
+        this.upper = new THREE.Mesh(lowerGeometry, this.material);
         // Create mesh.
-        this.mesh = new THREE.Mesh(this.geometry, this.material);
+        this.mesh = new THREE.Group();
+        this.mesh.add(this.beam,this.upper);
         this.mesh.scale.set(data.length, data.height, data.depth);
+        this.mesh.children[1].position.add(upper_offset); // move the beam away from the start location
         this.mesh.position.add(beam_offset); // move the beam away from the start location
 
         const type = 'beam';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
 
-        PHYSICS.set_initial_position(this.mesh.geometry.attributes.position.array);
+        PHYSICS.set_initial_position(this.mesh.children[0].geometry.attributes.position.array);
         // Set mesh on entity.
         el.setObject3D('mesh', this.mesh);
     },
