@@ -1,20 +1,48 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  // Fix for the devtool property
-  devtool: "source-map",
-  // Fix for the node property
-  node: {
-    __dirname: true,
-    __filename: true
+  mode: 'development',
+  entry: {
+    // Page-specific JS
+    index: './src/index.js',
   },
-  mode: "development",
-  entry: './src/index.js',
   output: {
-    filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash].js',
+    // Use absolute paths for assets
+    publicPath: '/',
   },
+  module: {
+      rules: [
+        {
+          test: /\.html$/,
+          use: ["html-loader"],
+ 
+        },
+        {
+          test: /\.(jpe?g|png|mp3|wav)$/,
+          use: ["file-loader"],
+        },
+      ]
+  },
+  plugins: [
+    // Clean dist/ on each build
+    new CleanWebpackPlugin(),
+    // Add HtmlWebpackPlugin entries to build individual HTML pages
+    new HtmlWebpackPlugin({
+      // Input path
+      template: 'src/index.html',
+      // Output (within dist/)
+      filename: 'index.html',
+      // Inject compiled JS into <head> (as per A-Frame docs)
+      inject: 'head',
+      // Specify which JS files, by key in `entry`, should be injected into the page
+      chunks: ['index'],
+    }),
+  ],
+  // Settings for webpack-dev-server
   devServer: {
     https: true,
     host: '0.0.0.0',
@@ -25,14 +53,4 @@ module.exports = {
        }
    }
   },
-  plugins: [new HtmlWebpackPlugin({ template: './dist/index.html' })],
-  module: {
-    rules: [
-      {
-        test: /\.html$/,
-        // Exports HTML as string, require references to static resources
-        use: ["html-loader"]
-      }
-    ]
-  }
 };
