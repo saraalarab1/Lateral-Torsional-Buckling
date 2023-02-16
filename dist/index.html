@@ -26,7 +26,10 @@
 
         </a-gui-flex-container>
 
-        <a-gui-flex-container flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="2.5" height="3.5" panel-rounded="0.2" position="-1 6.5 -10" rotation="0 0 0" panel-color="#212121">
+
+
+
+        <a-gui-flex-container flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="2.5" height="3.5" panel-rounded="0.2" position="-1 9.5 -10" rotation="0 0 0" panel-color="#212121">
 
             <a-gui-label width="1" height="0.75" value="Left" font-size="0.35" line-height="0.8" margin="0 0 0.05 0">
             </a-gui-label>
@@ -37,7 +40,7 @@
 
             <a-gui-button width="1" height="0.75" onclick="update_left('Fixed')" font-size="0.3" value="Fixed"></a-gui-button>
         </a-gui-flex-container>
-        <a-gui-flex-container flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="2.5" height="3.5" panel-rounded="0.2" position="1 6.5 -10" rotation="0 0 0" panel-color="#212121">
+        <a-gui-flex-container flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="2.5" height="3.5" panel-rounded="0.2" position="1 9.5 -10" rotation="0 0 0" panel-color="#212121">
             <a-gui-label width="1" height="0.75" value="Right" font-size="0.35" line-height="0.8" margin="0 0 0.05 0">
             </a-gui-label>
 
@@ -51,7 +54,34 @@
             </a-gui-button>
 
         </a-gui-flex-container>
-        <a-gui-flex-container  id=""  flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="4.5" height="4.5" panel-color="#212121" panel-rounded="0.2" position="0 9.5 -10" rotation="0 0 0">
+
+
+
+
+        <a-gui-flex-container flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="2.5" height="3.5" panel-rounded="0.2" position="-1 6.5 -10" rotation="0 0 0" panel-color="#212121">
+
+            <a-gui-label width="1" height="0.75" value="Visible" font-size="0.35" line-height="0.8" margin="0 0 0.05 0">
+            </a-gui-label>
+
+            <a-gui-button width="1" height="0.75" onclick="update_visible_left(true)" font-size="0.3" value="True" position="-1 -1.5 0"></a-gui-button>
+
+            <a-gui-button width="1" height="0.75" onclick="update_visible_left(false)" font-size="0.3" value="False"></a-gui-button>
+        </a-gui-flex-container>
+        <a-gui-flex-container flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="2.5" height="3.5" panel-rounded="0.2" position="1 6.5 -10" rotation="0 0 0" panel-color="#212121">
+            <a-gui-label width="1" height="0.75" value="Visible" font-size="0.35" line-height="0.8" margin="0 0 0.05 0">
+            </a-gui-label>
+
+            <a-gui-button width="1" height="0.75" onclick="update_visible_right(true)" font-size="0.3" value="True">
+            </a-gui-button>
+
+            <a-gui-button width="1" height="0.75" onclick="update_visible_right(false)" font-size="0.3" value="False">
+            </a-gui-button>
+
+            </a-gui-button>
+
+        </a-gui-flex-container>
+
+        <a-gui-flex-container id="" flex-direction="column" justify-content="flexStart" align-items="normal" component-padding="1" opacity="0.8" width="4.5" height="4.5" panel-color="#212121" panel-rounded="0.2" position="0 12.5 -10" rotation="0 0 0">
 
             <a-gui-label width="3" height="0.7" value="Color By" font-size="0.35" line-height="0.8" position="0 0 0">
             </a-gui-label>
@@ -67,7 +97,7 @@
 
         </a-gui-flex-container>
 
-        <a-gui-flex-container  id="load"  flex-direction="column" justify-content="center" align-items="normal" component-padding="0.3" opacity="0.8" width="3.5" height="4.5" panel-color="#072B73" panel-rounded="0.2" position="6 10 -10" rotation="0 -15 0">
+        <a-gui-flex-container id="load" flex-direction="column" justify-content="center" align-items="normal" component-padding="0.3" opacity="0.8" width="3.5" height="4.5" panel-color="#072B73" panel-rounded="0.2" position="6 10 -10" rotation="0 -15 0">
 
             <a-gui-label width="2.5" height="0.75" value="Applied Displacement" font-size="0.35" line-height="0.8" position="0 0 0">
             </a-gui-label>
