@@ -77,7 +77,6 @@ window.onload = function() {
     const leftSupport = document.createElement('a-entity');
     leftSupport.setAttribute('left_support', '');
     leftSupport.setAttribute("id", "left_support");
-
     // Create the beam entity
     const beam = document.createElement('a-entity');
     beam.setAttribute('beam', '');
@@ -87,7 +86,6 @@ window.onload = function() {
     const rightSupport = document.createElement('a-entity');
     rightSupport.setAttribute('right_support', '');
     rightSupport.setAttribute("id", "right_support");
-
     // Add the Three.js objects of each entity to the group
     group.add(leftSupport.object3D.el.object3D);
     group.add(beam.object3D.el.object3D);
@@ -294,8 +292,8 @@ window.update_color = function(value) {
         length: params.length,
         color_by: params.colour_by
     });
-    
-  }
+
+}
 
 window.update_left = function(value) {
     params.left = value;
@@ -316,6 +314,15 @@ window.update_right = function(value) {
         depth: params.depth,
     });
 }
+window.update_visible_right = function(value) {
+    console.log('updating visibility', value);
+    document.getElementById('right_support').setAttribute('visible', value);
+}
+
+window.update_visible_left = function(value) {
+    document.getElementById('left_support').setAttribute('visible', value);
+}
+
 
 function redraw_beam(beam) {
     console.log("redraw beam")
@@ -374,7 +381,7 @@ AFRAME.registerComponent('beam', {
         depth: { type: 'number', default: params.depth },
         applied_displacement: { type: 'number', default: params.displacement.y },
         load_position: { type: 'number', default: params.load_position },
-        color_by: {type: 'string', default: params.colour_by}
+        color_by: { type: 'string', default: params.colour_by }
     },
 
     /**
