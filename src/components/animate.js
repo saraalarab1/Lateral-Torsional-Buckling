@@ -1,4 +1,4 @@
-import {params} from '../utils/params'
+import { params } from '../utils/params'
 
 function animate() {
     requestAnimationFrame(animate);
@@ -120,7 +120,7 @@ window.update_color = function(value) {
 
 }
 
-window.update_left = function(value) {
+window.update_support = function(value) {
     params.left = value;
     document.getElementById('left_support').setAttribute('left_support', {
         support_type: params.left,
@@ -128,22 +128,17 @@ window.update_left = function(value) {
         height: params.height,
         depth: params.depth,
     });
-}
-
-window.update_right = function(value) {
-    params.right = value;
     document.getElementById('right_support').setAttribute('right_support', {
-        support_type: params.right,
+        support_type: params.left,
         length: params.length,
         height: params.height,
         depth: params.depth,
     });
 }
-window.update_visible_right = function(value) {
+
+window.update_visible_support = function(value) {
     console.log('updating visibility', value);
     document.getElementById('right_support').setAttribute('visible', value);
-}
-
-window.update_visible_left = function(value) {
     document.getElementById('left_support').setAttribute('visible', value);
+
 }

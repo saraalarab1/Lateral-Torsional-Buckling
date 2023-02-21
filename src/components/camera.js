@@ -52,8 +52,10 @@ window.addEventListener("load", (event) => {
     if (device == "Desktop") {
         const left_ball = document.getElementById("left_ball");
         left_ball.setAttribute("visible", false);
+        left_ball.setAttribute("position", "-15 8 -15");
         const right_ball = document.getElementById("right_ball");
         right_ball.setAttribute("visible", false);
+        right_ball.setAttribute("position", "15 8 -15");
         const main_ball = document.getElementById("main_ball");
         main_ball.setAttribute("visible", false);
     }
