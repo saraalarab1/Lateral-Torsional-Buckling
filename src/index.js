@@ -5,6 +5,7 @@ require('./components/camera')
 require('./components/gui')
 require('./components/group')
 require('./components/animate')
+require('./components/gaze')
 
 
 AFRAME.utils.device.checkHeadsetConnected = function() {

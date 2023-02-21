@@ -30,6 +30,7 @@ window.addEventListener("load", (event) => {
 
     let lengthSlider = document.createElement("a-gui-slider");
     lengthSlider.setAttribute("id", "lengthSlider");
+    lengthSlider.setAttribute("class","rangeButton")
     lengthSlider.setAttribute("width", "2.5");
     lengthSlider.setAttribute("height", "0.75");
     lengthSlider.setAttribute("onclick", "update_beam_length");
@@ -47,6 +48,7 @@ window.addEventListener("load", (event) => {
 
     let heightSlider = document.createElement("a-gui-slider");
     heightSlider.setAttribute("id", "heightSlider");
+    heightSlider.setAttribute("class","rangeButton")
     heightSlider.setAttribute("width", "2.5");
     heightSlider.setAttribute("height", "0.75");
     heightSlider.setAttribute("onclick", "update_beam_height");
@@ -64,6 +66,7 @@ window.addEventListener("load", (event) => {
 
     let depthSlider = document.createElement("a-gui-slider");
     depthSlider.setAttribute("id", "depthSlider");
+    depthSlider.setAttribute("class","rangeButton")
     depthSlider.setAttribute("width", "2.5");
     depthSlider.setAttribute("height", "0.75");
     depthSlider.setAttribute("onclick", "update_beam_depth");
@@ -249,22 +252,24 @@ window.addEventListener("load", (event) => {
     loadContainer.setAttribute("rotation", "0 -15 0");
 
     // create the <a-gui-label> element
-    const label4 = document.createElement("a-gui-label");
-    label4.setAttribute("width", "2.5");
-    label4.setAttribute("height", "0.75");
-    label4.setAttribute("value", "Applied Displacement");
-    label4.setAttribute("font-size", "0.35");
-    label4.setAttribute("line-height", "0.8");
-    label4.setAttribute("position", "0 0 0");
+    let appliedDisplacementLabel = document.createElement("a-gui-label");
+    appliedDisplacementLabel.setAttribute("width", "2.5");
+    appliedDisplacementLabel.setAttribute("height", "0.75");
+    appliedDisplacementLabel.setAttribute("value", "Applied Displacement");
+    appliedDisplacementLabel.setAttribute("font-size", "0.35");
+    appliedDisplacementLabel.setAttribute("line-height", "0.8");
+    appliedDisplacementLabel.setAttribute("position", "0 0 0");
 
     // create the <a-gui-slider> element
-    const slider = document.createElement("a-gui-slider");
-    slider.setAttribute("width", "2.5");
-    slider.setAttribute("height", "0.75");
-    slider.setAttribute("onclick", "update_applied_displacement");
-    slider.setAttribute("percent", "0.1");
-    slider.setAttribute("position", "0 0 0.1");
-    slider.setAttribute("margin", "0 0 0 0");
+    let appliedDisplacementSlider = document.createElement("a-gui-slider");
+    appliedDisplacementSlider.setAttribute("id", "appliedDisplacementSlider");
+    appliedDisplacementSlider.setAttribute("class","rangeButton")
+    appliedDisplacementSlider.setAttribute("width", "2.5");
+    appliedDisplacementSlider.setAttribute("height", "0.75");
+    appliedDisplacementSlider.setAttribute("onclick", "update_applied_displacement");
+    appliedDisplacementSlider.setAttribute("percent", "0.1");
+    appliedDisplacementSlider.setAttribute("position", "0 0 0.1");
+    appliedDisplacementSlider.setAttribute("margin", "0 0 0 0");
 
     let loadPositionLabel = document.createElement("a-gui-label");
     loadPositionLabel.setAttribute("width", "2.5");
@@ -276,6 +281,7 @@ window.addEventListener("load", (event) => {
 
     let loadPositionSlider = document.createElement("a-gui-slider");
     loadPositionSlider.setAttribute("id", "loadPositionSlider");
+    loadPositionSlider.setAttribute("class","rangeButton")
     loadPositionSlider.setAttribute("width", "2.5");
     loadPositionSlider.setAttribute("height", "0.75");
     loadPositionSlider.setAttribute("onclick", "update_load_position");
@@ -283,8 +289,8 @@ window.addEventListener("load", (event) => {
     loadPositionSlider.setAttribute("position", "0 1 0.1");
     loadPositionSlider.setAttribute("margin", "0 0 0 0")
 
-    loadContainer.appendChild(label4);
-    loadContainer.appendChild(slider);
+    loadContainer.appendChild(appliedDisplacementLabel);
+    loadContainer.appendChild(appliedDisplacementSlider);
     loadContainer.appendChild(loadPositionLabel)
     loadContainer.appendChild(loadPositionSlider)
 
