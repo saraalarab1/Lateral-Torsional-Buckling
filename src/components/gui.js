@@ -1,9 +1,9 @@
-import {params} from '../utils/params'
+import { params } from '../utils/params'
 
 window.addEventListener("load", (event) => {
 
 
-        // create a-gui-flex-container element
+    // create a-gui-flex-container element
     const dimensionsContainer = document.createElement("a-gui-flex-container");
 
     // set element attributes
@@ -81,7 +81,7 @@ window.addEventListener("load", (event) => {
 
     AFRAME.scenes[0].appendChild(dimensionsContainer);
 
-        // create a-gui-flex-container element
+    // create a-gui-flex-container element
     const support1Container = document.createElement("a-gui-flex-container");
 
     // set element attributes
@@ -100,30 +100,22 @@ window.addEventListener("load", (event) => {
 
     // create child elements
     var support1 = document.createElement("a-gui-label");
-    var button1 = document.createElement("a-gui-button");
     var button2 = document.createElement("a-gui-button");
     var button3 = document.createElement("a-gui-button");
 
     // set label element attributes
     support1.setAttribute("width", "1");
     support1.setAttribute("height", "0.75");
-    support1.setAttribute("value", "Left");
+    support1.setAttribute("value", "Type");
     support1.setAttribute("font-size", "0.35");
     support1.setAttribute("line-height", "0.8");
     support1.setAttribute("margin", "0 0 0.05 0");
 
-    // set button1 element attributes
-    button1.setAttribute("width", "1");
-    button1.setAttribute("height", "0.75");
-    button1.setAttribute("onclick", "update_left('Free')");
-    button1.setAttribute("font-size", "0.3");
-    button1.setAttribute("value", "Free");
-    button1.setAttribute("position", "-1 -0.5 0");
 
     // set button2 element attributes
     button2.setAttribute("width", "1");
     button2.setAttribute("height", "0.75");
-    button2.setAttribute("onclick", "update_left('Pin')");
+    button2.setAttribute("onclick", "update_support('Pin')");
     button2.setAttribute("font-size", "0.3");
     button2.setAttribute("value", "Pin");
     button2.setAttribute("position", "-1 -1.5 0");
@@ -131,73 +123,18 @@ window.addEventListener("load", (event) => {
     // set button3 element attributes
     button3.setAttribute("width", "1");
     button3.setAttribute("height", "0.75");
-    button3.setAttribute("onclick", "update_left('Fixed')");
+    button3.setAttribute("onclick", "update_support('Fixed')");
     button3.setAttribute("font-size", "0.3");
     button3.setAttribute("value", "Fixed");
 
     // add child elements to the flex container
     support1Container.appendChild(support1);
-    support1Container.appendChild(button1);
     support1Container.appendChild(button2);
     support1Container.appendChild(button3);
 
     AFRAME.scenes[0].appendChild(support1Container);
 
     // Create a flex container element
-    const support2Container = document.createElement("a-gui-flex-container");
-    support2Container.setAttribute("id", "rightsupport");
-    support2Container.setAttribute("flex-direction", "column");
-    support2Container.setAttribute("justify-content", "flexStart");
-    support2Container.setAttribute("align-items", "normal");
-    support2Container.setAttribute("component-padding", "1");
-    support2Container.setAttribute("opacity", "0.8");
-    support2Container.setAttribute("width", "2.5");
-    support2Container.setAttribute("height", "3.5");
-    support2Container.setAttribute("panel-rounded", "0.2");
-    support2Container.setAttribute("position", "1 9.5 -10");
-    support2Container.setAttribute("rotation", "0 0 0");
-    support2Container.setAttribute("panel-color", "#212121");
-
-    // Create a support2 element and add it to the flex container
-    const support2 = document.createElement("a-gui-label");
-    support2.setAttribute("width", "1");
-    support2.setAttribute("height", "0.75");
-    support2.setAttribute("value", "Right");
-    support2.setAttribute("font-size", "0.35");
-    support2.setAttribute("line-height", "0.8");
-    support2.setAttribute("margin", "0 0 0.05 0");
-    support2Container.appendChild(support2);
-
-    // Create a button element with onclick event handler and add it to the flex container
-    const freeBtn = document.createElement("a-gui-button");
-    freeBtn.setAttribute("width", "1");
-    freeBtn.setAttribute("height", "0.75");
-    freeBtn.setAttribute("onclick", "update_right('Free')");
-    freeBtn.setAttribute("font-size", "0.3");
-    freeBtn.setAttribute("value", "Free");
-    support2Container.appendChild(freeBtn);
-
-    // Create a button element with onclick event handler and add it to the flex container
-    const pinBtn = document.createElement("a-gui-button");
-    pinBtn.setAttribute("width", "1");
-    pinBtn.setAttribute("height", "0.75");
-    pinBtn.setAttribute("onclick", "update_right('Pin')");
-    pinBtn.setAttribute("font-size", "0.3");
-    pinBtn.setAttribute("value", "Pin");
-    support2Container.appendChild(pinBtn);
-
-    // Create a button element with onclick event handler and add it to the flex container
-    const fixedBtn = document.createElement("a-gui-button");
-    fixedBtn.setAttribute("width", "1");
-    fixedBtn.setAttribute("height", "0.75");
-    fixedBtn.setAttribute("onclick", "update_right('Fixed')");
-    fixedBtn.setAttribute("font-size", "0.3");
-    fixedBtn.setAttribute("value", "Fixed");
-    support2Container.appendChild(fixedBtn);
-
-    AFRAME.scenes[0].appendChild(support2Container);
-
-        // Create a flex container element
     const hiddenLeftContainer = document.createElement("a-gui-flex-container");
     hiddenLeftContainer.setAttribute("flex-direction", "column");
     hiddenLeftContainer.setAttribute("justify-content", "flexStart");
@@ -207,7 +144,7 @@ window.addEventListener("load", (event) => {
     hiddenLeftContainer.setAttribute("width", "2.5");
     hiddenLeftContainer.setAttribute("height", "3.5");
     hiddenLeftContainer.setAttribute("panel-rounded", "0.2");
-    hiddenLeftContainer.setAttribute("position", "-1 6.5 -10");
+    hiddenLeftContainer.setAttribute("position", "1 9.5 -10");
     hiddenLeftContainer.setAttribute("rotation", "0 0 0");
     hiddenLeftContainer.setAttribute("panel-color", "#212121");
 
@@ -225,7 +162,7 @@ window.addEventListener("load", (event) => {
     const trueBtn = document.createElement("a-gui-button");
     trueBtn.setAttribute("width", "1");
     trueBtn.setAttribute("height", "0.75");
-    trueBtn.setAttribute("onclick", "update_visible_left(true)");
+    trueBtn.setAttribute("onclick", "update_visible_support(true)");
     trueBtn.setAttribute("font-size", "0.3");
     trueBtn.setAttribute("value", "True");
     trueBtn.setAttribute("position", "-1 -1.5 0");
@@ -235,58 +172,12 @@ window.addEventListener("load", (event) => {
     const falseBtn = document.createElement("a-gui-button");
     falseBtn.setAttribute("width", "1");
     falseBtn.setAttribute("height", "0.75");
-    falseBtn.setAttribute("onclick", "update_visible_left(false)");
+    falseBtn.setAttribute("onclick", "update_visible_support(false)");
     falseBtn.setAttribute("font-size", "0.3");
     falseBtn.setAttribute("value", "False");
     hiddenLeftContainer.appendChild(falseBtn);
 
     AFRAME.scenes[0].appendChild(hiddenLeftContainer);
-
-    // create the container
-    const hiddenRightContainer = document.createElement('a-gui-flex-container');
-    hiddenRightContainer.setAttribute('flex-direction', 'column');
-    hiddenRightContainer.setAttribute('justify-content', 'flexStart');
-    hiddenRightContainer.setAttribute('align-items', 'normal');
-    hiddenRightContainer.setAttribute('component-padding', '1');
-    hiddenRightContainer.setAttribute('opacity', '0.8');
-    hiddenRightContainer.setAttribute('width', '2.5');
-    hiddenRightContainer.setAttribute('height', '3.5');
-    hiddenRightContainer.setAttribute('panel-rounded', '0.2');
-    hiddenRightContainer.setAttribute('position', '1 6.5 -10');
-    hiddenRightContainer.setAttribute('rotation', '0 0 0');
-    hiddenRightContainer.setAttribute('panel-color', '#212121');
-
-    // create the label
-    const label2 = document.createElement('a-gui-label');
-    label2.setAttribute('width', '1');
-    label2.setAttribute('height', '0.75');
-    label2.setAttribute('value', 'Visible');
-    label2.setAttribute('font-size', '0.35');
-    label2.setAttribute('line-height', '0.8');
-    label2.setAttribute('margin', '0 0 0.05 0');
-
-    // create the "True" button
-    const trueButton = document.createElement('a-gui-button');
-    trueButton.setAttribute('width', '1');
-    trueButton.setAttribute('height', '0.75');
-    trueButton.setAttribute('onclick', 'update_visible_right(true)');
-    trueButton.setAttribute('font-size', '0.3');
-    trueButton.setAttribute('value', 'True');
-
-    // create the "False" button
-    const falseButton = document.createElement('a-gui-button');
-    falseButton.setAttribute('width', '1');
-    falseButton.setAttribute('height', '0.75');
-    falseButton.setAttribute('onclick', 'update_visible_right(false)');
-    falseButton.setAttribute('font-size', '0.3');
-    falseButton.setAttribute('value', 'False');
-
-    // append the label and buttons to the container
-    hiddenRightContainer.appendChild(label2);
-    hiddenRightContainer.appendChild(trueButton);
-    hiddenRightContainer.appendChild(falseButton);
-
-    AFRAME.scenes[0].appendChild(hiddenRightContainer);
 
     // create the <a-gui-flex-container> element
     const colorContainer = document.createElement("a-gui-flex-container");
@@ -384,7 +275,7 @@ window.addEventListener("load", (event) => {
     loadPositionLabel.setAttribute("position", "0 0 0");
 
     let loadPositionSlider = document.createElement("a-gui-slider");
-    loadPositionSlider.setAttribute("id", "depthSlider");
+    loadPositionSlider.setAttribute("id", "loadPositionSlider");
     loadPositionSlider.setAttribute("width", "2.5");
     loadPositionSlider.setAttribute("height", "0.75");
     loadPositionSlider.setAttribute("onclick", "update_load_position");
