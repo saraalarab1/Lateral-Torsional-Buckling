@@ -83,7 +83,7 @@ AFRAME.registerComponent('beam', {
         this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.mesh.scale.set(data.length, data.height, data.depth);
         this.mesh.position.add(beam_offset); // move the beam away from the start location
-
+        this.mesh.rotation.set(165,0,0)
         const type = 'beam';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
 

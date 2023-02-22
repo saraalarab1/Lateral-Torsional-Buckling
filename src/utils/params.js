@@ -8,8 +8,8 @@ export let pin_radius = 1;
 
 export let params = {
     length: beamLength, // beam length (m)
-    depth: 0.2,
-    height: 1.5,
+    depth: 1.5,
+    height: 0.2,
     left: 'Fixed',
     right: 'Fixed',
     applied_load: 0,
