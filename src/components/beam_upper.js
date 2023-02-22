@@ -1,5 +1,5 @@
 import * as PHYSICS_UPPER from '../utils/physics_upper';
-import { params, beam_upper_offset } from '../utils/params';
+import { beam_upper_offset, params_upper } from '../utils/params';
 
 import { Lut } from 'three/examples/jsm/math/Lut.js';
 
@@ -9,11 +9,11 @@ let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm 
 function redraw_beam_upper(beam) {
     console.log("redraw beam")
 
-    PHYSICS_UPPER.updateDeformation_upper(params);
+    PHYSICS_UPPER.updateDeformation_upper(params_upper);
     beam.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS_UPPER.positions_upper, 3));
     beam.geometry.attributes.position.needsUpdate = true;
 
-    if (params.colour_by === 'None') {
+    if (params_upper.colour_by === 'None') {
         let colors = [];
         for (let i = 0; i < PHYSICS_UPPER.shear_force_upper.length; i++) {
             colors.push(1, 1, 1);
@@ -24,11 +24,11 @@ function redraw_beam_upper(beam) {
         beam.material.needsUpdate = true;
     } else {
         let arr, max_val;
-        if (params.colour_by === 'Bending Moment') {
+        if (params_upper.colour_by === 'Bending Moment') {
             arr = PHYSICS_UPPER.bending_moment_upper;
             lut = cooltowarm;
             max_val = PHYSICS_UPPER.M_max_upper;
-        } else if (params.colour_by === 'Shear Force') {
+        } else if (params_upper.colour_by === 'Shear Force') {
             arr = PHYSICS_UPPER.shear_force_upper;
             lut = cooltowarm;
             max_val = PHYSICS_UPPER.SF_max_upper;
@@ -58,12 +58,12 @@ function redraw_beam_upper(beam) {
 
 AFRAME.registerComponent('beam_upper', {
     schema: {
-        length: { type: 'number', default: params.length },
-        height: { type: 'number', default: params.height },
-        depth: { type: 'number', default: params.depth },
-        applied_displacement: { type: 'number', default: params.displacement.y },
-        load_position: { type: 'number', default: params.load_position },
-        color_by: { type: 'string', default: params.colour_by }
+        length: { type: 'number', default: params_upper.length },
+        height: { type: 'number', default: params_upper.height },
+        depth: { type: 'number', default: params_upper.depth },
+        applied_displacement: { type: 'number', default: params_upper.displacement.y },
+        load_position: { type: 'number', default: params_upper.load_position },
+        color_by: { type: 'string', default: params_upper.colour_by }
     },
 
     /**
@@ -73,7 +73,7 @@ AFRAME.registerComponent('beam_upper', {
         var data = this.data;
         var el = this.el;
         // Create geometry.
-        this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
+        this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params_upper.np, 1, 1);
 
         // Create material.
         this.material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: true });
@@ -97,9 +97,9 @@ AFRAME.registerComponent('beam_upper', {
 
         this.mesh.scale.set(data.length, data.height, data.depth);
         console.log('updating')
-        params.length = data.length
-        params.height = data.height
-        params.depth = data.depth
+        params_upper.length = data.length
+        params_upper.height = data.height
+        params_upper.depth = data.depth
         redraw_beam_upper(this.mesh);
 
     },

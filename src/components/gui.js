@@ -52,7 +52,7 @@ window.addEventListener("load", (event) => {
     heightSlider.setAttribute("width", "2.5");
     heightSlider.setAttribute("height", "0.75");
     heightSlider.setAttribute("onclick", "update_beam_height");
-    heightSlider.setAttribute("percent", (params.depth - 0.2) / (1.5 - 0.1));
+    heightSlider.setAttribute("percent", (params.height - 0.2) / (1.5 - 0.1));
     heightSlider.setAttribute("position", "0 1 0.1");
     heightSlider.setAttribute("margin", "0 0 0 0");
 
@@ -70,7 +70,7 @@ window.addEventListener("load", (event) => {
     depthSlider.setAttribute("width", "2.5");
     depthSlider.setAttribute("height", "0.75");
     depthSlider.setAttribute("onclick", "update_beam_depth");
-    depthSlider.setAttribute("percent", params.height);
+    depthSlider.setAttribute("percent", params.depth);
     depthSlider.setAttribute("position", "0 -2 0.1");
     depthSlider.setAttribute("margin", "0 0 0 0")
 
@@ -267,7 +267,7 @@ window.addEventListener("load", (event) => {
     appliedDisplacementSlider.setAttribute("width", "2.5");
     appliedDisplacementSlider.setAttribute("height", "0.75");
     appliedDisplacementSlider.setAttribute("onclick", "update_applied_displacement");
-    appliedDisplacementSlider.setAttribute("percent", "0.1");
+    appliedDisplacementSlider.setAttribute("percent", "0.01");
     appliedDisplacementSlider.setAttribute("position", "0 0 0.1");
     appliedDisplacementSlider.setAttribute("margin", "0 0 0 0");
 
@@ -285,7 +285,7 @@ window.addEventListener("load", (event) => {
     loadPositionSlider.setAttribute("width", "2.5");
     loadPositionSlider.setAttribute("height", "0.75");
     loadPositionSlider.setAttribute("onclick", "update_load_position");
-    loadPositionSlider.setAttribute("percent", (params.length - 6) / (50 - 5));
+    loadPositionSlider.setAttribute("percent",(params.length - 6) / (50 - 5));
     loadPositionSlider.setAttribute("position", "0 1 0.1");
     loadPositionSlider.setAttribute("margin", "0 0 0 0")
 

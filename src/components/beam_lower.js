@@ -1,5 +1,5 @@
 import * as PHYSICS_LOWER from '../utils/physics_lower';
-import { params, beam_lower_offset } from '../utils/params';
+import { beam_lower_offset, beam_offset, params_lower } from '../utils/params';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
 
 let lut;
@@ -8,11 +8,11 @@ let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm 
 function redraw_beam_lower(beam) {
     console.log("redraw beam")
 
-    PHYSICS_LOWER.updateDeformation_lower(params);
+    PHYSICS_LOWER.updateDeformation_lower(params_lower);
     beam.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS_LOWER.positions_lower, 3));
     beam.geometry.attributes.position.needsUpdate = true;
 
-    if (params.colour_by === 'None') {
+    if (params_lower.colour_by === 'None') {
         let colors = [];
         for (let i = 0; i < PHYSICS_LOWER.shear_force_lower.length; i++) {
             colors.push(1, 1, 1);
@@ -23,11 +23,11 @@ function redraw_beam_lower(beam) {
         beam.material.needsUpdate = true;
     } else {
         let arr, max_val;
-        if (params.colour_by === 'Bending Moment') {
+        if (params_lower.colour_by === 'Bending Moment') {
             arr = PHYSICS_LOWER.bending_moment_lower;
             lut = cooltowarm;
             max_val = PHYSICS_LOWER.M_max_lower;
-        } else if (params.colour_by === 'Shear Force') {
+        } else if (params_lower.colour_by === 'Shear Force') {
             arr = PHYSICS_LOWER.shear_force_lower;
             lut = cooltowarm;
             max_val = PHYSICS_LOWER.SF_max_lower;
@@ -58,12 +58,12 @@ function redraw_beam_lower(beam) {
 
 AFRAME.registerComponent('beam_lower', {
     schema: {
-        length: { type: 'number', default: params.length },
-        height: { type: 'number', default: params.height },
-        depth: { type: 'number', default: params.depth },
-        applied_displacement: { type: 'number', default: params.displacement.y },
-        load_position: { type: 'number', default: params.load_position },
-        color_by: { type: 'string', default: params.colour_by }
+        length: { type: 'number', default: params_lower.length },
+        height: { type: 'number', default: params_lower.height },
+        depth: { type: 'number', default: params_lower.depth },
+        applied_displacement: { type: 'number', default: params_lower.displacement.y },
+        load_position: { type: 'number', default: params_lower.load_position },
+        color_by: { type: 'string', default: params_lower.colour_by }
     },
 
     /**
@@ -73,7 +73,7 @@ AFRAME.registerComponent('beam_lower', {
         var data = this.data;
         var el = this.el;
         // Create geometry.
-        this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
+        this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params_lower.np, 1, 1);
 
         // Create material.
         this.material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: true });
@@ -95,10 +95,11 @@ AFRAME.registerComponent('beam_lower', {
         var data = this.data;
 
         this.mesh.scale.set(data.length, data.height, data.depth);
+
         console.log('updating')
-        params.length = data.length
-        params.height = data.height
-        params.depth = data.depth
+        params_lower.length = data.length
+        params_lower.height = data.height
+        params_lower.depth = data.depth
         redraw_beam_lower(this.mesh);
 
     },

@@ -81,7 +81,7 @@ AFRAME.registerComponent('beam', {
 
         // Create mesh.
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-        this.mesh.scale.set(data.length, data.depth, data.height);
+        this.mesh.scale.set(data.length, data.height, data.depth);
         this.mesh.position.add(beam_offset); // move the beam away from the start location
 
         const type = 'beam';
@@ -94,7 +94,7 @@ AFRAME.registerComponent('beam', {
     update: function() {
         var data = this.data;
 
-        this.mesh.scale.set(data.length, data.depth, data.height);
+        this.mesh.scale.set(data.length, data.height, data.depth);
         console.log('updating')
         params.length = data.length
         params.height = data.height
