@@ -1,4 +1,6 @@
 require('./components/beam')
+require('./components/beam_upper')
+require('./components/beam_lower')
 require('./components/right_support')
 require('./components/left_support')
 require('./components/camera')

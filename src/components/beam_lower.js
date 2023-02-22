@@ -1,20 +1,20 @@
-import {params, beam_offset} from '../utils/params'
-import * as PHYSICS from '../utils/physics.js';
+import * as PHYSICS_LOWER from '../utils/physics_lower';
+import { params, beam_lower_offset } from '../utils/params';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
 
 let lut;
 let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
 
-function redraw_beam(beam) {
+function redraw_beam_lower(beam) {
     console.log("redraw beam")
 
-    PHYSICS.updateDeformation(params);
-    beam.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
+    PHYSICS_LOWER.updateDeformation_lower(params);
+    beam.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS_LOWER.positions_lower, 3));
     beam.geometry.attributes.position.needsUpdate = true;
 
     if (params.colour_by === 'None') {
         let colors = [];
-        for (let i = 0; i < PHYSICS.shear_force.length; i++) {
+        for (let i = 0; i < PHYSICS_LOWER.shear_force_lower.length; i++) {
             colors.push(1, 1, 1);
         }
 
@@ -24,13 +24,13 @@ function redraw_beam(beam) {
     } else {
         let arr, max_val;
         if (params.colour_by === 'Bending Moment') {
-            arr = PHYSICS.bending_moment;
+            arr = PHYSICS_LOWER.bending_moment_lower;
             lut = cooltowarm;
-            max_val = PHYSICS.M_max;
+            max_val = PHYSICS_LOWER.M_max_lower;
         } else if (params.colour_by === 'Shear Force') {
-            arr = PHYSICS.shear_force;
+            arr = PHYSICS_LOWER.shear_force_lower;
             lut = cooltowarm;
-            max_val = PHYSICS.SF_max;
+            max_val = PHYSICS_LOWER.SF_max_lower;
         }
         const colors = [];
 
@@ -56,8 +56,7 @@ function redraw_beam(beam) {
 }
 
 
-
-AFRAME.registerComponent('beam', {
+AFRAME.registerComponent('beam_lower', {
     schema: {
         length: { type: 'number', default: params.length },
         height: { type: 'number', default: params.height },
@@ -81,25 +80,26 @@ AFRAME.registerComponent('beam', {
 
         // Create mesh.
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-        this.mesh.scale.set(data.length, data.depth, data.height);
-        this.mesh.position.add(beam_offset); // move the beam away from the start location
+        
+        this.mesh.scale.set(data.length, data.height, data.depth);
+        this.mesh.position.add(beam_lower_offset); // move the beam away from the start location
 
-        const type = 'beam';
+        const type = 'beam_lower';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
 
-        PHYSICS.set_initial_position(this.mesh.geometry.attributes.position.array);
+        PHYSICS_LOWER.set_initial_position_lower(this.mesh.geometry.attributes.position.array);
         // Set mesh on entity.
         el.setObject3D('mesh', this.mesh);
     },
     update: function() {
         var data = this.data;
 
-        this.mesh.scale.set(data.length, data.depth, data.height);
+        this.mesh.scale.set(data.length, data.height, data.depth);
         console.log('updating')
         params.length = data.length
         params.height = data.height
         params.depth = data.depth
-        redraw_beam(this.mesh);
+        redraw_beam_lower(this.mesh);
 
     },
 

@@ -60,7 +60,7 @@ window.addEventListener("load", (event) => {
         main_ball.setAttribute("visible", false);
     }
     if (device === "Desktop" || device === "Mobile") {
-        camera.setAttribute("position", "0 6 0.3");
+        camera.setAttribute("position", "0 4 0.3");
         camera.setAttribute("look-controls", "pointerLockEnabled: false;");
         camera.setAttribute("wasd-controls", "acceleration: 200");
         var cursorEntity = document.createElement("a-cursor");

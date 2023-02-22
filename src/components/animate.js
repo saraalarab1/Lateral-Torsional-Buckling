@@ -18,7 +18,17 @@ window.update_beam_length = function(click, percent) {
     params.length = percent;
     console.log(percent)
 
+    document.getElementById('beam_upper').setAttribute('beam_upper', {
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
     document.getElementById('beam').setAttribute('beam', {
+        length: params.length,
+        height: params.height,
+        depth: params.depth,
+    });
+    document.getElementById('beam_lower').setAttribute('beam_lower', {
         length: params.length,
         height: params.height,
         depth: params.depth,
@@ -44,7 +54,17 @@ window.update_beam_height = function(click, percent) {
     params.height = percent;
     console.log(percent)
 
+    document.getElementById('beam_upper').setAttribute('beam_upper', {
+        length: params.length,
+        height: params.height,
+        depth: params.depth
+    });
     document.getElementById('beam').setAttribute('beam', {
+        length: params.length,
+        height: params.height,
+        depth: params.depth
+    });
+    document.getElementById('beam_lower').setAttribute('beam_lower', {
         length: params.length,
         height: params.height,
         depth: params.depth
@@ -70,7 +90,17 @@ window.update_beam_depth = function(click, percent) {
     params.depth = percent;
     console.log(percent)
 
+    document.getElementById('beam_upper').setAttribute('beam_upper', {
+        length: params.length,
+        height: params.height,
+        depth: params.depth
+    });
     document.getElementById('beam').setAttribute('beam', {
+        length: params.length,
+        height: params.height,
+        depth: params.depth
+    });
+    document.getElementById('beam_lower').setAttribute('beam_lower', {
         length: params.length,
         height: params.height,
         depth: params.depth
@@ -94,9 +124,16 @@ window.update_applied_displacement = function(click, percent) {
     params.displacement.y = percent;
     console.log(percent)
 
+    document.getElementById('beam_upper').setAttribute('beam_upper', {
+        applied_displacement: params.displacement.y,
+    });
     document.getElementById('beam').setAttribute('beam', {
         applied_displacement: params.displacement.y,
     });
+    document.getElementById('beam_lower').setAttribute('beam_lower', {
+        applied_displacement: params.displacement.y,
+    });
+
 
 }
 
@@ -105,7 +142,13 @@ window.update_load_position = function(click, percent) {
     params.load_position = percent;
     console.log(percent)
 
+    document.getElementById('beam_upper').setAttribute('beam_upper', {
+        load_position: params.load_position,
+    });
     document.getElementById('beam').setAttribute('beam', {
+        load_position: params.load_position,
+    });
+    document.getElementById('beam_lower').setAttribute('beam_lower', {
         load_position: params.load_position,
     });
 
@@ -113,7 +156,15 @@ window.update_load_position = function(click, percent) {
 
 window.update_color = function(value) {
     params.colour_by = value;
+    document.getElementById('beam_upper').setAttribute('beam_upper', {
+        length: params.length,
+        color_by: params.colour_by
+    });
     document.getElementById('beam').setAttribute('beam', {
+        length: params.length,
+        color_by: params.colour_by
+    });
+    document.getElementById('beam_lower').setAttribute('beam_lower', {
         length: params.length,
         color_by: params.colour_by
     });
