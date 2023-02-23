@@ -85,10 +85,10 @@ window.update_beam_height = function(click, percent) {
 
 window.update_beam_depth = function(click, percent) {
     percent = percent.toFixed(2);
-    params.depth = percent*0.75;
-    params_upper.depth = percent*2;
-    params_lower.depth = percent*2;
-    console.log(percent)
+    params.depth = percent * 0.75;
+    params_upper.depth = percent * 2;
+    params_lower.depth = percent * 2;
+    console.log(percent);
 
     document.getElementById('beam_upper').setAttribute('beam_upper', {
         length: params_upper.length,
@@ -121,9 +121,9 @@ window.update_beam_depth = function(click, percent) {
 
 window.update_applied_displacement = function(click, percent) {
     percent = (percent * 0.5).toFixed(4);
-    params.displacement.y = percent;
-    params_upper.displacement.y = percent;
-    params_lower.displacement.y = percent;
+    params.displacement.y = percent * 10;
+    params_upper.displacement.y = percent * 4;
+    params_lower.displacement.y = percent * 4;
 
     console.log(percent)
 

@@ -1,5 +1,5 @@
 import * as PHYSICS_LOWER from '../utils/physics_lower';
-import { beam_lower_offset, beam_offset, params_lower } from '../utils/params';
+import { beam_lower_offset, beam_offset, beam_upper_offset, params_lower } from '../utils/params';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
 
 let lut;
@@ -80,10 +80,10 @@ AFRAME.registerComponent('beam_lower', {
 
         // Create mesh.
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-        
+
         this.mesh.scale.set(data.length, data.height, data.depth);
         this.mesh.position.add(beam_lower_offset); // move the beam away from the start location
-
+        this.mesh.rotation.set(85, 0, 0);
         const type = 'beam_lower';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
 
