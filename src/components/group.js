@@ -43,6 +43,7 @@ window.addEventListener("load", (event) => {
     entity.appendChild(rightSupport);
 
     entity.setAttribute('object3D', { threeObject: group });
+    entity.setAttribute("scale","0.22 0.22 0.22")
 
     AFRAME.scenes[0].appendChild(entity);
 

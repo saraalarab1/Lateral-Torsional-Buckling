@@ -1,8 +1,8 @@
 let beamLength = 20;
 
-export let beam_offset = new THREE.Vector3(0, 4, -10);
-export let beam_upper_offset = new THREE.Vector3(0, 4.65, -10);
-export let beam_lower_offset = new THREE.Vector3(0, 3.2, -10);
+export let beam_offset = new THREE.Vector3(0, 3, -6);
+export let beam_upper_offset = new THREE.Vector3(0, 3.65, -6);
+export let beam_lower_offset = new THREE.Vector3(0, 2.2, -6);
 
 export let pin_radius = 1;
 

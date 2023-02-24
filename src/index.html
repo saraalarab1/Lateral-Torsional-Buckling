@@ -8,18 +8,64 @@
 </head>
 
 <body>
-    <a-scene gui-env>
+    <a-scene shadow="type: pcfsoft" physics="driver: local; gravity: 0; friction: 0; restitution: 0;" renderer="antialias: true" raycaster="objects: [my-slider]">
+        <a-assets>
+          <a-mixin id="touch" class="hands" ></a-mixin>
+        </a-assets>
 
-        <a-sky color="#001337">
-        </a-sky>
+        <a-sky color="white"></a-sky></a-sky>
+
         <a-sphere id="left_ball" onclick="update_position('left')" position="-12 8 -15" radius="1.25" color="#7BC8A4"></a-sphere>
         <a-sphere id="right_ball" onclick="update_position('right')" position="12 8 -15" radius="1.25" color="#7BC8A4"></a-sphere>
         <a-sphere id="main_ball" onclick="update_position('main')" position="0 5 0" radius="0.5" color="#7BC8A4"></a-sphere>
 
-        <a-plane static-body width="100" height="100" position=" 0.00 0.00 0.00" rotation="-90 0 0" color="#666666" shadow="cast: false; receive: true">
+        <a-entity class="environment" environment="groundTexture: none; grid: 1x1; gridColor: #222; ground: flat; lighting: none; skyType: color; skyColor: gray; horizonColor: #222; groundColor: black; groundColor2: #fff"></a-entity>
 
-            <a-entity laser-controls="hand: left"></a-entity>
-            <a-entity laser-controls="hand: right"></a-entity>
+        <a-plane material="side: double" src="https://cdn.glitch.global/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/thumbnails%2FWoodQuarteredChiffon001_COL_2K.jpg?1675808243856" repeat="10 10" position="0 1.8 6.2" rotation="0 0 0" scale="10.4 4.8 1" static-body></a-plane>
+
+        <a-plane material="side: double" src="https://cdn.glitch.global/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/thumbnails%2FWoodFineDark004_COL_2K.jpg?1675809047142" repeat="10 10" position="0 4 0.9" rotation="90 0 0" scale="11 10.8 1" static-body></a-plane>
+
+        
+        <a-plane material="side: double" src="https://cdn.glitch.global/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/thumbnails%2FWoodQuarteredChiffon001_COL_2K.jpg?1675808243856" repeat="10 10" position="-5 2 0.7" rotation="0 90 0" scale="11.2 5 5" static-body></a-plane>
+        <a-plane material="side: double" src="https://cdn.glitch.global/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/thumbnails%2FWoodQuarteredChiffon001_COL_2K.jpg?1675808243856" repeat="10 10" position="5 2 0.7" rotation="0 90 0" scale="11.2 5 5" static-body></a-plane>
+
+
+        <a-plane material="side: double"  position="0 2.4 -4.9" rotation="0 0 0" scale="10.5 6.2 1" static-body></a-plane>
+
+        <a-assets>
+            <a-asset-item id="classRoom" src="https://raw.githubusercontent.com/Youssef140/Assets/main/Assets/imitation_classroom_stage/scene.gltf?token=GHSAT0AAAAAAB6O4KZMQ6GZ5PYLZ7HPAZLOY7CYJ2A"></a-asset-item>
+
+            <a-asset-item id="plus" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/MINUSS%20.glb?v=1675981115171"></a-asset-item>
+
+            <a-asset-item id="arrow" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/ARROW%202%20.glb?v=1675978565131"></a-asset-item>
+
+            <a-asset-item id="minus" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/pluss.glb?v=1675981125859"></a-asset-item>
+        </a-assets>
+
+        <a-entity gltf-model="#classRoom" modify-materials scale="0.008 0.008 0.008" position="0 0.7 0"></a-entity>
+
+
+        <a-entity data-aabb-collider-dynamic="true" class="grabbable" id="plot" scale="0.5 0.5 0.5" position="0 1 -0.6" graph="uMin: -6.2; uMax: 6.2; vMin: -6.2; vMax: 6.2; showBoundingLabels: true; showWireframe: false; function: f(u,v) = [u, v, a * cos(v) + b * sin(u)]"></a-entity >
+
+        <a-entity data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" position="0.6 1 0" rotation="0 -70 0" graph-variable-ui="graph: #plot"></a-entity>
+    
+        <a-entity position="0.7 1 0.4" rotation="0 -90 0" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" >
+        <a-entity my-toggle="title: Bounding Box; active: false" event-set__active="_target: #plot; graph.showBoundingBox: true" event-set__inactive="_target: #plot; graph.showBoundingBox: false" position="0 0 0"></a-entity>
+        <!--        <a-entity id="toggle2" my-toggle="title: bounding box; active: false" event-set__start="_event: click; _target: #toggle1; graph.showBoundingBox= true" position="0 0 0" clickable></a-entity>-->
+        <a-entity my-toggle="title: Labels; active: true" event-set__active="_target: #plot; graph.showBoundingLabels: true" event-set__inactive="_target: #plot; graph.showBoundingLabels: false" position="0 0.2 0"></a-entity>
+        <a-entity my-toggle="title: Hide Colors; active: false" event-set__active="_target: #plot; graph.showWireframe: true" event-set__inactive="_target: #plot; graph.showWireframe: false" position="0.25 0 0"></a-entity>
+        <a-entity my-toggle="title: Grid; active: true" event-set__active="_target: #plot; graph.showGrid: true" event-set__inactive="_target: #plot; graph.showGrid: false" position="0.25 0.2 0"></a-entity>
+        </a-entity>
+  
+
+        <a-entity id="function-text" position="0 1.5 -2.5" rotation="0 0 0" scale="1.5 1.5 1.5" my-text="text: ; color: white"></a-entity>
+
+        <a-entity light="type: spot; color: #ffffff; intensity: 0.9; castShadow: false" position="0 2 0" rotation="-90 0 0"></a-entity>
+        <a-entity light="type: ambient; color: #ffffff; intensity: 0.6;" position="0 3 0"></a-entity>
+        
+        <a-entity interaction-hands aabb-collider="objects: .grabbable" id="lhand" hand-controls="hand: left; handModelStyle: highPoly" mixin="touch"></a-entity>
+        <a-entity interaction-hands aabb-collider="objects: .grabbable" id="rhand" hand-controls="hand: right; handModelStyle: highPoly" mixin="touch"></a-entity>
+
 
     </a-scene>
 
