@@ -1,3 +1,6 @@
+require('aframe')
+require('aframe-extras')
+
 require('./components/beam')
 require('./components/beam_upper')
 require('./components/beam_lower')
