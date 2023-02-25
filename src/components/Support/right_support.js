@@ -1,4 +1,4 @@
-import {params, pin_radius, beam_offset} from '../utils/params'
+import {params, pin_radius, beam_offset} from '../../utils/params'
 
 
 AFRAME.registerComponent('right_support', {

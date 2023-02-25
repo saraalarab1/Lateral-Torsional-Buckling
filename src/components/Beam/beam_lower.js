@@ -1,5 +1,5 @@
-import * as PHYSICS_LOWER from '../utils/physics_lower';
-import { beam_lower_offset, beam_offset, beam_upper_offset, params_lower } from '../utils/params';
+import * as PHYSICS_LOWER from '../../utils/physics_lower';
+import { beam_lower_offset, beam_offset, beam_upper_offset, params_lower } from '../../utils/params';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
 
 let lut;

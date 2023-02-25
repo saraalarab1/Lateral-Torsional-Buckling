@@ -1,5 +1,5 @@
-import {params, beam_offset} from '../utils/params'
-import * as PHYSICS from '../utils/physics.js';
+import {params, beam_offset} from '../../utils/params'
+import * as PHYSICS from '../../utils/physics.js';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
 
 let lut;
@@ -73,6 +73,18 @@ AFRAME.registerComponent('beam', {
     init: function() {
         var data = this.data;
         var el = this.el;
+
+        this.heightMax = 2
+        this.heightMin = 1
+        this.depthMax = 2
+        this.depthMin = 1
+        this.lengthMax = 2
+        this.lengthMin = 1
+        this.applied_displacementMax = 2
+        this.applied_displacementMax =1
+        this.load_positionMax = 2
+        this.load_positionMin =1
+
         // Create geometry.
         this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
 
@@ -102,5 +114,20 @@ AFRAME.registerComponent('beam', {
         redraw_beam(this.mesh);
 
     },
+    getVariables: function(){
+        var data = this.data;
+
+        let variables = {}
+        variables['length'] = data.length;
+        variables['height'] = data.height;
+        variables['depth'] = data.depth;
+        variables['applied_displacement'] = data.applied_displacement;
+        variables['load_position'] = data.load_position;
+
+       
+        return variables;
+        
+
+    }
 
 });

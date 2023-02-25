@@ -27,21 +27,7 @@ export function isPhone() {
     );
 }
 
-window.update_position = function(position) {
-    const camera = document.getElementById("camera");
-    if (position == 'right') {
-        camera.setAttribute("position", "15 7 -8");
-        camera.setAttribute("rotation", "-30 90 0");
-    }
-    if (position == 'left') {
-        camera.setAttribute("position", "-15 7 -8");
-        camera.setAttribute("rotation", "-30 -90 0");
-    }
-    if (position == 'right') {
-        camera.setAttribute("position", "0 6 0.3");
-        camera.setAttribute("rotation", "0 0 0");
-    }
-}
+
 
 window.addEventListener("load", (event) => {
     var camera = document.createElement("a-entity");
@@ -60,7 +46,7 @@ window.addEventListener("load", (event) => {
         main_ball.setAttribute("visible", false);
     }
     if (device === "Desktop" || device === "Mobile") {
-        camera.setAttribute("position", "0 1.2 1");
+        camera.setAttribute("position", "0 1.2 3");
         camera.setAttribute("look-controls", "pointerLockEnabled: false;");
         camera.setAttribute("wasd-controls", "acceleration: 200");
         var cursorEntity = document.createElement("a-cursor");
