@@ -24,10 +24,10 @@ require('./components/Group/group')
 
 // require('./components/GazeBasedSystem/GraphScaler')
 require('./components/SliderComponent/slider.component');
-// require('./components/ToggleComponent/toggle.component');
+require('./components/ToggleComponent/toggle.component');
 require('./components/BeamUI/beam_variable_ui');
 // require('./components/BeamUI/beam-parameter-ui.component');
-// require('./components/TextComponent/text.component');
+require('./components/TextComponent/text.component');
 require('./components/GazeBasedSystem/DeviceCamera')
 
 
@@ -40,14 +40,3 @@ require('./components/GazeBasedSystem/DeviceCamera')
 
 
         
-
-AFRAME.utils.device.checkHeadsetConnected = function() {
-    if (AFRAME.utils.device.isMobile()) {
-      return false; // Disable HTTPS on mobile devices
-    }
-    return true;
-  };
-function animate() {
-    requestAnimationFrame(animate);
-    // controls.update();
-}

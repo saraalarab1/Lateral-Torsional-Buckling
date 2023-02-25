@@ -35,76 +35,78 @@ AFRAME.registerComponent('beam-variable-ui', {
         this.setup()
     },
     setup: function() {
+        var data = this.data;
+        var el = this.el;
         // this.el.innerHTML = "";
-                        
         this.variables = this.beam.getVariables();
 
         const height = 0.30;
         const offset = Object.keys(this.variables).length * height / 2;
 
         console.log(this.variables)
-        // let index = 0;
-        // for (let [variable, value] of Object.entries(this.variables)) {
-        //     let slider = this.createSlider(variable, parseFloat(value), parseFloat(this.graph.data[variable+"Min"]), parseFloat(this.graph.data[variable+"Max"]));
-        //     slider.setAttribute('position', `0 ${index * -height + offset} 0`)
-        //     slider.addEventListener('change', (evt) => {
-        //         var newvalue = evt.detail.value;
-        //         let beamAttributes = {}
-        //         beamAttributes[variable] = newvalue;
-        //         this.data.graph.setAttribute('beam', beamAttributes)
-        //     })
-        //     let plus = document.createElement("a-entity")
-        //     plus.setAttribute("gltf-model", "#plus")
-        //     plus.setAttribute("scale", "0.0055 0.0055 0.0055")
-        //     plus.setAttribute("rotation", "90 0 0")
-        //     plus.setAttribute('position', `0.1 ${index * -height + offset + 0.03} 0`)
-        //     let minus = document.createElement("a-entity")
-        //     minus.setAttribute("gltf-model", "#minus")
-        //     minus.setAttribute("scale", "0.0055 0.0055 0.0055")
-        //     minus.setAttribute("rotation", "90 0 0")
-        //     minus.setAttribute('position', `-0.45 ${index * -height + offset + 0.03} 0`)
-        //     var interval = null
-        //     if(getDevice() === "Mobile"){
-        //         plus.addEventListener("mouseenter", () => {
-        //             if (interval) clearInterval(interval)
-        //             interval = this.gazeBasedChangeValue(slider, variable, "plus")
-        //         })
-        //         minus.addEventListener("mouseenter", () => {
-        //             if (interval) clearInterval(interval)
-        //             interval = this.gazeBasedChangeValue(slider, variable, "minus")
-        //         })
-        //     } else {
-        //         plus.addEventListener("mousedown", () => {
-        //             if (interval) clearInterval(interval)
-        //             interval = this.gazeBasedChangeValue(slider, variable, "plus")
-        //         })
-        //         plus.addEventListener("mouseup", () => {
-        //             if (interval) clearInterval(interval)
-        //         })
-        //         minus.addEventListener("mousedown", () => {
-        //             if (interval) clearInterval(interval)
-        //             interval = this.gazeBasedChangeValue(slider, variable, "minus")
-        //         })
-        //         minus.addEventListener("mouseup", () => {
-        //             if (interval) clearInterval(interval)
-        //         })
-        //     }
+        let index = 0;
+        for (let [variable, value] of Object.entries(this.variables)) {
+            console.log(variable, value)
+            let slider = this.createSlider(variable, parseFloat(value), parseFloat(this.beam.data[variable+"Min"]), parseFloat(this.beam.data[variable+"Max"]));
+            slider.setAttribute('position', `0 ${index * -height + offset} 0`)
+            slider.addEventListener('change', (evt) => {
+                var newvalue = evt.detail.value;
+                let beamAttributes = {}
+                beamAttributes[variable] = newvalue;
+                this.data.beam.setAttribute('beam', beamAttributes)
+            })
+            let plus = document.createElement("a-entity")
+            plus.setAttribute("gltf-model", "#plus")
+            plus.setAttribute("scale", "0.0055 0.0055 0.0055")
+            plus.setAttribute("rotation", "90 0 0")
+            plus.setAttribute('position', `0.1 ${index * -height + offset + 0.03} 0`)
+            let minus = document.createElement("a-entity")
+            minus.setAttribute("gltf-model", "#minus")
+            minus.setAttribute("scale", "0.0055 0.0055 0.0055")
+            minus.setAttribute("rotation", "90 0 0")
+            minus.setAttribute('position', `-0.45 ${index * -height + offset + 0.03} 0`)
+            var interval = null
+            if(getDevice() === "Mobile"){
+                plus.addEventListener("mouseenter", () => {
+                    if (interval) clearInterval(interval)
+                    interval = this.gazeBasedChangeValue(slider, variable, "plus")
+                })
+                minus.addEventListener("mouseenter", () => {
+                    if (interval) clearInterval(interval)
+                    interval = this.gazeBasedChangeValue(slider, variable, "minus")
+                })
+            } else {
+                plus.addEventListener("mousedown", () => {
+                    if (interval) clearInterval(interval)
+                    interval = this.gazeBasedChangeValue(slider, variable, "plus")
+                })
+                plus.addEventListener("mouseup", () => {
+                    if (interval) clearInterval(interval)
+                })
+                minus.addEventListener("mousedown", () => {
+                    if (interval) clearInterval(interval)
+                    interval = this.gazeBasedChangeValue(slider, variable, "minus")
+                })
+                minus.addEventListener("mouseup", () => {
+                    if (interval) clearInterval(interval)
+                })
+            }
             
-        //     plus.addEventListener("mouseleave", () => {
-        //         if (interval) clearInterval(interval)
-        //     })
-        //     minus.addEventListener("mouseleave", () => {
-        //         if (interval) clearInterval(interval)
-        //     })
+            plus.addEventListener("mouseleave", () => {
+                if (interval) clearInterval(interval)
+            })
+            minus.addEventListener("mouseleave", () => {
+                if (interval) clearInterval(interval)
+            })
 
-        //     this.el.appendChild(slider)
-        //     if(getDevice() === "Desktop" || getDevice() === "Mobile"){
-        //         this.el.appendChild(plus)
-        //         this.el.appendChild(minus)
-        //     }
+            this.el.appendChild(slider)
+            if(getDevice() === "Desktop" || getDevice() === "Mobile"){
+                this.el.appendChild(plus)
+                this.el.appendChild(minus)
+            }
 
-        //     index++;
-        // }
+            index++;
+        }
     },
     createSlider: function(variable, value, min, max) {
         if ((min == null || isNaN(min)) && (max == null || isNaN(max))) {
@@ -117,7 +119,7 @@ AFRAME.registerComponent('beam-variable-ui', {
         }        
         const slider = document.createElement("a-entity");
         slider.setAttribute('my-slider', {
-            title: `${variable}Value`,
+            title: `${variable}`,
             value,
             min,
             max
