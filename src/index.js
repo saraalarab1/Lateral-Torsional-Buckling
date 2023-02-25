@@ -10,7 +10,10 @@ require('aframe-extras')
 require('aframe-physics-extras')
 require('aframe-fps-counter-component');
 
-require('./components/camera')
+require('./components/aframe-aabb-collider');
+require('./components/aframe-parent-constraint');
+require('./components/helper');
+
 require('./components/Beam/beam')
 require('./components/Beam/beam_upper')
 require('./components/Beam/beam_lower')
@@ -19,22 +22,21 @@ require('./components/Support/left_support')
 require('./components/Support/visibility')
 require('./components/Group/group')
 
-
-// require('./components/GazeBasedSystem/DeviceCamera')
 // require('./components/GazeBasedSystem/GraphScaler')
-require('./components/aframe-aabb-collider');
-require('./components/aframe-parent-constraint');
-require('./components/helper');
-require('./components/gui')
-require('./components/animate')
-require('./components/gaze')
-
 require('./components/SliderComponent/slider.component');
-// require('./components/BeamUI/beam_variable_ui');
-// require('./components/GraphComponent/Graph');
 // require('./components/ToggleComponent/toggle.component');
-// require('./components/GraphParameterUIComponent/graph-parameter-ui.component');
+require('./components/BeamUI/beam_variable_ui');
+// require('./components/BeamUI/beam-parameter-ui.component');
 // require('./components/TextComponent/text.component');
+require('./components/GazeBasedSystem/DeviceCamera')
+
+
+
+
+// require('./components/gui')
+// require('./components/animate')
+// require('./components/gaze')
+// require('./components/GraphComponent/Graph');
 
 
         
