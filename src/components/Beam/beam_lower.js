@@ -5,56 +5,6 @@ import { Lut } from 'three/examples/jsm/math/Lut.js';
 let lut;
 let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
 
-function redraw_beam_lower(beam) {
-    console.log("redraw beam")
-
-    PHYSICS_LOWER.updateDeformation_lower(params_lower);
-    beam.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS_LOWER.positions_lower, 3));
-    beam.geometry.attributes.position.needsUpdate = true;
-
-    if (params_lower.colour_by === 'None') {
-        let colors = [];
-        for (let i = 0; i < PHYSICS_LOWER.shear_force_lower.length; i++) {
-            colors.push(1, 1, 1);
-        }
-
-        beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        beam.geometry.attributes.color.needsUpdate = true;
-        beam.material.needsUpdate = true;
-    } else {
-        let arr, max_val;
-        if (params_lower.colour_by === 'Bending Moment') {
-            arr = PHYSICS_LOWER.bending_moment_lower;
-            lut = cooltowarm;
-            max_val = PHYSICS_LOWER.M_max_lower;
-        } else if (params_lower.colour_by === 'Shear Force') {
-            arr = PHYSICS_LOWER.shear_force_lower;
-            lut = cooltowarm;
-            max_val = PHYSICS_LOWER.SF_max_lower;
-        }
-        const colors = [];
-
-        if (max_val > 0) {
-            lut.setMin(-max_val);
-            lut.setMax(max_val);
-            for (let i = 0; i < arr.length; i++) {
-                const colorValue = arr[i];
-                const color = lut.getColor(colorValue);
-                colors.push(color.r, color.g, color.b);
-            }
-        } else {
-            for (let i = 0; i < arr.length; i++) {
-                colors.push(0, 0, 0);
-            }
-        }
-        beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        beam.geometry.attributes.color.needsUpdate = true;
-        beam.material.needsUpdate = true;
-
-    }
-
-}
-
 
 AFRAME.registerComponent('beam_lower', {
     schema: {
@@ -96,11 +46,56 @@ AFRAME.registerComponent('beam_lower', {
 
         this.mesh.scale.set(data.length, data.height, data.depth);
 
-        console.log('updating')
         params_lower.length = data.length
         params_lower.height = data.height
         params_lower.depth = data.depth
-        redraw_beam_lower(this.mesh);
+        
+        console.log("redraw lower beam")
+
+        PHYSICS_LOWER.updateDeformation_lower(params_lower);
+        this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS_LOWER.positions_lower, 3));
+        this.mesh.geometry.attributes.position.needsUpdate = true;
+    
+        if (params_lower.colour_by === 'None') {
+            let colors = [];
+            for (let i = 0; i < PHYSICS_LOWER.shear_force_lower.length; i++) {
+                colors.push(1, 1, 1);
+            }
+    
+            this.mesh.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+            this.mesh.geometry.attributes.color.needsUpdate = true;
+            this.mesh.material.needsUpdate = true;
+        } else {
+            let arr, max_val;
+            if (params_lower.colour_by === 'Bending Moment') {
+                arr = PHYSICS_LOWER.bending_moment_lower;
+                lut = cooltowarm;
+                max_val = PHYSICS_LOWER.M_max_lower;
+            } else if (params_lower.colour_by === 'Shear Force') {
+                arr = PHYSICS_LOWER.shear_force_lower;
+                lut = cooltowarm;
+                max_val = PHYSICS_LOWER.SF_max_lower;
+            }
+            const colors = [];
+    
+            if (max_val > 0) {
+                lut.setMin(-max_val);
+                lut.setMax(max_val);
+                for (let i = 0; i < arr.length; i++) {
+                    const colorValue = arr[i];
+                    const color = lut.getColor(colorValue);
+                    colors.push(color.r, color.g, color.b);
+                }
+            } else {
+                for (let i = 0; i < arr.length; i++) {
+                    colors.push(0, 0, 0);
+                }
+            }
+            this.mesh.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+            this.mesh.geometry.attributes.color.needsUpdate = true;
+            this.mesh.material.needsUpdate = true;
+    
+        }
 
     },
 

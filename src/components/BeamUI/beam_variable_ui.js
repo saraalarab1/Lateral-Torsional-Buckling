@@ -53,7 +53,9 @@ AFRAME.registerComponent('beam-variable-ui', {
                 var newvalue = evt.detail.value;
                 let beamAttributes = {}
                 beamAttributes[variable] = newvalue;
+                this.data.beam_upper.setAttribute('beam_upper', beamAttributes)
                 this.data.beam.setAttribute('beam', beamAttributes)
+                this.data.beam_lower.setAttribute('beam_lower', beamAttributes)
             })
             let plus = document.createElement("a-entity")
             plus.setAttribute("gltf-model", "#plus")
@@ -131,10 +133,12 @@ AFRAME.registerComponent('beam-variable-ui', {
             let sliderAttributes = slider.getAttribute("my-slider")
             if ((mode === 'plus' && sliderAttributes.value < sliderAttributes.max) ||
             (mode === 'minus' && sliderAttributes.value > sliderAttributes.min)){
-                let newvalue = sliderAttributes.value + (mode === "plus" ? 0.01 : -0.01);
+                let newvalue = sliderAttributes.value + (mode === "plus" ? 0.5 : -0.5);
                 let beamAttributes = {}
-                beamAttributes[variable] = newvalue;
-                this.data.graph.setAttribute('graph', beamAttributes)
+                beamAttributes[variable] = newvalue.toFixed(2);
+                this.data.beam_upper.setAttribute('beam_upper', beamAttributes)
+                this.data.beam.setAttribute('beam', beamAttributes)
+                this.data.beam_lower.setAttribute('beam_lower', beamAttributes)
                 sliderAttributes["value"] = newvalue;
                 slider.setAttribute('my-slider', sliderAttributes)
             }

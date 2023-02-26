@@ -1,60 +1,8 @@
 import {params, beam_offset} from '../../utils/params'
 import * as PHYSICS from '../../utils/physics.js';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
-
 let lut;
 let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
-
-function redraw_beam(beam) {
-    console.log("redraw beam")
-
-    PHYSICS.updateDeformation(params);
-    beam.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
-    beam.geometry.attributes.position.needsUpdate = true;
-
-    if (params.colour_by === 'None') {
-        let colors = [];
-        for (let i = 0; i < PHYSICS.shear_force.length; i++) {
-            colors.push(1, 1, 1);
-        }
-
-        beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        beam.geometry.attributes.color.needsUpdate = true;
-        beam.material.needsUpdate = true;
-    } else {
-        let arr, max_val;
-        if (params.colour_by === 'Bending Moment') {
-            arr = PHYSICS.bending_moment;
-            lut = cooltowarm;
-            max_val = PHYSICS.M_max;
-        } else if (params.colour_by === 'Shear Force') {
-            arr = PHYSICS.shear_force;
-            lut = cooltowarm;
-            max_val = PHYSICS.SF_max;
-        }
-        const colors = [];
-
-        if (max_val > 0) {
-            lut.setMin(-max_val);
-            lut.setMax(max_val);
-            for (let i = 0; i < arr.length; i++) {
-                const colorValue = arr[i];
-                const color = lut.getColor(colorValue);
-                colors.push(color.r, color.g, color.b);
-            }
-        } else {
-            for (let i = 0; i < arr.length; i++) {
-                colors.push(0, 0, 0);
-            }
-        }
-        beam.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        beam.geometry.attributes.color.needsUpdate = true;
-        beam.material.needsUpdate = true;
-
-    }
-
-}
-
 
 
 AFRAME.registerComponent('beam', {
@@ -74,15 +22,15 @@ AFRAME.registerComponent('beam', {
         var data = this.data;
         var el = this.el;
 
-        this.heightMax = 2
-        this.heightMin = 1
-        this.depthMax = 2
+        this.heightMax = 10
+        this.heightMin = 2
+        this.depthMax = 5
         this.depthMin = 1
-        this.lengthMax = 2
-        this.lengthMin = 1
-        this.applied_displacementMax = 2
+        this.lengthMax = 10
+        this.lengthMin = 2
+        this.applied_displacementMax = 10
         this.applied_displacementMax =1
-        this.load_positionMax = 2
+        this.load_positionMax = 10
         this.load_positionMin =1
 
         // Create geometry.
@@ -107,11 +55,56 @@ AFRAME.registerComponent('beam', {
         var data = this.data;
 
         this.mesh.scale.set(data.length, data.height, data.depth);
-        console.log('updating')
         params.length = data.length
         params.height = data.height
         params.depth = data.depth
-        redraw_beam(this.mesh);
+        
+        console.log("redraw beam")
+
+        PHYSICS.updateDeformation(params);
+        this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
+        this.mesh.geometry.attributes.position.needsUpdate = true;
+    
+        if (params.colour_by === 'None') {
+            let colors = [];
+            for (let i = 0; i < PHYSICS.shear_force.length; i++) {
+                colors.push(1, 1, 1);
+            }
+    
+            this.mesh.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+            this.mesh.geometry.attributes.color.needsUpdate = true;
+            this.mesh.material.needsUpdate = true;
+        } else {
+            let arr, max_val;
+            if (params.colour_by === 'Bending Moment') {
+                arr = PHYSICS.bending_moment;
+                lut = cooltowarm;
+                max_val = PHYSICS.M_max;
+            } else if (params.colour_by === 'Shear Force') {
+                arr = PHYSICS.shear_force;
+                lut = cooltowarm;
+                max_val = PHYSICS.SF_max;
+            }
+            const colors = [];
+    
+            if (max_val > 0) {
+                lut.setMin(-max_val);
+                lut.setMax(max_val);
+                for (let i = 0; i < arr.length; i++) {
+                    const colorValue = arr[i];
+                    const color = lut.getColor(colorValue);
+                    colors.push(color.r, color.g, color.b);
+                }
+            } else {
+                for (let i = 0; i < arr.length; i++) {
+                    colors.push(0, 0, 0);
+                }
+            }
+            this.mesh.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+            this.mesh.geometry.attributes.color.needsUpdate = true;
+            this.mesh.material.needsUpdate = true;
+    
+        }
 
     },
     getVariables: function(){

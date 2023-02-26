@@ -57,20 +57,20 @@ AFRAME.registerComponent('my-slider', {
         
         } );
 
-        const titleText = new MeshText2D(this.data.title, { align: textAlign.right,  font: '36px Arial', fillStyle: '#FFFFFF' , antialias: true });
+        const titleText = new MeshText2D(this.data.title, { align: textAlign.center,  font: '36px Arial', fillStyle: '#FFFFFF' , antialias: true });
         titleText.scale.set(0.001,0.001,0.001);
         titleText.position.y = 0.16;
         titleText.position.z = 0.02;
         titleText.rotateY(-Math.PI / 2);
         this.lever.add(titleText)
         
-        const minText = new MeshText2D(this.data.min.toFixed(this.data.precision), { align: textAlign.right,  font: '28px Arial', fillStyle: '#FFFFFF' , antialias: true });
+        const minText = new MeshText2D(this.data.min.toFixed(this.data.precision), { align: textAlign.center,  font: '28px Arial', fillStyle: '#FFFFFF' , antialias: true });
         minText.scale.set(0.001,0.001,0.001);
         minText.position.y = -0.02;
         minText.position.x = this.valueToLeverPosition(this.data.min);
         chassis.add(minText)
         
-        const maxText = new MeshText2D(this.data.max.toFixed(this.data.precision), { align: textAlign.left,  font: '28px Arial', fillStyle: '#FFFFFF' , antialias: true });
+        const maxText = new MeshText2D(this.data.max.toFixed(this.data.precision), { align: textAlign.center,  font: '28px Arial', fillStyle: '#FFFFFF' , antialias: true });
         maxText.scale.set(0.001,0.001,0.001);
         maxText.position.y = -0.02;
         maxText.position.x = this.valueToLeverPosition(this.data.max);
@@ -85,7 +85,7 @@ AFRAME.registerComponent('my-slider', {
         if (this.textmesh != null) {
             this.textmesh.text = text;
         } else {
-            this.textmesh = new MeshText2D(text, { align: textAlign.right,  font: '50px Arial', fillStyle: '#FFFFFF' , antialias: true });
+            this.textmesh = new MeshText2D(text, { align: textAlign.center,  font: '50px Arial', fillStyle: '#FFFFFF' , antialias: true });
             this.textmesh.scale.set(0.001,0.001,0.001);
             this.textmesh.position.y = 0.12;
             this.textmesh.position.z = 0.02;;
