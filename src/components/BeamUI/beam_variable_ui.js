@@ -43,10 +43,8 @@ AFRAME.registerComponent('beam-variable-ui', {
         const height = 0.30;
         const offset = Object.keys(this.variables).length * height / 2;
 
-        console.log(this.variables)
         let index = 0;
         for (let [variable, value] of Object.entries(this.variables)) {
-            console.log(variable, value)
             let slider = this.createSlider(variable, parseFloat(value), parseFloat(this.beam.data[variable+"Min"]), parseFloat(this.beam.data[variable+"Max"]));
             slider.setAttribute('position', `0 ${index * -height + offset} 0`)
             slider.addEventListener('change', (evt) => {
@@ -133,12 +131,25 @@ AFRAME.registerComponent('beam-variable-ui', {
             let sliderAttributes = slider.getAttribute("my-slider")
             if ((mode === 'plus' && sliderAttributes.value < sliderAttributes.max) ||
             (mode === 'minus' && sliderAttributes.value > sliderAttributes.min)){
-                let newvalue = sliderAttributes.value + (mode === "plus" ? 0.5 : -0.5);
+                let newvalue;
+                if(variable == 'length' || variable == 'load_position' || variable == 'applied_displacement'){
+                    newvalue = sliderAttributes.value + (mode === "plus" ? 0.5 : -0.5);
+                }else{
+                    newvalue = sliderAttributes.value + (mode === "plus" ? 0.01 : -0.01);
+                }
                 let beamAttributes = {}
-                beamAttributes[variable] = newvalue.toFixed(2);
-                this.data.beam_upper.setAttribute('beam_upper', beamAttributes)
+                let sideAttributes = {}
+
+                if(variable == 'depth'){
+                    beamAttributes['height'] = newvalue.toFixed(2);
+                }else{
+                    beamAttributes[variable] = newvalue.toFixed(2);
+                }
+                sideAttributes[variable] = newvalue.toFixed(2);
+
+                this.data.beam_upper.setAttribute('beam_upper', sideAttributes)
                 this.data.beam.setAttribute('beam', beamAttributes)
-                this.data.beam_lower.setAttribute('beam_lower', beamAttributes)
+                this.data.beam_lower.setAttribute('beam_lower', sideAttributes)
                 sliderAttributes["value"] = newvalue;
                 slider.setAttribute('my-slider', sliderAttributes)
             }

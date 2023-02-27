@@ -22,16 +22,14 @@ AFRAME.registerComponent('beam', {
         var data = this.data;
         var el = this.el;
 
-        this.heightMax = 10
-        this.heightMin = 2
-        this.depthMax = 5
-        this.depthMin = 1
-        this.lengthMax = 10
-        this.lengthMin = 2
-        this.applied_displacementMax = 10
-        this.applied_displacementMax =1
-        this.load_positionMax = 10
-        this.load_positionMin =1
+        this.data['depthMin'] = 0.1
+        this.data['depthMax'] = 2
+        this.data['lengthMin'] = 6
+        this.data['lengthMax'] = 30
+        this.data['applied_displacementMin'] = 0
+        this.data['applied_displacementMax'] =10
+        this.data['load_positionMin'] =0
+        this.data['load_positionMax'] = data.length
 
         // Create geometry.
         this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
@@ -55,6 +53,7 @@ AFRAME.registerComponent('beam', {
         var data = this.data;
 
         this.mesh.scale.set(data.length, data.height, data.depth);
+        this.data['load_positionMax'] = data.length
         params.length = data.length
         params.height = data.height
         params.depth = data.depth
@@ -112,7 +111,6 @@ AFRAME.registerComponent('beam', {
 
         let variables = {}
         variables['length'] = data.length;
-        variables['height'] = data.height;
         variables['depth'] = data.depth;
         variables['applied_displacement'] = data.applied_displacement;
         variables['load_position'] = data.load_position;

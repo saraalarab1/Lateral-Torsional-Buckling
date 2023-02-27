@@ -3,30 +3,7 @@
 // window.addEventListener("load", (event) => {
 
 
-//     // create a-gui-flex-container element
-//     const dimensionsContainer = document.createElement("a-gui-flex-container");
 
-//     // set element attributes
-//     dimensionsContainer.setAttribute("id", "dimensions");
-//     dimensionsContainer.setAttribute("flex-direction", "column");
-//     dimensionsContainer.setAttribute("justify-content", "center");
-//     dimensionsContainer.setAttribute("align-items", "normal");
-//     dimensionsContainer.setAttribute("component-padding", "0.3");
-//     dimensionsContainer.setAttribute("opacity", "0.5");
-//     dimensionsContainer.setAttribute("width", "3.5");
-//     dimensionsContainer.setAttribute("height", "5");
-//     dimensionsContainer.setAttribute("panel-color", "#072B73");
-//     dimensionsContainer.setAttribute("panel-rounded", "0.2");
-//     dimensionsContainer.setAttribute("position", "-7 10 -10");
-//     dimensionsContainer.setAttribute("rotation", "0 15 0");
-
-//     // add the element to its parent
-//     let lengthLabel = document.createElement("a-gui-label");
-//     lengthLabel.setAttribute("width", "2.5");
-//     lengthLabel.setAttribute("height", "0.75");
-//     lengthLabel.setAttribute("value", "Length");
-//     lengthLabel.setAttribute("font-size", "0.35");
-//     lengthLabel.setAttribute("line-height", "0.8");
 
 //     let lengthSlider = document.createElement("a-gui-slider");
 //     lengthSlider.setAttribute("id", "lengthSlider");
@@ -38,14 +15,6 @@
 //     lengthSlider.setAttribute("position", "0 0 0.1");
 //     lengthSlider.setAttribute("margin", "0 0 0 0")
 
-//     let heightLabel = document.createElement("a-gui-label");
-//     heightLabel.setAttribute("width", "2.5");
-//     heightLabel.setAttribute("height", "0.75");
-//     heightLabel.setAttribute("value", "Height");
-//     heightLabel.setAttribute("font-size", "0.35");
-//     heightLabel.setAttribute("line-height", "0.8");
-//     heightLabel.setAttribute("position", "0 0 0");
-
 //     let heightSlider = document.createElement("a-gui-slider");
 //     heightSlider.setAttribute("id", "heightSlider");
 //     heightSlider.setAttribute("class","rangeButton")
@@ -56,13 +25,6 @@
 //     heightSlider.setAttribute("position", "0 1 0.1");
 //     heightSlider.setAttribute("margin", "0 0 0 0");
 
-//     let depthLabel = document.createElement("a-gui-label");
-//     depthLabel.setAttribute("width", "2.5");
-//     depthLabel.setAttribute("height", "0.75");
-//     depthLabel.setAttribute("value", "Depth");
-//     depthLabel.setAttribute("font-size", "0.35");
-//     depthLabel.setAttribute("line-height", "0.8");
-//     depthLabel.setAttribute("position", "0 0 0");
 
 //     let depthSlider = document.createElement("a-gui-slider");
 //     depthSlider.setAttribute("id", "depthSlider");
