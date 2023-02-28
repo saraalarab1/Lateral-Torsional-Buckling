@@ -14,12 +14,13 @@ export let params = {
     right: 'Fixed',
     applied_load: 0,
     load_position:10,
-    visible: false,
+    support_visible: false,
     youngs_modulus: 215,
     colour_by: 'Bending Moment',
     np: 100, // number of points along beam
     displacement_control: true,
     displacement: new THREE.Vector3(0, 0, 0),
+    visible: false
 }
 
 export let params_upper = {
@@ -30,12 +31,13 @@ export let params_upper = {
     right: 'Fixed',
     applied_load: 0,
     load_position: 10,
-    visible: false,
+    support_visible: false,
     youngs_modulus: 215,
     colour_by: 'Bending Moment',
     np: 100, // number of points along beam
     displacement_control: true,
     displacement: new THREE.Vector3(0, 0, 0),
+    visible: false
 }
 
 export let params_lower = {
@@ -46,10 +48,11 @@ export let params_lower = {
     right: 'Fixed',
     applied_load: 0,
     load_position: 10,
-    visible: false,
+    support_visible: false,
     youngs_modulus: 215,
     colour_by: 'Bending Moment',
     np: 100, // number of points along beam
     displacement_control: true,
     displacement: new THREE.Vector3(0, 0, 0),
+    visible:false
 }

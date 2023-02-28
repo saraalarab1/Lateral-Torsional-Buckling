@@ -3,14 +3,17 @@
   "engines": {
     "node": "10.x"
   },
+  "url": "git+https://github.com/saraalarab1/Lateral-Torsional-Buckling.git",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.config.js --open",
-    "build": "webpack --config webpack.dev.config.js",
+    "start": "webpack-dev-server --config webpack.prod.config.js --open",
+    "build": "webpack --config webpack.prod.config.js",
     "test": "jest",
-    "fix_ssl": "export NODE_OPTIONS=--openssl-legacy-provider"
+    "fix_ssl": "export NODE_OPTIONS=--openssl-legacy-provider",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +23,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^4.2.1",
     "file-loader": "^5.0.2",
+    "gh-pages": "^5.0.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.9.0",

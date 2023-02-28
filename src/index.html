@@ -49,10 +49,10 @@
         </a-entity>
                         
         <a-entity position="-0.6 1 3.2" rotation="0 70 0" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" >
-          <a-entity my-toggle="title: Pin; active: true" event-set__active="_target: #plot; graph.showBoundingBox: true" event-set__inactive="_target: #plot; graph.showBoundingBox: false" position="0 0 0"></a-entity>
-          <a-entity my-toggle="title: Hide Support; active: true" event-set__active="_target: #plot; graph.showBoundingLabels: true" event-set__inactive="_target: #plot; graph.showBoundingLabels: false" position="0 0.2 0"></a-entity>
-          <a-entity my-toggle="title: Color By Bending Moment; active: true" event-set__active="_target: #plot; graph.showGrid: true" event-set__inactive="_target: #plot; graph.showGrid: false" position="0.35 0.2 0"></a-entity>
-          <a-entity my-toggle="title: Hide Colors; active: false" event-set__active="_target: #plot; graph.showWireframe: true" event-set__inactive="_target: #plot; graph.showWireframe: false" position="0.35 0 0"></a-entity>
+          <a-entity my-toggle="title: Pin; active: true" event-set__active="_target: #left_support, #right_support; left_support.support_type: Pin; right_support.support_type: Pin;" event-set__inactive="_target: #left_support, #right_support; left_support.support_type: Fixed; right_support.support_type: Fixed;" position="0 0 0"></a-entity>
+          <a-entity my-toggle="title: Hide Support; active: false" event-set__active="_target:  #left_support, #right_support; left_support.visible: true; right_support.visible: true; " event-set__inactive="_target:  #left_support, #right_support; left_support.visible: false; right_support.visible: false; " position="0 0.2 0"></a-entity>
+          <a-entity my-toggle="title: Color By Bending Moment; active: true" event-set__active="_target: #beam; graph.showGrid: true" event-set__inactive="_target: #beam; graph.showGrid: false" position="0.35 0.2 0"></a-entity>
+          <a-entity my-toggle="title: Hide Colors; active: true" event-set__active="_target: #beam , #beam_upper , #beam_lower; beam.color_visibility: true; beam_upper.color_visibility: true; beam_lower.color_visibility: true;" event-set__inactive="_target: #beam , #beam_upper , #beam_lower; beam.color_visibility: false; beam_upper.color_visibility: false; beam_lower.color_visibility: false;" position="0.35 0 0"></a-entity>
         </a-entity>
       
 

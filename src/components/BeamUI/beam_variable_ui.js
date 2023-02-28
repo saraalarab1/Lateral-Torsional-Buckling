@@ -27,10 +27,6 @@ AFRAME.registerComponent('beam-variable-ui', {
         if (this.beam == null) {
             throw new Error("Beam Component not found!")
         }
-
-        this.data.beam.addEventListener("beam-changed", () => {
-            this.setup();
-        })
                 
         this.setup()
     },

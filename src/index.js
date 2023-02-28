@@ -26,7 +26,7 @@ require('./components/Group/group')
 require('./components/SliderComponent/slider.component');
 require('./components/ToggleComponent/toggle.component');
 require('./components/BeamUI/beam_variable_ui');
-// require('./components/BeamUI/beam-parameter-ui.component');
+// require('./components/BeamUI/beam_parameter_ui');
 require('./components/TextComponent/text.component');
 require('./components/GazeBasedSystem/DeviceCamera')
 
