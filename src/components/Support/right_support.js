@@ -7,6 +7,9 @@ AFRAME.registerComponent('right_support', {
         length: { type: 'number', default: params.length },
         height: { type: 'number', default: params.height },
         depth: { type: 'number', default: params.depth },
+        visible:{
+            default: false
+        }
     },
 
     /**
@@ -41,6 +44,12 @@ AFRAME.registerComponent('right_support', {
             this.mesh.rotation.x = Math.PI / 2.;
 
         }
+        // Get the value of the "visible" schema attribute
+        const isVisible = data.visible;
+        params.support_visible = isVisible
+
+        // Set the "visible" attribute of the element based on the value of "isVisible"
+        el.setAttribute('visible', isVisible);
         this.mesh.name = 'Right Support'
         this.mesh.userData.type = 'right_support'; // this sets up interaction group for controllers
         // Set mesh on entity.
@@ -75,9 +84,17 @@ AFRAME.registerComponent('right_support', {
             this.mesh.rotation.x = Math.PI / 2.;
 
         }
+
+        console.log(data.visible)
+        // Get the value of the "visible" schema attribute
+        const isVisible = data.visible;
+        params.support_visible = isVisible
+
+        // Set the "visible" attribute of the element based on the value of "isVisible"
         this.mesh.name = 'Right Support'
         this.mesh.userData.type = 'right_support'; // this sets up interaction group for controllers
         // Set mesh on entity.
+        el.setAttribute('visible', params.support_visible);
         el.setObject3D('mesh', this.mesh);
         // updateDeformation(params);
 

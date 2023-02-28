@@ -8,6 +8,9 @@ AFRAME.registerComponent('left_support', {
         length: { type: 'number', default: params.length },
         height: { type: 'number', default: params.height },
         depth: { type: 'number', default: params.depth },
+        visible:{
+            default: false,
+        }
     },
 
     /**
@@ -42,6 +45,13 @@ AFRAME.registerComponent('left_support', {
             this.mesh.position.add(beam_offset);
             this.mesh.rotation.x = Math.PI / 2.;
         }
+
+        // Get the value of the "visible" schema attribute
+        const isVisible = data.visible;
+        params.support_visible = isVisible
+
+        // Set the "visible" attribute of the element based on the value of "isVisible"
+        el.setAttribute('visible', params.support_visible);
         this.mesh.name = 'Left support'
         this.mesh.userData.type = 'left_support'; // this sets up interaction group for controllers
         // Set mesh on entity.
@@ -50,7 +60,7 @@ AFRAME.registerComponent('left_support', {
     update: function() {
         var data = this.data;
         var el = this.el;
-
+        console.log('updating left support')
         let pin_geometry = new THREE.CylinderBufferGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
         let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
         let support_material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: false });
@@ -76,8 +86,16 @@ AFRAME.registerComponent('left_support', {
             this.mesh.position.add(beam_offset);
             this.mesh.rotation.x = Math.PI / 2.;
         }
+
+        // Get the value of the "visible" schema attribute
+        const isVisible = data.visible;
+
+        // Set the "visible" attribute of the element based on the value of "isVisible"
+        params.support_visible = isVisible
         this.mesh.name = 'Left support'
         this.mesh.userData.type = 'left_support'; // this sets up interaction group for controllers
+        el.setAttribute('visible', params.support_visible);
+        console.log('setting attribute', isVisible)
         // Set mesh on entity.
         el.setObject3D('mesh', this.mesh);
     }
