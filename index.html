@@ -6,7 +6,7 @@
     <meta name="description" content="Hello, WebVR! - A-Frame">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-41295198-4"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,500,0..1,-50..200" />
-<link rel="shortcut icon" href="favicon.png"><script type="text/javascript" src="vr.253d0f80ce144722acd0.bundle.js"></script></head>
+<link rel="shortcut icon" href="favicon.png"><script type="text/javascript" src="vr.045865185b3f5a499139.bundle.js"></script></head>
 
 <body>
     <a-scene shadow="type: pcfsoft" physics="driver: local; gravity: 0; friction: 0; restitution: 0;" renderer="antialias: true" raycaster="objects: [my-slider]">
@@ -23,11 +23,11 @@
           <a-asset-item id="arrow" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/ARROW%202%20.glb?v=1675978565131"></a-asset-item>
           <a-asset-item id="minus" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/pluss.glb?v=1675981125859"></a-asset-item>
           <a-asset-item id="teleportationArea" src="https://raw.githubusercontent.com/Youssef140/Assets/main/Assets/magic_ring_-_green/scene.gltf"></a-asset-item>
-          <!-- <a-asset-item id="class" src="https://cdn.glitch.me/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/CLASSROOM%203.glb"> -->
+          <a-asset-item id="class" src="https://cdn.glitch.me/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/CLASSROOM%203.glb">
           </a-asset-item>
         </a-assets>
       
-        <!-- <a-entity gltf-model="#class" position="17 0.1 -12.4" rotation="0 180 0" scale="1 1 1"></a-entity> -->
+        <a-entity gltf-model="#class" position="17 0.1 -12.4" rotation="0 180 0" scale="1 1 1"></a-entity>
 
         <a-entity id="left-teleport" gltf-model="#teleportationArea" modify-materials scale="0.02 0.02 0.02" position="-1 0.1 -1"></a-entity>
         <a-entity id="right-teleport" gltf-model="#teleportationArea" modify-materials scale="0.02 0.02 0.02" position="1 0.1 -1"></a-entity>
@@ -52,7 +52,7 @@
           <a-entity my-toggle="title: Pin; active: true" event-set__active="_target: #left_support, #right_support; left_support.support_type: Pin; right_support.support_type: Pin;" event-set__inactive="_target: #left_support, #right_support; left_support.support_type: Fixed; right_support.support_type: Fixed;" position="0 0 0"></a-entity>
           <a-entity my-toggle="title: Hide Support; active: false" event-set__active="_target:  #left_support, #right_support; left_support.visible: true; right_support.visible: true; " event-set__inactive="_target:  #left_support, #right_support; left_support.visible: false; right_support.visible: false; " position="0 0.2 0"></a-entity>
           <a-entity my-toggle="title: Color By Bending Moment; active: true" event-set__active="_target: #beam; graph.showGrid: true" event-set__inactive="_target: #beam; graph.showGrid: false" position="0.35 0.2 0"></a-entity>
-          <a-entity my-toggle="title: Hide Colors; active: false" event-set__active="_target: #beam; graph.showWireframe: true" event-set__inactive="_target: #beam; graph.showWireframe: false" position="0.35 0 0"></a-entity>
+          <a-entity my-toggle="title: Hide Colors; active: true" event-set__active="_target: #beam , #beam_upper , #beam_lower; beam.color_visibility: true; beam_upper.color_visibility: true; beam_lower.color_visibility: true;" event-set__inactive="_target: #beam , #beam_upper , #beam_lower; beam.color_visibility: false; beam_upper.color_visibility: false; beam_lower.color_visibility: false;" position="0.35 0 0"></a-entity>
         </a-entity>
       
 
