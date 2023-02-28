@@ -13,7 +13,8 @@ AFRAME.registerComponent('beam_lower', {
         depth: { type: 'number', default: params_lower.depth },
         applied_displacement: { type: 'number', default: params_lower.displacement.y },
         load_position: { type: 'number', default: params_lower.load_position },
-        color_by: { type: 'string', default: params_lower.colour_by }
+        color_by: { type: 'string', default: params_lower.colour_by },
+        color_visibility: {default: false}
     },
 
     /**
@@ -28,7 +29,7 @@ AFRAME.registerComponent('beam_lower', {
         this.data['lengthMin'] = 6
         this.data['lengthMax'] = 30
         this.data['applied_displacementMin'] = 0
-        this.data['applied_displacementMax'] =10
+        this.data['applied_displacementMax'] =1
         this.data['load_positionMin'] =0
         this.data['load_positionMax'] = data.length
 
@@ -43,7 +44,6 @@ AFRAME.registerComponent('beam_lower', {
 
         this.mesh.scale.set(data.length, data.height, data.depth);
         this.mesh.position.add(beam_lower_offset); // move the beam away from the start location
-        this.mesh.rotation.set(85, 0, 0);
         const type = 'beam_lower';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
 
@@ -60,7 +60,10 @@ AFRAME.registerComponent('beam_lower', {
         params_lower.length = data.length
         params_lower.height = data.height
         params_lower.depth = data.depth
-        
+        params_lower.load_position = data.load_position
+        params_lower.displacement.y = data.applied_displacement
+        params_lower.visible = data.color_visibility;
+
         console.log("redraw lower beam")
 
         PHYSICS_LOWER.updateDeformation_lower(params_lower);

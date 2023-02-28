@@ -1,5 +1,5 @@
 import * as PHYSICS_UPPER from '../../utils/physics_upper';
-import { beam_upper_offset, params_upper } from '../../utils/params';
+import { beam_upper_offset, params, params_upper } from '../../utils/params';
 
 import { Lut } from 'three/examples/jsm/math/Lut.js';
 
@@ -13,7 +13,9 @@ AFRAME.registerComponent('beam_upper', {
         depth: { type: 'number', default: params_upper.depth },
         applied_displacement: { type: 'number', default: params_upper.displacement.y },
         load_position: { type: 'number', default: params_upper.load_position },
-        color_by: { type: 'string', default: params_upper.colour_by }
+        color_by: { type: 'string', default: params_upper.colour_by },
+        color_visibility: {default: false}
+
     },
 
     /**
@@ -28,7 +30,7 @@ AFRAME.registerComponent('beam_upper', {
         this.data['lengthMin'] = 6
         this.data['lengthMax'] = 30
         this.data['applied_displacementMin'] = 0
-        this.data['applied_displacementMax'] =10
+        this.data['applied_displacementMax'] =1
         this.data['load_positionMin'] =0
         this.data['load_positionMax'] = data.length
 
@@ -60,7 +62,10 @@ AFRAME.registerComponent('beam_upper', {
         params_upper.length = data.length
         params_upper.height = data.height
         params_upper.depth = data.depth
-        
+        params_upper.load_position = data.load_position
+        params_upper.displacement.y = data.applied_displacement
+        params_upper.visible = data.color_visibility;
+
         console.log("redraw upper beam")
 
         PHYSICS_UPPER.updateDeformation_upper(params_upper);

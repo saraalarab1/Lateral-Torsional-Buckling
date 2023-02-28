@@ -12,7 +12,8 @@ AFRAME.registerComponent('beam', {
         depth: { type: 'number', default: params.depth },
         applied_displacement: { type: 'number', default: params.displacement.y },
         load_position: { type: 'number', default: params.load_position },
-        color_by: { type: 'string', default: params.colour_by }
+        color_by: { type: 'string', default: params.colour_by },
+        color_visibility: {default: false}
     },
 
     /**
@@ -27,7 +28,7 @@ AFRAME.registerComponent('beam', {
         this.data['lengthMin'] = 6
         this.data['lengthMax'] = 30
         this.data['applied_displacementMin'] = 0
-        this.data['applied_displacementMax'] =10
+        this.data['applied_displacementMax'] =1
         this.data['load_positionMin'] =0
         this.data['load_positionMax'] = data.length
 
@@ -57,13 +58,13 @@ AFRAME.registerComponent('beam', {
         params.length = data.length
         params.height = data.height
         params.depth = data.depth
-        
-        console.log("redraw beam")
-
+        params.load_position = data.load_position
+        params.displacement.y = data.applied_displacement
+        params.visible = data.color_visibility;
         PHYSICS.updateDeformation(params);
         this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
         this.mesh.geometry.attributes.position.needsUpdate = true;
-    
+
         if (params.colour_by === 'None') {
             let colors = [];
             for (let i = 0; i < PHYSICS.shear_force.length; i++) {
