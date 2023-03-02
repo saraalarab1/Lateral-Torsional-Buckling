@@ -19,19 +19,24 @@ AFRAME.registerComponent('right_support', {
         var data = this.data;
         var el = this.el;
 
+        let length = data.length *34.5
+        let height = data.height
+
         let pin_geometry = new THREE.CylinderBufferGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
-        let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
+        let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, height + 2 * pin_radius, data.depth + 2 * pin_radius);
         let support_material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: false });
+
+   
 
         if (data.support_type == 'Pin') {
             this.mesh = new THREE.Mesh(pin_geometry, support_material);
-            this.mesh.position.set(data.length / 2., -data.height / 2 - pin_radius, 0);
+            this.mesh.position.set(length / 2., -height / 2 - pin_radius, 0);
             this.mesh.position.add(beam_offset);
             this.mesh.rotation.x = Math.PI / 2.;
         } else if (data.support_type === 'Fixed') {
             this.mesh = new THREE.Mesh(fixed_geometry, support_material);
 
-            this.mesh.position.set(data.length / 2. + pin_radius / 2., 0, 0);
+            this.mesh.position.set(length / 2. + pin_radius / 2., 0, 0);
             this.mesh.position.add(beam_offset);
         } else if (data.support_type === 'Free') {
             let material = support_material.clone();
@@ -39,19 +44,19 @@ AFRAME.registerComponent('right_support', {
             material.opacity = 0.3;
             this.mesh = new THREE.Mesh(fixed_geometry, material);
 
-            this.mesh.position.set(data.length / 2., -data.height / 2 - pin_radius, 0);
+            this.mesh.position.set(length / 2., -height / 2 - pin_radius, 0);
             this.mesh.position.add(beam_offset);
             this.mesh.rotation.x = Math.PI / 2.;
 
         }
-        // Get the value of the "visible" schema attribute
-        const isVisible = data.visible;
-        params.support_visible = isVisible
-
-        // Set the "visible" attribute of the element based on the value of "isVisible"
-        el.setAttribute('visible', isVisible);
         this.mesh.name = 'Right Support'
-        this.mesh.userData.type = 'right_support'; // this sets up interaction group for controllers
+        this.mesh.userData.type = 'right_support'; 
+
+        console.log("right support visible: ",data.visible)
+
+        el.setAttribute('visible', data.visible);
+       
+
         // Set mesh on entity.
         el.setObject3D('mesh', this.mesh);
     },
@@ -59,19 +64,22 @@ AFRAME.registerComponent('right_support', {
         var data = this.data;
         var el = this.el;
 
+        let length = data.length *34.5
+        let height = data.height
+        
         let pin_geometry = new THREE.CylinderBufferGeometry(pin_radius, pin_radius, data.depth + 2 * pin_radius, 20, 32);
-        let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, data.height + 2 * pin_radius, data.depth + 2 * pin_radius);
+        let fixed_geometry = new THREE.BoxBufferGeometry(pin_radius, height + 2 * pin_radius, data.depth + 2 * pin_radius);
         let support_material = new THREE.MeshStandardMaterial({ color: 0xcccccc, vertexColors: false });
 
         if (data.support_type == 'Pin') {
             this.mesh = new THREE.Mesh(pin_geometry, support_material);
-            this.mesh.position.set(data.length / 2., -data.height / 2 - pin_radius, 0);
+            this.mesh.position.set(length / 2., -height / 2 - pin_radius, 0);
             this.mesh.position.add(beam_offset);
             this.mesh.rotation.x = Math.PI / 2.;
         } else if (data.support_type === 'Fixed') {
             this.mesh = new THREE.Mesh(fixed_geometry, support_material);
 
-            this.mesh.position.set(data.length / 2. + pin_radius / 2., 0, 0);
+            this.mesh.position.set(length / 2. + pin_radius / 2., 0, 0);
             this.mesh.position.add(beam_offset);
         } else if (data.support_type === 'Free') {
             let material = support_material.clone();
@@ -79,20 +87,19 @@ AFRAME.registerComponent('right_support', {
             material.opacity = 0.3;
             this.mesh = new THREE.Mesh(fixed_geometry, material);
 
-            this.mesh.position.set(data.length / 2., -data.height / 2 - pin_radius, 0);
+            this.mesh.position.set(length / 2., -height / 2 - pin_radius, 0);
             this.mesh.position.add(beam_offset);
             this.mesh.rotation.x = Math.PI / 2.;
 
         }
-
-        console.log(data.visible)
-        // Get the value of the "visible" schema attribute
-        const isVisible = data.visible;
-        params.support_visible = isVisible
-
-        // Set the "visible" attribute of the element based on the value of "isVisible"
         this.mesh.name = 'Right Support'
-        this.mesh.userData.type = 'right_support'; // this sets up interaction group for controllers
+        this.mesh.userData.type = 'right_support'; 
+        
+        let isVisible = data.visible;
+        params.support_visible = isVisible
+      
+        console.log("right support visible: ",params.support_visible)
+
         // Set mesh on entity.
         el.setAttribute('visible', params.support_visible);
         el.setObject3D('mesh', this.mesh);

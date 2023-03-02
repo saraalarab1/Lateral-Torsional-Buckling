@@ -14,11 +14,10 @@ require('./components/aframe-aabb-collider');
 require('./components/aframe-parent-constraint');
 require('./components/helper');
 
-require('./components/Beam/beam')
-require('./components/Beam/beam_upper')
-require('./components/Beam/beam_lower')
-require('./components/Support/right_support')
-require('./components/Support/left_support')
+require('./components/Beam/i_beam')
+
+// require('./components/Support/right_support')
+// require('./components/Support/left_support')
 require('./components/Support/visibility')
 require('./components/Group/group')
 

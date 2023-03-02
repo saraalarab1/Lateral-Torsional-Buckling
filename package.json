@@ -1,7 +1,7 @@
 {
   "name": "bending_beam",
   "engines": {
-    "node": "10.x"
+    "node": "18.13.0"
   },
   "url": "git+https://github.com/saraalarab1/Lateral-Torsional-Buckling.git",
   "version": "1.0.0",
