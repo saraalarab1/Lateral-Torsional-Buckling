@@ -40,12 +40,14 @@ AFRAME.registerComponent('beam', {
 
         // Create mesh.
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-        this.mesh.scale.set(data.length, data.height, data.depth);
+        this.mesh.scale.set(data.length, data.depth, data.height);
+        // this.mesh.scale.set(data.length, data.height, data.depth);
+
         this.mesh.position.add(beam_offset); // move the beam away from the start location
-        this.mesh.rotation.set(165,0,0)
+        // this.mesh.rotation.set(165,0,0)
         const type = 'beam';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
-
+        console.log(this.mesh.geometry.attributes)
         PHYSICS.set_initial_position(this.mesh.geometry.attributes.position.array);
         // Set mesh on entity.
         el.setObject3D('mesh', this.mesh);
@@ -53,7 +55,9 @@ AFRAME.registerComponent('beam', {
     update: function() {
         var data = this.data;
 
-        this.mesh.scale.set(data.length, data.height, data.depth);
+        this.mesh.scale.set(data.length, data.depth, data.height);
+        // this.mesh.scale.set(data.length, data.height, data.depth);
+
         this.data['load_positionMax'] = data.length
         params.length = data.length
         params.height = data.height
@@ -63,6 +67,9 @@ AFRAME.registerComponent('beam', {
         params.visible = data.color_visibility;
         PHYSICS.updateDeformation(params);
         this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
+        // PHYSICS.updateDeformationHorizontal(params)
+        // this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions_y, 2));
+
         this.mesh.geometry.attributes.position.needsUpdate = true;
 
         if (params.colour_by === 'None') {
