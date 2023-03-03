@@ -67,8 +67,6 @@ AFRAME.registerComponent('beam', {
         params.visible = data.color_visibility;
         PHYSICS.updateDeformation(params);
         this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
-        // PHYSICS.updateDeformationHorizontal(params)
-        // this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions_y, 2));
 
         this.mesh.geometry.attributes.position.needsUpdate = true;
 

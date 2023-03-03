@@ -71,46 +71,9 @@ export function updateDeformation(params) {
                 shear_force.push(-R2);
             }
         }
-       
         positions[i * 3 + 1] = initial_positions[i * 3 + 1] - deflection;
+        positions[i * 3 + 2] = initial_positions[i * 3 + 2] - deflection*4;
 
-    }
-}
-
-export function updateDeformationHorizontal(params) {
-    let d = params.depth;
-    let a = params.load_position; // distance from front to load point
-    let b = d - a; // distance from back to load point
-
-    EI = 1;
-    if ((params.left === 'Pin') && (params.right === 'Pin')) {
-        P = (3 * params.displacement.y * d) / (a * a * b * b) || 0;
-    } else if ((params.left === 'Fixed') && (params.right === 'Fixed')) {
-        P = (3 * EI * d * d * d * params.displacement.y) / (a * a * a * b * b * b) || 0;
-    }
-
-    let deflection;
-    bending_moment = [];
-    shear_force = [];
-
-    for (let i = 0; i < positions_y.length / 3; i++) {
-        let y = d * positions_y[i * 3 + 1] + d / 2; // distance along beam
-
-        if ((params.left === 'Pin') && (params.right === 'Pin')) {
-            if (y < a) {
-                deflection = P * b * y * (d * d - b * b - y * y) / (6 * EI * d);
-            } else {
-                deflection = P * a * (d - y) * (2 * d * y - y * y - a * a) / (6 * EI * d);
-            }
-        } else if ((params.left === 'Fixed') && (params.right === 'Fixed')) {
-            if (y < a) {
-                deflection = P * b * b * y * y * (3 * a * d - 3 * a * y - b * y) / (6 * EI * d * d * d);
-            } else {
-                deflection = P * a * a * (d - y) * (d - y) * (3 * b * d - 3 * b * (d - y) - a * (d - y)) / (6 * EI * d * d * d);
-            }
-        }
-
-        positions_y[i * 3 + 0] = positions[i * 3 + 0] - deflection;
     }
 }
 
