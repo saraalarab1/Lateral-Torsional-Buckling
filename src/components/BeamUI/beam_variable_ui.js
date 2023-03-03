@@ -129,19 +129,25 @@ AFRAME.registerComponent('beam-variable-ui', {
             (mode === 'minus' && sliderAttributes.value > sliderAttributes.min)){
                 let newvalue;
                 if(variable == 'length' || variable == 'load_position' || variable == 'applied_displacement'){
-                    newvalue = sliderAttributes.value + (mode === "plus" ? 0.5 : -0.5);
+                    newvalue = sliderAttributes.value + (mode === "plus" ? 0.1 : -0.1);
                 }else{
                     newvalue = sliderAttributes.value + (mode === "plus" ? 0.01 : -0.01);
                 }
                 let beamAttributes = {}
                 let sideAttributes = {}
 
-                if(variable == 'depth'){
-                    beamAttributes['height'] = newvalue.toFixed(2);
+                // if(variable == 'depth'){
+                //     beamAttributes['height'] = newvalue.toFixed(2);
+                // }else{
+                //     beamAttributes[variable] = newvalue.toFixed(2);
+                // }
+                if(variable == 'applied_displacement'){
+                sideAttributes[variable] = newvalue.toFixed(2)*6.52;
+                beamAttributes[variable] = newvalue.toFixed(2);
                 }else{
+                    sideAttributes[variable] = newvalue.toFixed(2);
                     beamAttributes[variable] = newvalue.toFixed(2);
                 }
-                sideAttributes[variable] = newvalue.toFixed(2);
 
                 this.data.beam_upper.setAttribute('beam_upper', sideAttributes)
                 this.data.beam.setAttribute('beam', beamAttributes)
