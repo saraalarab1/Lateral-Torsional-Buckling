@@ -141,9 +141,13 @@ AFRAME.registerComponent('beam-variable-ui', {
                 // }else{
                 //     beamAttributes[variable] = newvalue.toFixed(2);
                 // }
+                if(variable == 'applied_displacement'){
                 sideAttributes[variable] = newvalue.toFixed(2)*6.52;
                 beamAttributes[variable] = newvalue.toFixed(2);
-
+                }else{
+                    sideAttributes[variable] = newvalue.toFixed(2);
+                    beamAttributes[variable] = newvalue.toFixed(2);
+                }
 
                 this.data.beam_upper.setAttribute('beam_upper', sideAttributes)
                 this.data.beam.setAttribute('beam', beamAttributes)
