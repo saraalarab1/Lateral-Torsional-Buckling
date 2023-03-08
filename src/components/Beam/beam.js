@@ -23,10 +23,6 @@ AFRAME.registerComponent('beam', {
         var data = this.data;
         var el = this.el;
 
-        this.data['depthMin'] = 0.1
-        this.data['depthMax'] = 2
-        this.data['lengthMin'] = 6
-        this.data['lengthMax'] = 30
         this.data['applied_displacementMin'] = 0
         this.data['applied_displacementMax'] =1
         this.data['load_positionMin'] =0
@@ -116,8 +112,6 @@ AFRAME.registerComponent('beam', {
         var data = this.data;
 
         let variables = {}
-        variables['length'] = data.length;
-        variables['depth'] = data.depth;
         variables['applied_displacement'] = data.applied_displacement;
         variables['load_position'] = data.load_position;
 

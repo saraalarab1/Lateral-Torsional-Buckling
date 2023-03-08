@@ -31,11 +31,9 @@
         <a-gltf-model id="class" src="src/models/classroom.glb" position="-11 0.1 -13.45" rotation="0 -90 0" scale="1 1 1"></a-gltf-model>
 
         <a-entity group id="group" scale="0.22 0.22 0.22" position="3 1 2">
-          <a-entity right_support id="right_support"></a-entity>
           <a-entity beam_upper id="beam_upper"></a-entity>
           <a-entity beam id="beam"></a-entity>
           <a-entity beam_lower id="beam_lower"></a-entity>
-          <a-entity left_support id="left_support"></a-entity>
         </a-entity>
               
         <a-entity data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" position="4.6 1.4 5" rotation="0 -70 0" beam-variable-ui="beam: #beam; beam_upper: #beam_upper; beam_lower: #beam_lower;">
@@ -55,10 +53,7 @@
         </a-entity>
 
         <a-entity position="1.6 1.4 5" rotation="0 70 0" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" >
-          <a-entity my-toggle="title: Pin; active: true" event-set__active="_target: #left_support, #right_support; left_support.support_type: Pin; right_support.support_type: Pin;" event-set__inactive="_target: #left_support, #right_support; left_support.support_type: Fixed; right_support.support_type: Fixed;" position="0 0 0"></a-entity>
-          <a-entity my-toggle="title: Hide Support; active: false" event-set__active="_target:  #left_support, #right_support; left_support.visible: true; right_support.visible: true; " event-set__inactive="_target:  #left_support, #right_support; left_support.visible: false; right_support.visible: false; " position="0 0.2 0"></a-entity>
-          <a-entity my-toggle="title: Color By Bending Moment; active: true" event-set__active="_target: #beam; graph.showGrid: true" event-set__inactive="_target: #beam; graph.showGrid: false" position="0.35 0.2 0"></a-entity>
-          <a-entity my-toggle="title: Hide Colors; active: true" event-set__active="_target: #beam , #beam_upper , #beam_lower; beam.color_visibility: true; beam_upper.color_visibility: true; beam_lower.color_visibility: true;" event-set__inactive="_target: #beam , #beam_upper , #beam_lower; beam.color_visibility: false; beam_upper.color_visibility: false; beam_lower.color_visibility: false;" position="0.35 0 0"></a-entity>
+          <a-entity my-toggle="title: Hide Colors; active: false;" event-set__active="_target: #beam , #beam_upper , #beam_lower; beam.color_visibility: true; beam_upper.color_visibility: true; beam_lower.color_visibility: true;" event-set__inactive="_target: #beam , #beam_upper , #beam_lower; beam.color_visibility: false; beam_upper.color_visibility: false; beam_lower.color_visibility: false;" position="0.35 0 0"></a-entity>
         </a-entity>
       
 

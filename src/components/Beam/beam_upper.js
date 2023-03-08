@@ -25,10 +25,6 @@ AFRAME.registerComponent('beam_upper', {
         var data = this.data;
         var el = this.el;
 
-        this.data['depthMin'] = 0.1
-        this.data['depthMax'] = 2
-        this.data['lengthMin'] = 6
-        this.data['lengthMax'] = 30
         this.data['load_positionMin'] =0
         this.data['load_positionMax'] = data.length
 

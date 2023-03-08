@@ -17,9 +17,6 @@ require('./components/helper');
 require('./components/Beam/beam')
 require('./components/Beam/beam_upper')
 require('./components/Beam/beam_lower')
-require('./components/Support/right_support')
-require('./components/Support/left_support')
-require('./components/Support/visibility')
 require('./components/Group/group')
 
 // require('./components/GazeBasedSystem/GraphScaler')
