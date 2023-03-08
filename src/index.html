@@ -10,45 +10,51 @@
 
 <body>
     <a-scene shadow="type: pcfsoft" physics="driver: local; gravity: 0; friction: 0; restitution: 0;" renderer="antialias: true" raycaster="objects: [my-slider]">
-        <a-assets>
-          <a-mixin id="touch" class="hands" ></a-mixin>
-        </a-assets>
-      
-        <a-sky color="white"></a-sky>
+      <a-assets>
+        <a-mixin id="touch" class="hands" ></a-mixin>
+      </a-assets>
+    
 
 
-        <a-entity class="environment" environment="groundTexture: none; grid: 1x1; gridColor: #222; ground: flat; skyType: color; skyColor: gray; horizonColor: #222; groundColor: black; groundColor2: #fff"></a-entity>
-        <a-assets>
-          <a-asset-item id="plus" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/MINUSS%20.glb?v=1675981115171"></a-asset-item>
-          <a-asset-item id="arrow" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/ARROW%202%20.glb?v=1675978565131"></a-asset-item>
-          <a-asset-item id="minus" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/pluss.glb?v=1675981125859"></a-asset-item>
-          <a-asset-item id="teleportationArea" src="https://raw.githubusercontent.com/Youssef140/Assets/main/Assets/magic_ring_-_green/scene.gltf"></a-asset-item>
-          <a-asset-item id="class" src="https://cdn.glitch.me/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/CLASSROOM%203.glb">
-          </a-asset-item>
-        </a-assets>
+      <a-entity class="environment" environment="groundTexture: none; grid: 1x1; gridColor: #222; ground: flat; skyType: color; skyColor: gray; horizonColor: #222; groundColor: black; groundColor2: #fff"></a-entity>
+      <a-assets>
+        <a-asset-item id="plus" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/MINUSS%20.glb?v=1675981115171"></a-asset-item>
+        <a-asset-item id="arrow" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/ARROW%202%20.glb?v=1675978565131"></a-asset-item>
+        <a-asset-item id="minus" src="https://cdn.glitch.global/126b4e72-2ac0-4b74-ad2f-4be152694c26/pluss.glb?v=1675981125859"></a-asset-item>
+        <a-asset-item id="teleportationArea" src="https://raw.githubusercontent.com/Youssef140/Assets/main/Assets/magic_ring_-_green/scene.gltf"></a-asset-item>
+        <!-- <a-asset-item id="class" src="https://cdn.glitch.me/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/CLASSROOM%203.glb"> -->
+        </a-asset-item>
+        <a-asset-item id="exit-sign" src="https://cdn.glitch.global/9c8de3fe-0afd-4613-b8a2-ca66167d2a9d/scene.gltf?v=1677528795614"></a-asset-item>
+      </a-assets>
       
-        <a-entity gltf-model="#class" position="17 0.1 -12.4" rotation="0 180 0" scale="1 1 1"></a-entity>
+        <!-- <a-entity gltf-model="#class" position="-11 0.1 -13.45" rotation="0 -90 0" scale="0.8 0.8 0.8"></a-entity> -->
+        <a-gltf-model id="class" src="src/models/classroom.glb" position="-11 0.1 -13.45" rotation="0 -90 0" scale="1 1 1"></a-gltf-model>
 
-        <a-entity id="left-teleport" gltf-model="#teleportationArea" modify-materials scale="0.02 0.02 0.02" position="-1 0.1 -1"></a-entity>
-        <a-entity id="right-teleport" gltf-model="#teleportationArea" modify-materials scale="0.02 0.02 0.02" position="1 0.1 -1"></a-entity>
-        <a-entity id="center-up-teleport" gltf-model="#teleportationArea" modify-materials scale="0.02 0.02 0.02" position="0 0.2 -2"></a-entity>
-        <a-entity id="center-down-teleport" gltf-model="#teleportationArea" modify-materials scale="0.02 0.02 0.02" position="0 0.1 -0.7"></a-entity>
-        <a-entity id="center-down-teleport" gltf-model="#teleportationArea" modify-materials scale="0.02 0.02 0.02" rotation="-90 0 0" position="4 1.1 6.7"></a-entity>
-      
-        <a-entity data-aabb-collider-dynamic="true" class="grabbable" id="plot" scale="0.5 0.5 0.5" position="0 1 -0.6" graph="xMin: -6.2; xMax: 6.2; yMin: -6.2; yMax: 6.2; x2Min: -6.2; x2Max: 6.2; y2Min: -6.2; y2Max: 6.2; showBoundingLabels: true; showWireframe: false; function: f(x,y) = [x, y, a * cos(y) + b * sin(x)]"></a-entity >
-                    
-        <a-entity group id="group" scale="0.22 0.22 0.22" >
-            <a-entity right_support id="right_support"></a-entity>
-            <a-entity beam_upper id="beam_upper"></a-entity>
-            <a-entity beam id="beam"></a-entity>
-            <a-entity beam_lower id="beam_lower"></a-entity>
-            <a-entity left_support id="left_support"></a-entity>
+        <a-entity group id="group" scale="0.22 0.22 0.22" position="3 1 2">
+          <a-entity right_support id="right_support"></a-entity>
+          <a-entity beam_upper id="beam_upper"></a-entity>
+          <a-entity beam id="beam"></a-entity>
+          <a-entity beam_lower id="beam_lower"></a-entity>
+          <a-entity left_support id="left_support"></a-entity>
+        </a-entity>
+              
+        <a-entity data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" position="4.6 1.4 5" rotation="0 -70 0" beam-variable-ui="beam: #beam; beam_upper: #beam_upper; beam_lower: #beam_lower;">
         </a-entity>
 
-        <a-entity data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" position="0.6 1 3" rotation="0 -70 0" beam-variable-ui="beam: #beam; beam_upper: #beam_upper; beam_lower: #beam_lower;">
+        <!-- Walls -->
+        <a-entity geometry="primitive: box;" material="color: white" position="3.5 2 -1.6" scale="10.6 4.5 0.1" ></a-entity>
+        <a-entity geometry="primitive: box;" material="color: white" position="4 2 9"  scale="10.6 4.5 0.1" ></a-entity> 
+        <a-entity geometry="primitive: box;" material="color: white" position="-2 2 3.6" rotation="0 90 0" scale="10.6 4.5 0.1" ></a-entity>
+        <a-entity geometry="primitive: box;" material="color: white" position="8.6 2 3.6" rotation="0 90 0" scale="10.6 4.5 0.1"></a-entity>
+
+        <a-entity gltf-model="#exit-sign" position="8.3 2.22 0.9" rotation="0 180 0" scale="1 1 1"
+            material="color: #FFF;"
+            onmouseenter="this.setAttribute('material', 'color', '#555');"
+            onmouseleave="this.setAttribute('material', 'color', '#FFF');"
+            layer="layer1">
         </a-entity>
-                        
-        <a-entity position="-0.6 1 3.2" rotation="0 70 0" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" >
+
+        <a-entity position="1.6 1.4 5" rotation="0 70 0" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" >
           <a-entity my-toggle="title: Pin; active: true" event-set__active="_target: #left_support, #right_support; left_support.support_type: Pin; right_support.support_type: Pin;" event-set__inactive="_target: #left_support, #right_support; left_support.support_type: Fixed; right_support.support_type: Fixed;" position="0 0 0"></a-entity>
           <a-entity my-toggle="title: Hide Support; active: false" event-set__active="_target:  #left_support, #right_support; left_support.visible: true; right_support.visible: true; " event-set__inactive="_target:  #left_support, #right_support; left_support.visible: false; right_support.visible: false; " position="0 0.2 0"></a-entity>
           <a-entity my-toggle="title: Color By Bending Moment; active: true" event-set__active="_target: #beam; graph.showGrid: true" event-set__inactive="_target: #beam; graph.showGrid: false" position="0.35 0.2 0"></a-entity>
@@ -56,15 +62,17 @@
         </a-entity>
       
 
-        <a-entity id="function-text" position="0 1.5 -2.5" rotation="0 0 0" scale="1.5 1.5 1.5" my-text="text: Bending Beam ; color: white"></a-entity>
+        <a-entity id="function-text" position="3 2.5 1.5" rotation="0 0 0" scale="1.5 1.5 1.5" my-text="text: Bending Beam ; color: white"></a-entity>
 
-        <a-entity light="type: ambient; color: #ffffff; intensity: 1;" position="0 3 0"></a-entity>
+        <a-entity light="type: ambient; color: #ffffff; intensity: 1;" position="3 3 0"></a-entity>
 
 
-      
+        <a-entity light="type: ambient; color: #ffffff; intensity: 1;" position="3 3 1"></a-entity>
+
         <a-entity interaction-hands aabb-collider="objects: .grabbable" id="lhand" hand-controls="hand: left; handModelStyle: highPoly" mixin="touch"></a-entity>
         <a-entity interaction-hands aabb-collider="objects: .grabbable" id="rhand" hand-controls="hand: right; handModelStyle: highPoly" mixin="touch"></a-entity>
       
+        <a-sky color="grey"></a-sky>
       
       </a-scene>
 

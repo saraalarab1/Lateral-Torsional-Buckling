@@ -17,147 +17,100 @@ export function getDevice() {
 }
 
 window.addEventListener("load", (event) => {
+  var rig = document.createElement("a-entity");
+  rig.setAttribute("id", "rig");
+  rig.setAttribute("position", "0 0 0.2");
   var camera = document.createElement("a-entity");
   camera.setAttribute("camera", "");
+  camera.setAttribute("id", "camera");
   var device = getDevice();
   if (device === "Desktop") {
-    camera.setAttribute("position", "0 1.2 3");
-    camera.setAttribute("kinematic-body", "radius: 0.3");
+    rig.setAttribute("kinematic-body", "radius: 0.3");
+    // rig.setAttribute("wasd-controls", "acceleration: 200");
+    rig.setAttribute("movement-controls", "speed: 0.2");
+    camera.setAttribute("position", "3 1.6 5");
     camera.setAttribute("look-controls", "pointerLockEnabled: false;");
-    camera.setAttribute("wasd-controls", "acceleration: 200");
     var cursorEntity = document.createElement("a-entity");
     cursorEntity.setAttribute("cursor", "");
     cursorEntity.setAttribute("position", "0 0 -0.1");
-    cursorEntity.setAttribute(
-      "geometry",
-      `primitive: sphere; radius: ${
-        getDevice() === "Mobile" ? "0.001" : "0.0006"
-      }`
-    );
+    cursorEntity.setAttribute("geometry", `primitive: sphere; radius: 0.0015;`);
     cursorEntity.setAttribute(
       "material",
       "color: #000; shader: flat; opacity: 0.6"
     );
     camera.appendChild(cursorEntity);
-    const leftTeleport = document.getElementById("left-teleport")
-    leftTeleport.addEventListener("mouseenter", () => {
-      camera.setAttribute("position", "-1 1.2 -1");
-    });
-  }
-  else if(device === "Mobile"){
-    camera.setAttribute("position", "0 1.2 0.3");
+    rig.appendChild(camera);
+    AFRAME.scenes[0].appendChild(rig);
+  } else if (device === "Mobile") {
+    camera.setAttribute("position", "0 1.6 0");
     camera.setAttribute("kinematic-body", "radius: 0.3");
     camera.setAttribute("look-controls", "pointerLockEnabled: false;");
     camera.setAttribute("wasd-controls", "acceleration: 200");
     var cursorEntity = document.createElement("a-entity");
     cursorEntity.setAttribute("cursor", "");
-    cursorEntity.setAttribute("position", "0 0 -0.1");
+    cursorEntity.setAttribute("position", "0 0 -0.6");
+    cursorEntity.setAttribute("geometry", `primitive: sphere; radius: 0.004;`);
     cursorEntity.setAttribute(
-        "geometry",
-        `primitive: sphere; radius: ${
-            getDevice() === "Mobile" ? "0.001" : "0.0006"
-        }`
-    );
-    cursorEntity.setAttribute(
-        "material",
-        "color: #000; shader: flat; opacity: 0.6"
+      "material",
+      "color: #000; shader: flat; opacity: 0.6"
     );
     camera.appendChild(cursorEntity);
 
-    var leftTel = document.createElement("a-entity")
-    leftTel.setAttribute("id","left-teleport")
-    leftTel.setAttribute("gltf-model","#teleportationArea")
-    leftTel.setAttribute("modify-materials","")
-    leftTel.setAttribute("scale","0.02 0.02 0.02")
-    leftTel.setAttribute("position","-1 0.1 -1")
+    createTeleport("left-teleport", "-1.5 0.1 -2", rig, "-1.5 0 -2");
+    createTeleport("right-teleport", "1.9 0.1 -2", rig, "1.9 0 -2");
+    createTeleport("center-up-teleport", "0 0.1 -3", rig, "0 0 -3");
+    createTeleport("center-down-teleport", "0 0.1 0.2", rig, "0 0 0.2");
 
-    var teleportDelay = 0
-
-    function setDelay(){
-      teleportDelay = 2000
-    }
-
-    function killDelay(){
-      teleportDelay = 0
-    }
-
-    var cameraPosition = null
-    function setPosition(position){
-      cameraPosition = position
-    }
-
-
-    leftTeleport.addEventListener("mouseenter", () => {
-      setPosition("leftTeleport")
-      setTimeout(function() {
-          if(cameraPosition === "leftTeleport"){
-            camera.setAttribute("position", "-1 1.2 -1")
-          }
-      }, 2000);
-
-    });
-
-    leftTeleport.addEventListener("mouseleave", () => {
-      setPosition(null)
-    });
-
-    const rightTeleport = document.getElementById("right-teleport")
-    rightTeleport.addEventListener("mouseenter", () => {
-      setPosition("rightTeleport")
-      setTimeout(function() {
-        if(cameraPosition === "rightTeleport"){
-          camera.setAttribute("position", "1 1.2 -1")
-        }
-      }, 2000);
-    });
-
-    rightTeleport.addEventListener("mouseleave", () => {
-      setPosition(null)
-    });
-
-
-    const centerUpTeleport = document.getElementById("center-up-teleport")
-    centerUpTeleport.addEventListener("mouseenter", () => {
-      setPosition("centerUpTeleport")
-      setTimeout(function() {
-        if(cameraPosition === "centerUpTeleport"){
-          camera.setAttribute("position", "0 1.2 -2")
-        }
-      }, 2000);
-    });
-
-    centerUpTeleport.addEventListener("mouseleave", () => {
-      setPosition(null)
-    });
-
-    const centerDownTeleport = document.getElementById("center-down-teleport")
-    centerDownTeleport.addEventListener("mouseenter", () => {
-      setPosition("centerDownTeleport")
-      setTimeout(function() {
-        if(cameraPosition === "centerDownTeleport"){
-          camera.setAttribute("position", "0 0.5 -0.7")
-        }
-      }, 2000);
-    });
-
-    centerDownTeleport.addEventListener("mouseleave", () => {
-      setPosition(null)
-    });
-  }
-  else {
+    rig.appendChild(camera);
+    AFRAME.scenes[0].appendChild(rig);
+  } else {
     camera.setAttribute(
       "orbit-controls",
-      "target: 0 1 -0.6; initialPosition: -0.5 1.4 0.3; minDistance: -0.01; enableZoom: false;"
+      "target: 0 1 -1.4; initialPosition: -0.5 1.4 0.3; minDistance: -0.01; enableZoom: false;"
     );
 
     // var graphScaler = document.createElement("a-entity");
     // graphScaler.setAttribute("data-aabb-collider-dynamic", "true");
     // graphScaler.setAttribute("class", "grabbable visible-on-vr");
-    // graphScaler.setAttribute("position", "-0.6 1 0");
+    // graphScaler.setAttribute("position", "-0.8 1 0");
     // graphScaler.setAttribute("rotation", "0 70 0");
     // graphScaler.setAttribute("graph-parameter-ui", "graph: #plot");
-    // AFRAME.scenes[0].appendChild(graphScaler);
-  }
 
-  AFRAME.scenes[0].appendChild(camera);
+    // AFRAME.scenes[0].appendChild(graphScaler);
+    AFRAME.scenes[0].appendChild(camera);
+  }
 });
+
+const createTeleport = (id, position, camera, cameraPos) => {
+  let teleportationArea = document.createElement("a-entity");
+  teleportationArea.setAttribute("id", id);
+  teleportationArea.setAttribute("gltf-model", "#teleportationArea");
+  teleportationArea.setAttribute("modify-materials", "");
+  teleportationArea.setAttribute("scale", "0.035 0.035 0.035");
+  teleportationArea.setAttribute("position", position);
+  teleportationArea.setAttribute(
+    "animation",
+    "property: scale; to: 0.075 0.075 0.075; dur: 2000; startEvents: mouseenter;"
+  );
+  teleportationArea.setAttribute(
+    "animation__2",
+    "property: scale; to: 0.035 0.035 0.035; dur: 200; startEvents: mouseleave;"
+  );
+
+  AFRAME.scenes[0].appendChild(teleportationArea);
+
+  var stillHovering = false;
+
+  teleportationArea.addEventListener("mouseenter", () => {
+    stillHovering = true;
+    setTimeout(function () {
+      if (stillHovering) camera.setAttribute("position", cameraPos);
+    }, 2000);
+  });
+
+  teleportationArea.addEventListener("mouseleave", () => {
+    stillHovering = false;
+  });
+
+  return teleportationArea;
+};
