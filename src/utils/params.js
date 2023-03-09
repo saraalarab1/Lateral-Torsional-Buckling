@@ -6,7 +6,7 @@ let supportVisible = true
 let colorType = "Bending Moment"
 let colorVisible = true
 let applied_load = 0.01
-let load_position = 0.01
+let load_position = 2
 
 
 export let beam_offset = new THREE.Vector3(0, 3, -6);

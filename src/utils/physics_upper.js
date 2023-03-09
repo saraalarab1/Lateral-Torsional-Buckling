@@ -68,8 +68,8 @@ export function updateDeformation_upper(params) {
                 shear_force_upper.push(-R2);
             }
         } 
-        positions_upper[i * 3 + 1] = initial_positions[i * 3 + 1] - deflection;
-        positions_upper[i * 3 + 2] = initial_positions[i * 3 + 2] - deflection/9;
+        positions_upper[i * 3 + 1] = initial_positions[i * 3 + 1] - deflection*0.85;
+        positions_upper[i * 3 + 2] = initial_positions[i * 3 + 2] - deflection/10;
 
     }
 }

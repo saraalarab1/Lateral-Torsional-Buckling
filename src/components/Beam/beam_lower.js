@@ -24,8 +24,8 @@ AFRAME.registerComponent('beam_lower', {
         var data = this.data;
         var el = this.el;
 
-        this.data['load_positionMin'] =0
-        this.data['load_positionMax'] = data.length
+        this.data['load_positionMin'] =2
+        this.data['load_positionMax'] = data.length -2
 
         // Create geometry.
         this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params_lower.np, 1, 1);
@@ -47,9 +47,11 @@ AFRAME.registerComponent('beam_lower', {
     },
     update: function() {
         var data = this.data;
+        data.applied_displacement = data.applied_displacement>0?data.applied_displacement:0
+        data.load_position = data.load_position>2?data.load_position:2
 
         this.mesh.scale.set(data.length, data.height, data.depth);
-        this.data['load_positionMax'] = data.length
+        this.data['load_positionMax'] = data.length -2
 
         params_lower.length = data.length
         params_lower.height = data.height

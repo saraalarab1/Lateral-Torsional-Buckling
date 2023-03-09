@@ -1,3 +1,5 @@
+import { positions } from "./physics";
+
 export let positions_lower, shear_force_lower, bending_moment_lower;
 let initial_positions;
 let EI;
@@ -68,9 +70,10 @@ export function updateDeformation_lower(params) {
                 shear_force_lower.push(-R2);
             }
         } 
-        positions_lower[i * 3 + 1] = initial_positions[i * 3 + 1] - deflection;
-        positions_lower[i * 3 + 2] = initial_positions[i * 3 + 2] - deflection/9;
+        positions_lower[i * 3 + 1] = initial_positions[i * 3 + 1] - deflection*0.8;
+        positions_lower[i * 3 + 2] = initial_positions[i * 3 + 2] - deflection/12;
 
 
     }
+    console.log("*****")
 }

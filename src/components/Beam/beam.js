@@ -3,7 +3,8 @@ import * as PHYSICS from '../../utils/physics.js';
 import { Lut } from 'three/examples/jsm/math/Lut.js';
 let lut;
 let cooltowarm = new Lut("cooltowarm", 512); // options are rainbow, cooltowarm and blackbody
-
+let old_displacement = 0
+let old_load_position = 2
 
 AFRAME.registerComponent('beam', {
     schema: {
@@ -25,8 +26,8 @@ AFRAME.registerComponent('beam', {
 
         this.data['applied_displacementMin'] = 0
         this.data['applied_displacementMax'] =1
-        this.data['load_positionMin'] =0
-        this.data['load_positionMax'] = data.length
+        this.data['load_positionMin'] =2
+        this.data['load_positionMax'] = data.length-2
 
         // Create geometry.
         this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
@@ -40,6 +41,7 @@ AFRAME.registerComponent('beam', {
         // this.mesh.scale.set(data.length, data.height, data.depth);
 
         this.mesh.position.add(beam_offset); // move the beam away from the start location
+
         // this.mesh.rotation.set(165,0,0)
         const type = 'beam';
         this.mesh.userData.type = type; // this sets up interaction group for controllers
@@ -50,14 +52,36 @@ AFRAME.registerComponent('beam', {
     },
     update: function() {
         var data = this.data;
+        data.applied_displacement = data.applied_displacement>0?data.applied_displacement:0
+        data.load_position = data.load_position>2?data.load_position:2
 
+        if(data.load_position != old_load_position){
+            old_load_position = data.load_position
+        }
+        if(data.applied_displacement != old_displacement){
+
+            if(old_displacement>data.applied_displacement){
+                console.log("2")
+
+                let beam_offset_1 = new THREE.Vector3(0, + data.applied_displacement*0.013, 0);
+                this.mesh.position.add(beam_offset_1);
+                data.depth = data.depth + data.applied_displacement*0.038<params.depth?data.depth + data.applied_displacement*0.038:params.depth;
+
+            }else{
+                console.log("3")
+
+                let beam_offset_1 = new THREE.Vector3(0, - data.applied_displacement*0.013, 0);
+                this.mesh.position.add(beam_offset_1);
+                data.depth = data.depth - data.applied_displacement*0.038;
+
+            }
+
+            old_displacement = data.applied_displacement
+
+        }
+        
         this.mesh.scale.set(data.length, data.depth, data.height);
-        // this.mesh.scale.set(data.length, data.height, data.depth);
-
-        this.data['load_positionMax'] = data.length
-        params.length = data.length
-        params.height = data.height
-        params.depth = data.depth
+ 
         params.load_position = data.load_position
         params.displacement.y = data.applied_displacement
         params.visible = data.color_visibility;

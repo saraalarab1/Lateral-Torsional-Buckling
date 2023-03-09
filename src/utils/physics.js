@@ -71,7 +71,7 @@ export function updateDeformation(params) {
                 shear_force.push(-R2);
             }
         }
-        positions[i * 3 + 1] = initial_positions[i * 3 + 1] - deflection;
+        positions[i * 3 + 1] = initial_positions[i * 3 + 1] - deflection*0.87;
         positions[i * 3 + 2] = initial_positions[i * 3 + 2] - deflection*4;
 
     }
