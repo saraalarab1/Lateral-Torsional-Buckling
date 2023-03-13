@@ -63,18 +63,23 @@ AFRAME.registerComponent('beam', {
 
                 let beam_offset_1 = new THREE.Vector3(0, + data.applied_displacement*0.013, 0);
                 this.mesh.position.add(beam_offset_1);
+
                 data.depth = data.depth + data.applied_displacement*0.038<params.depth?data.depth + data.applied_displacement*0.038:params.depth;
 
             }else{
 
                 let beam_offset_1 = new THREE.Vector3(0, - data.applied_displacement*0.013, 0);
                 this.mesh.position.add(beam_offset_1);
-                data.depth = data.depth - data.applied_displacement*0.038;
+
+                if(this.mesh.position.y<2.9){
+                    this.mesh.position.y = 2.9
+                }
+    
+                data.depth = data.depth - data.applied_displacement*0.038>1.2491999999999999?data.depth - data.applied_displacement*0.038:1.2491999999999999;
 
             }
 
             old_displacement = data.applied_displacement
-
         }
         
         this.mesh.scale.set(data.length, data.depth, data.height);
