@@ -13,7 +13,7 @@ AFRAME.registerComponent('beam_lower', {
         depth: { type: 'number', default: params_lower.depth },
         applied_displacement: { type: 'number', default: params_lower.displacement.y },
         load_position: { type: 'number', default: params_lower.load_position },
-        color_by: { type: 'string', default: params_lower.colour_by },
+        colour_by: { type: 'number', default: params_lower.colour_by },
     },
 
     /**
@@ -64,7 +64,7 @@ AFRAME.registerComponent('beam_lower', {
         this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS_LOWER.positions_lower, 3));
         this.mesh.geometry.attributes.position.needsUpdate = true;
     
-        if (params_lower.colour_by === 'None') {
+        if (data.colour_by === 0) {
             let colors = [];
             for (let i = 0; i < PHYSICS_LOWER.shear_force_lower.length; i++) {
                 colors.push(1, 1, 1);
@@ -75,11 +75,11 @@ AFRAME.registerComponent('beam_lower', {
             this.mesh.material.needsUpdate = true;
         } else {
             let arr, max_val;
-            if (params_lower.colour_by === 'Bending Moment') {
+            if (data.colour_by === 1) {
                 arr = PHYSICS_LOWER.bending_moment_lower;
                 lut = cooltowarm;
                 max_val = PHYSICS_LOWER.M_max_lower;
-            } else if (params_lower.colour_by === 'Shear Force') {
+            } else if (data.colour_by === 2) {
                 arr = PHYSICS_LOWER.shear_force_lower;
                 lut = cooltowarm;
                 max_val = PHYSICS_LOWER.SF_max_lower;

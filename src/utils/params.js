@@ -3,7 +3,7 @@ let beamDepth = 1.5;
 let beamHeight = 0.2
 let supportType = "Fixed"
 let supportVisible = true
-let colorType = "Bending Moment"
+let colorType = 1 //Bending Moment
 let applied_load = 0.01
 let load_position = 10
 
