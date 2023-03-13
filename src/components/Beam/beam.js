@@ -14,7 +14,6 @@ AFRAME.registerComponent('beam', {
         applied_displacement: { type: 'number', default: params.displacement.y },
         load_position: { type: 'number', default: params.load_position },
         color_by: { type: 'string', default: params.colour_by },
-        color_visibility: {default: false}
     },
 
     /**
@@ -61,14 +60,12 @@ AFRAME.registerComponent('beam', {
         if(data.applied_displacement != old_displacement){
 
             if(old_displacement>data.applied_displacement){
-                console.log("2")
 
                 let beam_offset_1 = new THREE.Vector3(0, + data.applied_displacement*0.013, 0);
                 this.mesh.position.add(beam_offset_1);
                 data.depth = data.depth + data.applied_displacement*0.038<params.depth?data.depth + data.applied_displacement*0.038:params.depth;
 
             }else{
-                console.log("3")
 
                 let beam_offset_1 = new THREE.Vector3(0, - data.applied_displacement*0.013, 0);
                 this.mesh.position.add(beam_offset_1);
@@ -84,7 +81,6 @@ AFRAME.registerComponent('beam', {
  
         params.load_position = data.load_position
         params.displacement.y = data.applied_displacement
-        params.visible = data.color_visibility;
         PHYSICS.updateDeformation(params);
         this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS.positions, 3));
 

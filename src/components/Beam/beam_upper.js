@@ -14,7 +14,6 @@ AFRAME.registerComponent('beam_upper', {
         applied_displacement: { type: 'number', default: params_upper.displacement.y },
         load_position: { type: 'number', default: params_upper.load_position },
         color_by: { type: 'string', default: params_upper.colour_by },
-        color_visibility: {default: false}
 
     },
 
@@ -60,7 +59,6 @@ AFRAME.registerComponent('beam_upper', {
         params_upper.depth = data.depth
         params_upper.load_position = data.load_position
         params_upper.displacement.y = data.applied_displacement
-        params_upper.visible = data.color_visibility;
 
         console.log("redraw upper beam")
 

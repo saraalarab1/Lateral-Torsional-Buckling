@@ -4,9 +4,8 @@ let beamHeight = 0.2
 let supportType = "Fixed"
 let supportVisible = true
 let colorType = "Bending Moment"
-let colorVisible = true
 let applied_load = 0.01
-let load_position = 2
+let load_position = 10
 
 
 export let beam_offset = new THREE.Vector3(0, 3, -6);
@@ -29,7 +28,6 @@ export let params = {
     np: 100, // number of points along beam
     displacement_control: true,
     displacement: new THREE.Vector3(0, 0, 0),
-    visible: colorVisible
 }
 
 export let params_upper = {
@@ -46,7 +44,6 @@ export let params_upper = {
     np: 100, // number of points along beam
     displacement_control: true,
     displacement: new THREE.Vector3(0, 0, 0),
-    visible: colorVisible
 }
 
 export let params_lower = {
@@ -63,5 +60,4 @@ export let params_lower = {
     np: 100, // number of points along beam
     displacement_control: true,
     displacement: new THREE.Vector3(0, 0, 0),
-    visible:colorVisible
 }

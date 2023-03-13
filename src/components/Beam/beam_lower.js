@@ -14,7 +14,6 @@ AFRAME.registerComponent('beam_lower', {
         applied_displacement: { type: 'number', default: params_lower.displacement.y },
         load_position: { type: 'number', default: params_lower.load_position },
         color_by: { type: 'string', default: params_lower.colour_by },
-        color_visibility: {default: false}
     },
 
     /**
@@ -58,7 +57,6 @@ AFRAME.registerComponent('beam_lower', {
         params_lower.depth = data.depth
         params_lower.load_position = data.load_position
         params_lower.displacement.y = data.applied_displacement
-        params_lower.visible = data.color_visibility;
 
         console.log("redraw lower beam")
 
