@@ -19,16 +19,16 @@ export function getDevice() {
 window.addEventListener("load", (event) => {
   var rig = document.createElement("a-entity");
   rig.setAttribute("id", "rig");
-  rig.setAttribute("position", "0 0 0.2");
+  rig.setAttribute("position", "3 0 5.2");
   var camera = document.createElement("a-entity");
   camera.setAttribute("camera", "");
   camera.setAttribute("id", "camera");
   var device = getDevice();
   if (device === "Desktop") {
-    rig.setAttribute("kinematic-body", "radius: 0.3");
+    rig.setAttribute("kinematic-body", "radius: 0.4");
     // rig.setAttribute("wasd-controls", "acceleration: 200");
     rig.setAttribute("movement-controls", "speed: 0.2");
-    camera.setAttribute("position", "3 1.6 5");
+    camera.setAttribute("position", "0 1.6 0");
     camera.setAttribute("look-controls", "pointerLockEnabled: false;");
     var cursorEntity = document.createElement("a-entity");
     cursorEntity.setAttribute("cursor", "");
