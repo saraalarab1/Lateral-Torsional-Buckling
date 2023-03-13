@@ -19,7 +19,7 @@ export function getDevice() {
 window.addEventListener("load", (event) => {
   var rig = document.createElement("a-entity");
   rig.setAttribute("id", "rig");
-  rig.setAttribute("position", "3 0 5.2");
+  rig.setAttribute("position", "3 0 7");
   var camera = document.createElement("a-entity");
   camera.setAttribute("camera", "");
   camera.setAttribute("id", "camera");
@@ -42,7 +42,7 @@ window.addEventListener("load", (event) => {
     rig.appendChild(camera);
     AFRAME.scenes[0].appendChild(rig);
   } else if (device === "Mobile") {
-    camera.setAttribute("position", "0 1.6 0");
+    camera.setAttribute("position", "0 1.7 0");
     camera.setAttribute("kinematic-body", "radius: 0.3");
     camera.setAttribute("look-controls", "pointerLockEnabled: false;");
     camera.setAttribute("wasd-controls", "acceleration: 200");
@@ -56,10 +56,10 @@ window.addEventListener("load", (event) => {
     );
     camera.appendChild(cursorEntity);
 
-    createTeleport("left-teleport", "-1.5 0.1 -2", rig, "-1.5 0 -2");
-    createTeleport("right-teleport", "1.9 0.1 -2", rig, "1.9 0 -2");
-    createTeleport("center-up-teleport", "0 0.1 -3", rig, "0 0 -3");
-    createTeleport("center-down-teleport", "0 0.1 0.2", rig, "0 0 0.2");
+    createTeleport("left-teleport", "6 0.2 2.6", rig, "6 0 2.6");
+    createTeleport("right-teleport", "0 0.2 2.6", rig, "0 0 2.6");
+    createTeleport("center-up-teleport", "3 0.2 0.5", rig, "3 0 0.5");
+    createTeleport("center-down-teleport", "3 0.2 7", rig, "3 0 7");
 
     rig.appendChild(camera);
     AFRAME.scenes[0].appendChild(rig);
@@ -86,7 +86,7 @@ const createTeleport = (id, position, camera, cameraPos) => {
   teleportationArea.setAttribute("id", id);
   teleportationArea.setAttribute("gltf-model", "#teleportationArea");
   teleportationArea.setAttribute("modify-materials", "");
-  teleportationArea.setAttribute("scale", "0.035 0.035 0.035");
+  teleportationArea.setAttribute("scale", "0.065 0.065 0.065");
   teleportationArea.setAttribute("position", position);
   teleportationArea.setAttribute(
     "animation",

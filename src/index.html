@@ -30,13 +30,13 @@
         <a-entity gltf-model="#class" position="-11 0.1 -13.45" rotation="0 -90 0" scale="1 1 1"></a-entity>
         <!-- <a-gltf-model id="class" src="src/models/classroom.glb" position="-11 0.1 -13.45" rotation="0 -90 0" scale="1 1 1"></a-gltf-model> -->
 
-        <a-entity group id="group" scale="0.22 0.22 0.22" position="3 1 2">
+        <a-entity group id="group" scale="0.22 0.22 0.22" position="3 1 4">
           <a-entity beam_upper id="beam_upper"></a-entity>
           <a-entity beam id="beam"></a-entity>
           <a-entity beam_lower id="beam_lower"></a-entity>
         </a-entity>
               
-        <a-entity scale="2 2 2" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" position="5.6 1.4 3" rotation="0 -70 0" beam-variable-ui="beam: #beam; beam_upper: #beam_upper; beam_lower: #beam_lower;">
+        <a-entity scale="2 2 2" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" position="5.6 1.4 5" rotation="0 -70 0" beam-variable-ui="beam: #beam; beam_upper: #beam_upper; beam_lower: #beam_lower;">
         </a-entity>
 
         <!-- Walls -->
@@ -52,7 +52,7 @@
             layer="layer1">
         </a-entity>
 
-        <a-entity scale="2 2 2" position="5.6 2 3.5" rotation="0 -70 0" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" >
+        <a-entity scale="2 2 2" position="5.6 2 5.5" rotation="0 -70 0" data-aabb-collider-dynamic="true" class="grabbable visible-on-vr" >
           <a-entity my-toggle="title: Hide Colors; active: false;" event-set__inactive="_target: #group; group.colour_by: 1;" event-set__active="_target: #group; group.colour_by: 0;" position="0.35 0 0"></a-entity>
         </a-entity>
       
