@@ -134,7 +134,7 @@ AFRAME.registerComponent('beam-variable-ui', {
                 newvalue = sliderAttributes.value + (mode === "plus" ? 0.02 : -0.02);
                 console.log(variable)
                 if(variable == "load_position"){
-                let newarrowpos = arrow.getAttribute("position").x +  (mode === "plus" ? 0.005 : -0.005);
+                let newarrowpos = arrow.getAttribute("position").x +  (mode === "plus" ? 0.003 : -0.003);
                 arrow.setAttribute("position", {x:newarrowpos,y:2.5,z:2.9})
                 }
 
