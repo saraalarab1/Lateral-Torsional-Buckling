@@ -66,17 +66,9 @@ window.addEventListener("load", (event) => {
   } else {
     camera.setAttribute(
       "orbit-controls",
-      "target: 0 1 -1.4; initialPosition: -0.5 1.4 0.3; minDistance: -0.01; enableZoom: false;"
+      "target: 3 1.6 7; initialPosition: 3 1.6 7; minDistance: -0.01; enableZoom: false;"
     );
 
-    // var graphScaler = document.createElement("a-entity");
-    // graphScaler.setAttribute("data-aabb-collider-dynamic", "true");
-    // graphScaler.setAttribute("class", "grabbable visible-on-vr");
-    // graphScaler.setAttribute("position", "-0.8 1 0");
-    // graphScaler.setAttribute("rotation", "0 70 0");
-    // graphScaler.setAttribute("graph-parameter-ui", "graph: #plot");
-
-    // AFRAME.scenes[0].appendChild(graphScaler);
     AFRAME.scenes[0].appendChild(camera);
   }
 });
