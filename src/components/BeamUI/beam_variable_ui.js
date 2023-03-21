@@ -125,19 +125,14 @@ AFRAME.registerComponent('beam-variable-ui', {
     gazeBasedChangeValue: function (slider, variable, mode) {
         let interval = setInterval(() => {
             let sliderAttributes = slider.getAttribute("my-slider")
-            let arrow = document.getElementById("arrow_1")
-
             if ((mode === 'plus' && sliderAttributes.value < sliderAttributes.max) ||
             (mode === 'minus' && sliderAttributes.value > sliderAttributes.min)){
                 let newvalue;
-
-                newvalue = sliderAttributes.value + (mode === "plus" ? 0.02 : -0.02);
-                console.log(variable)
-                if(variable == "load_position"){
-                let newarrowpos = arrow.getAttribute("position").x +  (mode === "plus" ? 0.003 : -0.003);
-                arrow.setAttribute("position", {x:newarrowpos,y:2.5,z:2.9})
+                if(variable == 'length' || variable == 'load_position' || variable == 'applied_displacement'){
+                    newvalue = sliderAttributes.value + (mode === "plus" ? 0.1 : -0.1);
+                }else{
+                    newvalue = sliderAttributes.value + (mode === "plus" ? 0.01 : -0.01);
                 }
-
                 let beamAttributes = {}
                 let sideAttributes = {}
 
