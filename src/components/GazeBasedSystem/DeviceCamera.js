@@ -42,7 +42,7 @@ window.addEventListener("load", (event) => {
     rig.appendChild(camera);
     AFRAME.scenes[0].appendChild(rig);
   } else if (device === "Mobile") {
-    camera.setAttribute("position", "0 1.7 0");
+    camera.setAttribute("position", "0 1.75 0");
     camera.setAttribute("kinematic-body", "radius: 0.3");
     camera.setAttribute("look-controls", "pointerLockEnabled: false;");
     camera.setAttribute("wasd-controls", "acceleration: 200");
@@ -56,18 +56,22 @@ window.addEventListener("load", (event) => {
     );
     camera.appendChild(cursorEntity);
 
-    createTeleport("left-teleport", "6 0.2 2.6", rig, "6 0 2.6");
-    createTeleport("right-teleport", "0 0.2 2.6", rig, "0 0 2.6");
+    createTeleport("left-teleport", "6 0.3 2.7", rig, "6 0 2.7");
+    createTeleport("right-teleport", "0 0.3 2.7", rig, "0 0 2.7");
     createTeleport("center-up-teleport", "3 0.2 0.5", rig, "3 0 0.5");
     createTeleport("center-down-teleport", "3 0.2 7", rig, "3 0 7");
 
     rig.appendChild(camera);
     AFRAME.scenes[0].appendChild(rig);
   } else {
-    camera.setAttribute(
-      "orbit-controls",
-      "target: 3 1.6 7; initialPosition: 3 1.6 7; minDistance: -0.01; enableZoom: false;"
-    );
+    rig.setAttribute(" movement-controls","fly: false;")
+    camera.setAttribute("position", "0 1 0");
+    camera.setAttribute('camera', 'active: true');
+    
+    const thumbstickControls = document.createElement('a-entity');
+    thumbstickControls.setAttribute('thumbstick-controls', 'movementEnabled: true; rotationEnabled: false; movementSpeed: 0.1');
+    camera.appendChild(thumbstickControls);    
+
 
     AFRAME.scenes[0].appendChild(camera);
   }
