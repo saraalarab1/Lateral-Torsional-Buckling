@@ -64,16 +64,33 @@ window.addEventListener("load", (event) => {
     rig.appendChild(camera);
     AFRAME.scenes[0].appendChild(rig);
   } else {
-    rig.setAttribute(" movement-controls","fly: false;")
-    camera.setAttribute("position", "0 1 0");
-    camera.setAttribute('camera', 'active: true');
-    
-    const thumbstickControls = document.createElement('a-entity');
-    thumbstickControls.setAttribute('thumbstick-controls', 'movementEnabled: true; rotationEnabled: false; movementSpeed: 0.1');
-    camera.appendChild(thumbstickControls);    
+   
+    rig.setAttribute("kinematic-body", "radius: 0.4");
+    rig.setAttribute("movement-controls", "speed: 0.1");
+    rig.setAttribute("position", "3 1 7");
 
 
-    AFRAME.scenes[0].appendChild(camera);
+    // Create the left hand entity and attach it to the rig
+    var leftHand = document.createElement('a-entity');
+    leftHand.setAttribute('id', 'lhand');
+    leftHand.setAttribute('interaction-hands', '');
+    leftHand.setAttribute('aabb-collider', 'objects: .grabbable');
+    leftHand.setAttribute('hand-controls', 'hand: left; handModelStyle: highPoly');
+    leftHand.setAttribute('mixin', 'touch');
+    rig.appendChild(leftHand);
+
+    // Create the right hand entity and attach it to the rig
+    var rightHand = document.createElement('a-entity');
+    rightHand.setAttribute('id', 'rhand');
+    rightHand.setAttribute('interaction-hands', '');
+    rightHand.setAttribute('aabb-collider', 'objects: .grabbable');
+    rightHand.setAttribute('hand-controls', 'hand: right; handModelStyle: highPoly');
+    rightHand.setAttribute('mixin', 'touch');
+    rig.appendChild(rightHand);
+
+    camera.setAttribute("look-controls", "pointerLockEnabled: false;");
+    rig.appendChild(camera);
+    AFRAME.scenes[0].appendChild(rig);
   }
 });
 
