@@ -166,11 +166,14 @@ AFRAME.registerComponent('beam-variable-ui', {
             if ((mode === 'plus' && sliderAttributes.value < sliderAttributes.max) ||
             (mode === 'minus' && sliderAttributes.value > sliderAttributes.min)){
                 let newvalue;
-                newvalue = sliderAttributes.value + (mode === "plus" ? 0.1 : -0.1);
                 if(variable == "load_position"){
-                    let newarrowpos = arrow.getAttribute("position").x +  (mode === "plus" ? 0.025 : -0.025);
+                    newvalue = sliderAttributes.value + (mode === "plus" ?  0.05 : -0.05);
+
+                    let newarrowpos = arrow.getAttribute("position").x +  (mode === "plus" ? 0.01 : -0.01);
                     arrow.setAttribute("position", {x:newarrowpos,y:2.5,z:2.9})
-                    }
+                }else{
+                    newvalue = sliderAttributes.value + (mode === "plus" ?  0.01 : -0.01);
+                }
                 this.updateBeam(variable, newvalue)
                 sliderAttributes["value"] = newvalue;
                 slider.setAttribute('my-slider', sliderAttributes)
@@ -181,12 +184,6 @@ AFRAME.registerComponent('beam-variable-ui', {
     updateBeam: function (variable, newvalue) {
         let beamAttributes = {}
         let sideAttributes = {}
-
-        // if(variable == 'depth'){
-        //     beamAttributes['height'] = newvalue.toFixed(2);
-        // }else{
-        //     beamAttributes[variable] = newvalue.toFixed(2);
-        // }
         if(variable == 'applied_displacement'){
         sideAttributes[variable] = newvalue.toFixed(2)*6.52;
         beamAttributes[variable] = newvalue.toFixed(2);
