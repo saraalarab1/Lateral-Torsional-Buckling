@@ -58,8 +58,6 @@ AFRAME.registerComponent('beam_lower', {
         params_lower.load_position = data.load_position
         params_lower.displacement.y = data.applied_displacement
 
-        console.log("redraw lower beam")
-
         PHYSICS_LOWER.updateDeformation_lower(params_lower);
         this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS_LOWER.positions_lower, 3));
         this.mesh.geometry.attributes.position.needsUpdate = true;

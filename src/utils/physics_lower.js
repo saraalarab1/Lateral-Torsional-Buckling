@@ -75,5 +75,4 @@ export function updateDeformation_lower(params) {
 
 
     }
-    console.log("*****")
 }

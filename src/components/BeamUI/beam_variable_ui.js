@@ -1,5 +1,6 @@
 import { getDevice } from "../GazeBasedSystem/DeviceCamera";
 
+let global_interval = null
 
 AFRAME.registerComponent('beam-variable-ui', {
     schema: {
@@ -103,17 +104,13 @@ AFRAME.registerComponent('beam-variable-ui', {
 
             index++;
         }
-        let button = document.createElement("a-entity")
-        button.setAttribute("geometry", "primitive: plane; width: 0.1; height: 0.1")
-        button.setAttribute("material", "color: #333333")
-        button.setAttribute('position', `0.4 ${-height + offset + 0.03} 0`)
+        let button = document.getElementById("play")
         button.addEventListener("click", () => {
           let slider = document.getElementById('applied_displacement');
-          if (slider) {
+          if (slider && !global_interval) {
             slider.emit("animateValue", { mode: "plus" });
           }
         });
-        this.el.appendChild(button);
     },
     createSlider: function(variable, value, min, max) {
         if ((min == null || isNaN(min)) && (max == null || isNaN(max))) {
@@ -146,35 +143,18 @@ AFRAME.registerComponent('beam-variable-ui', {
             if ((mode === 'plus' && sliderAttributes.value < sliderAttributes.max) ||
                 (mode === 'minus' && sliderAttributes.value > sliderAttributes.min)) {
             let newvalue = 0;
-            var interval = null
-
-            interval = setInterval(() => {
-                sliderAttributes.value = newvalue;
-                slider.setAttribute('my-slider', sliderAttributes);
-                newvalue +=0.01;
-                console.log(newvalue);
-                if(newvalue>1){
-                    newvalue=1;
-                    clearInterval(interval)
-                }
-            this.updateBeam('applied_displacement', newvalue)
-            }, 50);
-            console.log(interval);
-            // setTimeout(() => {
-
-            //     slider.setAttribute('animtation__value', value)
-            // }, ());
-            // slider.setAttribute('animation__value', {
-            //     property: 'my-slider.value',
-            //     dur: 4000,
-            //     easing: 'linear',
-            //     to: newvalue,
-            //     on: function(){
-            //         console.log("****^^^")
-            //         if (interval) clearInterval(interval)
-            //         interval = this.gazeBasedChangeValue(slider, variable, "plus")
-            //     }
-            // });
+            global_interval = null
+            global_interval = setInterval(() => {
+                    sliderAttributes.value = newvalue;
+                    slider.setAttribute('my-slider', sliderAttributes);
+                    newvalue +=0.01;
+                    if(newvalue>1){
+                        newvalue=1;
+                        clearInterval(global_interval)
+                        global_interval = null
+                    }
+                this.updateBeam('applied_displacement', newvalue)
+                }, 50);
             }
         });
         return slider;

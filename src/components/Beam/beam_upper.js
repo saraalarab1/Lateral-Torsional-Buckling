@@ -60,8 +60,6 @@ AFRAME.registerComponent('beam_upper', {
         params_upper.load_position = data.load_position
         params_upper.displacement.y = data.applied_displacement
 
-        console.log("redraw upper beam")
-
         PHYSICS_UPPER.updateDeformation_upper(params_upper);
         this.mesh.geometry.setAttribute('position', new THREE.BufferAttribute(PHYSICS_UPPER.positions_upper, 3));
         this.mesh.geometry.attributes.position.needsUpdate = true;
