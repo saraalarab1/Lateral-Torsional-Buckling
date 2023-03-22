@@ -25,8 +25,8 @@ AFRAME.registerComponent('beam', {
 
         this.data['applied_displacementMin'] = 0
         this.data['applied_displacementMax'] =1
-        this.data['load_positionMin'] =2
-        this.data['load_positionMax'] = data.length-2
+        this.data['load_positionMin'] =5
+        this.data['load_positionMax'] = data.length-5
 
         // Create geometry.
         this.geometry = new THREE.BoxBufferGeometry(1, 1, 1, params.np, 1, 1);
@@ -61,21 +61,28 @@ AFRAME.registerComponent('beam', {
 
             if(old_displacement>data.applied_displacement){
 
-                let beam_offset_1 = new THREE.Vector3(0, + data.applied_displacement*0.013, 0);
-                this.mesh.position.add(beam_offset_1);
+                let beam_offset_1 = new THREE.Vector3(0,   + data.applied_displacement*0.08, 0);
 
-                data.depth = data.depth + data.applied_displacement*0.038<params.depth?data.depth + data.applied_displacement*0.038:params.depth;
+                if(this.mesh.position.y  + data.applied_displacement*0.08<3){
+                    this.mesh.position.add(beam_offset_1);
+                }else{
+                    this.mesh.position.y = 3
+                }
+
+                data.depth = data.depth + data.applied_displacement*0.025<params.depth?data.depth + data.applied_displacement*0.025:params.depth;
 
             }else{
 
-                let beam_offset_1 = new THREE.Vector3(0, - data.applied_displacement*0.013, 0);
-                this.mesh.position.add(beam_offset_1);
+                let beam_offset_1 = new THREE.Vector3(0, - data.applied_displacement*0.008, 0);
 
-                if(this.mesh.position.y<2.9){
+                if(this.mesh.position.y  - data.applied_displacement*0.008 >2.9){
+                    this.mesh.position.add(beam_offset_1);
+                }else{
                     this.mesh.position.y = 2.9
+
                 }
     
-                data.depth = data.depth - data.applied_displacement*0.038>1.2491999999999999?data.depth - data.applied_displacement*0.038:1.2491999999999999;
+                data.depth = data.depth - data.applied_displacement*0.025>1.24919?data.depth - data.applied_displacement*0.025:1.24919;
 
             }
 
