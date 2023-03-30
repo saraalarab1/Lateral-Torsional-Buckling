@@ -105,12 +105,21 @@ AFRAME.registerComponent('beam-variable-ui', {
             index++;
         }
         let button = document.getElementById("play")
+        if(getDevice() === "Mobile"){
+            button.addEventListener("mouseenter", () => {
+                let slider = document.getElementById('applied_displacement');
+                if (slider && !global_interval) {
+                    slider.emit("animateValue", { mode: "plus" });
+                }
+            })
+        }else{
         button.addEventListener("click", () => {
           let slider = document.getElementById('applied_displacement');
           if (slider && !global_interval) {
             slider.emit("animateValue", { mode: "plus" });
           }
         });
+    }
     },
     createSlider: function(variable, value, min, max) {
         if ((min == null || isNaN(min)) && (max == null || isNaN(max))) {
