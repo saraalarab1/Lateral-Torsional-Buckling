@@ -10,6 +10,7 @@ jspm_packages/
 
 # Optional npm cache directory
 .npm
+src/models/
 
 # Optional eslint cache
 .eslintcache
