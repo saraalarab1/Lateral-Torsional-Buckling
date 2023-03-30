@@ -1,7 +1,6 @@
 const path = require("path");
 const merge = require("webpack-merge");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const common = require("./webpack.common.config");
@@ -21,7 +20,7 @@ module.exports = merge(common, {
     // the filename is the name of the bundled file
     filename: "[name].[contentHash].bundle.js",
     // dist is the folder name it gets exported to
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist"),
   },
   devServer: {
     overlay: {
@@ -33,12 +32,12 @@ module.exports = merge(common, {
     minimizer: [new TerserPlugin()]
   },
   // Deletes the dist folder, so the new .js files wont stack and pollute the folder
-  plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin({
+  plugins: [new HtmlWebpackPlugin({
     favicon: "./src/images/favicon.png",
     chunks: ['vr'],
     template: "./src/index.html",
     filename: "index.html",
     // Injects file in the head of the html
     inject: 'head'
-  })]
+    })]
 });
